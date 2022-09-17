@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,13 +20,19 @@ public class Prestamo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    public Integer codigo;
+    private Integer codigo;
 
     @Column(nullable = false)
-    public LocalDateTime fecha_prestamo;
+    private LocalDateTime fecha_prestamo;
 
     @Column(nullable = false)
-    public LocalDate fecha_devolucion; // No importa la hora
+    private LocalDate fecha_devolucion; // No importa la hora
 
+    @ManyToOne
+    private Cliente cliente;
 
+    // El prestamo es la entidad propietaria, porque para que el prestamo exista,
+    // el libro ya debe de existir
+    @ManyToMany
+    private List<Libro> libros;
 }

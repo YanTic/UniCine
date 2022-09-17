@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -33,5 +34,12 @@ public class Libro implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Genero genero;
+
+    // Como el prestamo es la entidad propietaria, el libro lleva el mappedBy
+    @ManyToMany(mappedBy = "libros")
+    private List<Prestamo> prestamos;
+
+    @ManyToMany // Entidad propietaria, porque depende del autor
+    private List<Autor> autores;
 
 }
