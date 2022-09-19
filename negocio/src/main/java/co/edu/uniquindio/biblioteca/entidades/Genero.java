@@ -1,4 +1,4 @@
-package co.edu.uniquindio.unicine.entidades;
+package co.edu.uniquindio.biblioteca.entidades;
 
 public enum Genero {
     TERROR,
