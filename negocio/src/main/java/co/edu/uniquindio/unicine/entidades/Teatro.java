@@ -16,8 +16,9 @@ import java.util.List;
 public class Teatro implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private String id;
+    private Integer id;
 
     @Column(nullable = false)
     private String nombre;
@@ -36,6 +37,9 @@ public class Teatro implements Serializable {
 
     @OneToMany(mappedBy = "teatro")
     private List<Funcion> funciones;
+
+    @OneToMany(mappedBy = "teatro")
+    private List<Administrador> administradores;
 
     @OneToMany(mappedBy = "teatro")
     private List<Sala> salas;

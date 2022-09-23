@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,8 +18,9 @@ import java.util.List;
 public class Compra implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private String id;
+    private Integer id;
 
     @Column(nullable = false)
     private LocalDateTime fecha;
@@ -27,7 +29,8 @@ public class Compra implements Serializable {
     private String metodo_pago;
 
     @Column(nullable = false)
-    private String valor_total;
+    @Positive
+    private Float valorTotal;
 
 
     // --- Relaciones ---

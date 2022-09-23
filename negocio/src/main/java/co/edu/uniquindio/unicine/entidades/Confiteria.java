@@ -2,10 +2,8 @@ package co.edu.uniquindio.unicine.entidades;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,17 +17,19 @@ import java.util.List;
 public class Confiteria implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private String id;
+    private Integer id;
 
     @Column(nullable = false)
     private String producto;
 
     @Column(nullable = false)
-    private String precio;
+    @Positive
+    private Float precio;
 
     @Column(nullable = false)
-    private String URLimagen;
+    private String imagenURL;
 
 
     // --- Relaciones ---

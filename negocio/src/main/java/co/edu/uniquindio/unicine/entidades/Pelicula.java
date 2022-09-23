@@ -16,10 +16,12 @@ import java.util.List;
 public class Pelicula implements Serializable {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+    private Integer id;
 
     @Column(nullable = false)
-    private String nombre, URLimagen, URLtrailer, sinpsis, reparto;
+    private String nombre, imagenURL, trailerURL, sinpsis, reparto;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

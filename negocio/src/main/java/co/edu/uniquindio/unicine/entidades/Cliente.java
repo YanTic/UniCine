@@ -18,7 +18,7 @@ public class Cliente implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
-    private int cedula;
+    private Integer cedula;
 
     @Column(nullable = false)
     private String nombre_completo;

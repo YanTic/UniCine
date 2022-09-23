@@ -2,10 +2,7 @@ package co.edu.uniquindio.unicine.entidades;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,11 +17,12 @@ import java.time.LocalTime;
 public class Evento implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private String id;
+    private Integer id;
 
     @Column(nullable = false)
-    private String nombre, imagen;
+    private String nombre, imagenURL;
 
     @Column(nullable = false)
     private LocalDate fecha;

@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Getter
@@ -13,16 +12,17 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-public class Sala implements Serializable {
+public class Administrador implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Integer id;
+    private String cedula;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TipoSala tipo;
+    private String nombre;
+
+    @Column(nullable = false)
+    private String contrasenia;
 
 
     // --- Relaciones ---
@@ -30,9 +30,4 @@ public class Sala implements Serializable {
     @ManyToOne
     private Teatro teatro;
 
-    @OneToMany(mappedBy = "sala")
-    private List<Funcion> funciones;
-
-    @OneToMany(mappedBy = "sala")
-    private List<Silla> sillas;
 }

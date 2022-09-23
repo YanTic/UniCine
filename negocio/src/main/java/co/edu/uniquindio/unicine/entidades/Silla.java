@@ -16,8 +16,9 @@ import java.util.List;
 public class Silla implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private String id;
+    private Integer id;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

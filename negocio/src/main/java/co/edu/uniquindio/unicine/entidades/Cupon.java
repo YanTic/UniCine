@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -16,11 +17,12 @@ import java.time.LocalDate;
 public class Cupon implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private String id;
+    private Integer id;
 
     @Column(nullable = false)
-    private int valor_descuento;
+    private Integer valor_descuento;
 
     @Column(nullable = false)
     private LocalDate fecha_vencimiento;
