@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class Cliente implements Serializable {
@@ -43,4 +42,18 @@ public class Cliente implements Serializable {
 
     @OneToMany(mappedBy = "cliente")
     private List<Compra> compras;
+
+    @Builder
+
+    public Cliente(Integer cedula, String nombre_completo, List<String> telefonos, String email, String imagen_perfil, String contrasenia) {
+        this.cedula = cedula;
+        this.nombre_completo = nombre_completo;
+        this.telefonos = telefonos;
+        this.email = email;
+        this.imagen_perfil = imagen_perfil;
+        this.contrasenia = contrasenia;
+    }
+
+
+
 }

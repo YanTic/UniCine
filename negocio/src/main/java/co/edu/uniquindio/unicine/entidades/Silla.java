@@ -10,9 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Silla implements Serializable {
 
     @Id
@@ -41,4 +39,13 @@ public class Silla implements Serializable {
 
     @OneToMany(mappedBy = "silla")
     private List<Boleta> boletas;
+
+    @Builder
+    public Silla(EstadoSilla estado, String fila, String columna, Sala sala, TipoSilla tipo) {
+        this.estado = estado;
+        this.fila = fila;
+        this.columna = columna;
+        this.sala = sala;
+        this.tipo = tipo;
+    }
 }

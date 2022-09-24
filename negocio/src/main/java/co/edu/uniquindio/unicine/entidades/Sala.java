@@ -10,9 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Sala implements Serializable {
 
     @Id
@@ -35,4 +33,10 @@ public class Sala implements Serializable {
 
     @OneToMany(mappedBy = "sala")
     private List<Silla> sillas;
+
+    @Builder
+    public Sala(TipoSala tipo, Teatro teatro) {
+        this.tipo = tipo;
+        this.teatro = teatro;
+    }
 }

@@ -12,9 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Compra implements Serializable {
 
     @Id
@@ -26,7 +24,8 @@ public class Compra implements Serializable {
     private LocalDateTime fecha;
 
     @Column(nullable = false)
-    private String metodo_pago;
+    @Enumerated(EnumType.STRING)
+    private MetodoPago metodo_pago;
 
     @Column(nullable = false)
     @Positive
@@ -46,4 +45,13 @@ public class Compra implements Serializable {
 
     @OneToMany(mappedBy = "compra")
     private List<Boleta> boletas;
+
+    @Builder
+    public Compra(MetodoPago metodo_pago, List<Confiteria> confiterias, Cupon cupon, Cliente cliente) {
+        this.fecha = LocalDateTime.now();
+        this.metodo_pago = metodo_pago;
+        this.confiterias = confiterias;
+        this.cupon = cupon;
+        this.cliente = cliente;
+    }
 }

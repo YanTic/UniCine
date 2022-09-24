@@ -11,9 +11,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Evento implements Serializable {
 
     @Id
@@ -35,4 +33,14 @@ public class Evento implements Serializable {
 
     @ManyToOne
     private Teatro teatro;
+
+    @Builder
+    public Evento(String nombre, String imagenURL, LocalDate fecha, LocalTime hora_inicio, LocalTime hora_fin, Teatro teatro) {
+        this.nombre = nombre;
+        this.imagenURL = imagenURL;
+        this.fecha = fecha;
+        this.hora_inicio = hora_inicio;
+        this.hora_fin = hora_fin;
+        this.teatro = teatro;
+    }
 }

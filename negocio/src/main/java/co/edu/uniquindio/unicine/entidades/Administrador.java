@@ -9,9 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Administrador implements Serializable {
 
     @Id
@@ -30,4 +28,11 @@ public class Administrador implements Serializable {
     @ManyToOne
     private Teatro teatro;
 
+    @Builder
+    public Administrador(String cedula, String nombre, String contrasenia, Teatro teatro) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.contrasenia = contrasenia;
+        this.teatro = teatro;
+    }
 }

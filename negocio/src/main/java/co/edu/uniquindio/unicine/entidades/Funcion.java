@@ -11,9 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Funcion implements Serializable {
 
     @Id
@@ -42,4 +40,13 @@ public class Funcion implements Serializable {
 
     @OneToMany(mappedBy = "funcion")
     private List<Boleta> boletas;
+
+    @Builder
+    public Funcion(Float precio, Teatro teatro, Horario horario, Pelicula pelicula, Sala sala) {
+        this.precio = precio;
+        this.teatro = teatro;
+        this.horario = horario;
+        this.pelicula = pelicula;
+        this.sala = sala;
+    }
 }

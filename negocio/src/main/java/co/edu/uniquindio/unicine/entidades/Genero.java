@@ -10,9 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Genero implements Serializable {
 
     @Id
@@ -28,4 +26,10 @@ public class Genero implements Serializable {
 
     @ManyToMany(mappedBy = "generos")
     private List<Pelicula> peliculas;
+
+    @Builder
+
+    public Genero(String nombre) {
+        this.nombre = nombre;
+    }
 }

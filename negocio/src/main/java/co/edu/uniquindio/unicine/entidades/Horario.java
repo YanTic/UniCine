@@ -12,9 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Horario implements Serializable {
 
     @Id
@@ -36,4 +34,11 @@ public class Horario implements Serializable {
 
     @OneToMany(mappedBy = "horario")
     private List<Funcion> funciones;
+
+    @Builder
+    public Horario(LocalTime hora_inicio, LocalTime hora_fin, LocalDate fecha) {
+        this.hora_inicio = hora_inicio;
+        this.hora_fin = hora_fin;
+        this.fecha = fecha;
+    }
 }

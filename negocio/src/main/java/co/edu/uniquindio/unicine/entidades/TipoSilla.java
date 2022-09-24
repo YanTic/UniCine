@@ -11,9 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class TipoSilla implements Serializable {
 
     @Id
@@ -34,4 +32,9 @@ public class TipoSilla implements Serializable {
     @OneToMany(mappedBy = "tipo")
     private List<Silla> sillas;
 
+    @Builder
+    public TipoSilla(String nombre, Float precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
 }

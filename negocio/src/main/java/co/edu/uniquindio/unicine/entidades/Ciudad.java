@@ -10,9 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Ciudad implements Serializable {
 
     @Id
@@ -26,6 +24,13 @@ public class Ciudad implements Serializable {
 
     // --- Relaciones ---
 
+    // SIEMPRE QUE SE VEA LA ANOTACION @ONETOMANY NUNCA!! SE DEBE METER EN EL CONSTRUCTOR
+    // EN CASO DE ONETOONE, EL QUE LLEVA EL MAPPEDBY NUNCA SE PONE EN EL CONSTRUCTOR.
     @OneToMany(mappedBy = "ciudad")
     private List<Teatro> teatros;
+
+    @Builder
+    public Ciudad(String nombre) {
+        this.nombre = nombre;
+    }
 }

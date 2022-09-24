@@ -11,9 +11,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Boleta implements Serializable {
 
     @Id
@@ -28,4 +26,11 @@ public class Boleta implements Serializable {
 
     @ManyToOne
     private Silla silla;
+
+    @Builder
+    public Boleta(Compra compra, Funcion funcion, Silla silla) {
+        this.compra = compra;
+        this.funcion = funcion;
+        this.silla = silla;
+    }
 }

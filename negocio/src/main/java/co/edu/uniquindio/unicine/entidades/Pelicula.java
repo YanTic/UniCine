@@ -10,9 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Pelicula implements Serializable {
 
     @Id
@@ -21,7 +19,7 @@ public class Pelicula implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
-    private String nombre, imagenURL, trailerURL, sinpsis, reparto;
+    private String nombre, imagenURL, trailerURL, sinopsis, reparto;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -35,4 +33,15 @@ public class Pelicula implements Serializable {
 
     @ManyToMany
     private List<Genero> generos;
+
+    @Builder
+    public Pelicula(String nombre, String imagenURL, String trailerURL, String sinopsis, String reparto, EstadoPelicula estado, List<Genero> generos) {
+        this.nombre = nombre;
+        this.imagenURL = imagenURL;
+        this.trailerURL = trailerURL;
+        this.sinopsis = sinopsis;
+        this.reparto = reparto;
+        this.estado = estado;
+        this.generos = generos;
+    }
 }

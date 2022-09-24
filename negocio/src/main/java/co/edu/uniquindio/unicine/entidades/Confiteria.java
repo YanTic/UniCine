@@ -11,9 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Confiteria implements Serializable {
 
     @Id
@@ -36,4 +34,11 @@ public class Confiteria implements Serializable {
 
     @ManyToMany(mappedBy = "confiterias")
     private List<Compra> compras;
+
+    @Builder
+    public Confiteria(String producto, Float precio, String imagenURL) {
+        this.producto = producto;
+        this.precio = precio;
+        this.imagenURL = imagenURL;
+    }
 }
