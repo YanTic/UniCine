@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Genero implements Serializable {
 
     @Id
@@ -25,10 +26,10 @@ public class Genero implements Serializable {
     // --- Relaciones ---
 
     @ManyToMany(mappedBy = "generos")
+    @ToString.Exclude
     private List<Pelicula> peliculas;
 
     @Builder
-
     public Genero(String nombre) {
         this.nombre = nombre;
     }

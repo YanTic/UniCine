@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Ciudad implements Serializable {
 
     @Id
@@ -27,6 +28,7 @@ public class Ciudad implements Serializable {
     // SIEMPRE QUE SE VEA LA ANOTACION @ONETOMANY NUNCA!! SE DEBE METER EN EL CONSTRUCTOR
     // EN CASO DE ONETOONE, EL QUE LLEVA EL MAPPEDBY NUNCA SE PONE EN EL CONSTRUCTOR.
     @OneToMany(mappedBy = "ciudad")
+    @ToString.Exclude
     private List<Teatro> teatros;
 
     @Builder

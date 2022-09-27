@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Confiteria implements Serializable {
 
     @Id
@@ -33,6 +34,7 @@ public class Confiteria implements Serializable {
     // --- Relaciones ---
 
     @ManyToMany(mappedBy = "confiterias")
+    @ToString.Exclude
     private List<Compra> compras;
 
     @Builder

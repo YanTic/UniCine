@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Funcion implements Serializable {
 
     @Id
@@ -39,6 +40,7 @@ public class Funcion implements Serializable {
     private Sala sala;
 
     @OneToMany(mappedBy = "funcion")
+    @ToString.Exclude
     private List<Boleta> boletas;
 
     @Builder

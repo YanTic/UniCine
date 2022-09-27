@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class TipoSilla implements Serializable {
 
     @Id
@@ -30,6 +31,7 @@ public class TipoSilla implements Serializable {
     // --- Relaciones ---
 
     @OneToMany(mappedBy = "tipo")
+    @ToString.Exclude
     private List<Silla> sillas;
 
     @Builder

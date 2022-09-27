@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Pelicula implements Serializable {
 
     @Id
@@ -29,6 +30,7 @@ public class Pelicula implements Serializable {
     // --- Relaciones ---
 
     @OneToMany(mappedBy = "pelicula")
+    @ToString.Exclude
     private List<Funcion> funciones;
 
     @ManyToMany

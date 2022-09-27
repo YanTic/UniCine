@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Silla implements Serializable {
 
     @Id
@@ -38,6 +39,7 @@ public class Silla implements Serializable {
     private TipoSilla tipo;
 
     @OneToMany(mappedBy = "silla")
+    @ToString.Exclude
     private List<Boleta> boletas;
 
     @Builder

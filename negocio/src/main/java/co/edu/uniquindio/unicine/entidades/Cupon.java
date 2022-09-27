@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Cupon implements Serializable {
 
     @Id
@@ -34,6 +35,7 @@ public class Cupon implements Serializable {
     // --- Relaciones ---
 
     @OneToOne(mappedBy = "cupon")
+    @ToString.Exclude
     private Compra compra;
 
     @ManyToOne

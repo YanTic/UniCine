@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Administrador implements Serializable {
 
     @Id

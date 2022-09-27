@@ -12,6 +12,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Boleta implements Serializable {
 
     @Id

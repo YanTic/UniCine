@@ -12,6 +12,7 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Evento implements Serializable {
 
     @Id
