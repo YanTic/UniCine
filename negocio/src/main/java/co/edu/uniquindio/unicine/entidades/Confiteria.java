@@ -33,9 +33,9 @@ public class Confiteria implements Serializable {
 
     // --- Relaciones ---
 
-    @ManyToMany(mappedBy = "confiterias")
+    @OneToMany(mappedBy = "confiteria")
     @ToString.Exclude
-    private List<Compra> compras;
+    private List<ConfiteriaCompra> confiteriaCompras;
 
     @Builder
     public Confiteria(String producto, Float precio, String imagenURL) {

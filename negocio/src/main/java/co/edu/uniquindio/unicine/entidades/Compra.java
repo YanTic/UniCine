@@ -35,8 +35,9 @@ public class Compra implements Serializable {
 
     // --- Relaciones ---
 
-    @ManyToMany
-    private List<Confiteria> confiterias;
+    @OneToMany(mappedBy = "compra")
+    @ToString.Exclude
+    private List<ConfiteriaCompra> confiteriaCompras;
 
     @OneToOne
     private Cupon cupon;
@@ -49,10 +50,10 @@ public class Compra implements Serializable {
     private List<Boleta> boletas;
 
     @Builder
-    public Compra(MetodoPago metodo_pago, List<Confiteria> confiterias, Cupon cupon, Cliente cliente) {
+    public Compra(MetodoPago metodo_pago, List<ConfiteriaCompra> confiteriaCompras, Cupon cupon, Cliente cliente) {
         this.fecha = LocalDateTime.now();
         this.metodo_pago = metodo_pago;
-        this.confiterias = confiterias;
+        this.confiteriaCompras = confiteriaCompras;
         this.cupon = cupon;
         this.cliente = cliente;
     }
