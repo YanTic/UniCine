@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 
 @Entity
@@ -20,6 +21,10 @@ public class Administrador implements Serializable {
     @Column(nullable = false)
     private String nombre;
 
+    @Email
+    @Column(nullable = false)
+    private String correo;
+
     @Column(nullable = false)
     private String contrasenia;
 
@@ -30,9 +35,10 @@ public class Administrador implements Serializable {
     private Teatro teatro;
 
     @Builder
-    public Administrador(String cedula, String nombre, String contrasenia, Teatro teatro) {
+    public Administrador(String cedula, String nombre, String correo, String contrasenia, Teatro teatro) {
         this.cedula = cedula;
         this.nombre = nombre;
+        this.correo = correo;
         this.contrasenia = contrasenia;
         this.teatro = teatro;
     }
