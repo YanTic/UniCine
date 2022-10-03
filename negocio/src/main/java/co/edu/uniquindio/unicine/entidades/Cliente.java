@@ -20,19 +20,23 @@ public class Cliente implements Serializable {
     private Integer cedula;
 
     @Column(nullable = false)
-    private String nombre_completo;
+    private String nombre;
 
     @ElementCollection
     private List<String> telefonos;
 
     @Email
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String imagen_perfil;
 
-    @Column(nullable = false)
+    @ToString.Exclude // Porque es inseguro
+    @Column(nullable = false, length = 100)
     private String contrasenia;
+
+    @Column(nullable = false)
+    private Boolean estado;
 
 
     // --- Relaciones ---
@@ -49,7 +53,7 @@ public class Cliente implements Serializable {
     @Builder
     public Cliente(Integer cedula, String nombre_completo, List<String> telefonos, String email, String imagen_perfil, String contrasenia) {
         this.cedula = cedula;
-        this.nombre_completo = nombre_completo;
+        this.nombre = nombre_completo;
         this.telefonos = telefonos;
         this.email = email;
         this.imagen_perfil = imagen_perfil;
