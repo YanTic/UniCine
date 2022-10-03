@@ -28,11 +28,11 @@ insert into confiteria values (3, "url", 10000, "Gaseosa Mediana");
 insert into confiteria values (4, "url", 40000, "Combo parejita");
 insert into confiteria values (5, "url", 13000, "Nachos");
 
-insert into cliente values (1,"1234","julian@email.com","url","Julian Acosta");
-insert into cliente values (2,"3jn1","juan@email.com","url","Juan Bunny");
-insert into cliente values (3,"34a4","pepe@email.com","url","Pepe Lipa");
-insert into cliente values (4,"a378","mailo@email.com","url","Mailo Styles");
-insert into cliente values (5,"b35a","diego@email.com","url","Diego Cloud");
+insert into cliente values (1,"1234","julian@email.com", 1, "url","Julian Acosta");
+insert into cliente values (2,"3jn1","juan@email.com", 1, "url","Juan Bunny");
+insert into cliente values (3,"34a4","pepe@email.com", 0, "url","Pepe Lipa");
+insert into cliente values (4,"a378","mailo@email.com", 0, "url","Mailo Styles");
+insert into cliente values (5,"b35a","diego@email.com", 1, "url","Diego Cloud");
 
 insert into cliente_telefonos values (1,"3353");
 insert into cliente_telefonos values (1,"2441");
