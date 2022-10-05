@@ -27,12 +27,15 @@ public class Boleta implements Serializable {
     // --- Relaciones ---
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Compra compra;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Funcion funcion;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Silla silla;
 
     @Builder

@@ -27,6 +27,7 @@ public class Sala implements Serializable {
     // --- Relaciones ---
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Teatro teatro;
 
     @OneToMany(mappedBy = "sala")

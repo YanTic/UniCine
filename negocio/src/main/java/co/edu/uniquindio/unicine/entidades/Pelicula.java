@@ -34,6 +34,7 @@ public class Pelicula implements Serializable {
     private List<Funcion> funciones;
 
     @ManyToMany
+    @JoinColumn(nullable = false)
     private List<Genero> generos;
 
     @Builder

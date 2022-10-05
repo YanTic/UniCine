@@ -30,9 +30,11 @@ public class ConfiteriaCompra implements Serializable {
     // --- Relaciones ---
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Confiteria confiteria;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Compra compra;
 
 

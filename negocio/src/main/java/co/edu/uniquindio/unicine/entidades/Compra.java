@@ -40,9 +40,11 @@ public class Compra implements Serializable {
     private List<ConfiteriaCompra> confiteriaCompras;
 
     @OneToOne
+    @JoinColumn(nullable = false)
     private Cupon cupon;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Cliente cliente;
 
     @OneToMany(mappedBy = "compra")

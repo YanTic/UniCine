@@ -33,9 +33,11 @@ public class Silla implements Serializable {
     // --- Relaciones ---
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Sala sala;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private TipoSilla tipo;
 
     @OneToMany(mappedBy = "silla")

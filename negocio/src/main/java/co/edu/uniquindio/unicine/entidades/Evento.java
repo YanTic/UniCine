@@ -33,6 +33,7 @@ public class Evento implements Serializable {
     // --- Relaciones ---
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Teatro teatro;
 
     @Builder

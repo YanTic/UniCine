@@ -28,15 +28,19 @@ public class Funcion implements Serializable {
     // --- Relaciones ---
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Teatro teatro;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Horario horario;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Pelicula pelicula;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Sala sala;
 
     @OneToMany(mappedBy = "funcion")

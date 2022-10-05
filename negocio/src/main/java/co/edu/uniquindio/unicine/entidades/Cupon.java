@@ -39,6 +39,7 @@ public class Cupon implements Serializable {
     private Compra compra;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Cliente cliente;
 
     @Builder
