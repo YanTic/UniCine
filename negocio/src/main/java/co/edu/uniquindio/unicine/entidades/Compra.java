@@ -40,8 +40,8 @@ public class Compra implements Serializable {
     private List<ConfiteriaCompra> confiteriaCompras;
 
     @OneToOne
-    @JoinColumn(nullable = false)
-    private Cupon cupon;
+    @JoinColumn(nullable = true)
+    private CuponCliente cupon;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -52,7 +52,7 @@ public class Compra implements Serializable {
     private List<Boleta> boletas;
 
     @Builder
-    public Compra(MetodoPago metodo_pago, List<ConfiteriaCompra> confiteriaCompras, Cupon cupon, Cliente cliente) {
+    public Compra(MetodoPago metodo_pago, List<ConfiteriaCompra> confiteriaCompras, CuponCliente cupon, Cliente cliente) {
         this.fecha = LocalDateTime.now();
         this.metodo_pago = metodo_pago;
         this.confiteriaCompras = confiteriaCompras;

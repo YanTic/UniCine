@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-public class Silla implements Serializable {
+public class DistribucionSillas implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,36 +20,28 @@ public class Silla implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private EstadoSilla estado;
+    private Integer filas;
 
     @Column(nullable = false)
-    private String fila;
+    private Integer columnas;
 
     @Column(nullable = false)
-    private String columna;
+    private Integer totalSillas;
 
+    @Column(nullable = false)
+    private String rutaEsquema;
 
     // --- Relaciones ---
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Sala sala;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private TipoSilla tipo;
-
-    @OneToMany(mappedBy = "silla")
+    @OneToMany(mappedBy = "distribucionSillas")
     @ToString.Exclude
-    private List<Boleta> boletas;
+    private List<Sala> salas;
 
     @Builder
-    public Silla(EstadoSilla estado, String fila, String columna, Sala sala, TipoSilla tipo) {
-        this.estado = estado;
-        this.fila = fila;
-        this.columna = columna;
-        this.sala = sala;
-        this.tipo = tipo;
+    public DistribucionSillas(Integer filas, Integer columnas, String rutaEsquema, Integer totalSillas) {
+        this.filas = filas;
+        this.columnas = columnas;
+        this.rutaEsquema = rutaEsquema;
+        this.totalSillas = totalSillas;
     }
 }

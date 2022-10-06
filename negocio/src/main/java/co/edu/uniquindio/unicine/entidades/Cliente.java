@@ -42,12 +42,12 @@ public class Cliente implements Serializable {
     // --- Relaciones ---
 
     // A todos los OneToMany deben ser excluidos del ToString, así como del constructor
-    @ToString.Exclude
     @OneToMany(mappedBy = "cliente")
-    private List<Cupon> cupones;
+    @ToString.Exclude
+    private List<CuponCliente> cupones;
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "cliente")
+    @ToString.Exclude
     private List<Compra> compras;
 
     @Builder

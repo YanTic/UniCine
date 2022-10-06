@@ -23,6 +23,16 @@ public class Boleta implements Serializable {
     @Column(nullable = false)
     private Float precio;
 
+    @Column(nullable = false, length = 30)
+    private String fila;
+
+    @Column(nullable = false, length = 30)
+    private String columna;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TipoSilla tipo;
+
 
     // --- Relaciones ---
 
@@ -34,15 +44,12 @@ public class Boleta implements Serializable {
     @JoinColumn(nullable = false)
     private Funcion funcion;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Silla silla;
 
     @Builder
-    public Boleta(Float precio, Compra compra, Funcion funcion, Silla silla) {
+    public Boleta(Float precio, Compra compra, Funcion funcion, TipoSilla tipo) {
         this.precio = precio;
         this.compra = compra;
         this.funcion = funcion;
-        this.silla = silla;
+        this.tipo = tipo;
     }
 }

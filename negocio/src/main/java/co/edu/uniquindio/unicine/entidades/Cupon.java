@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,20 +35,16 @@ public class Cupon implements Serializable {
 
     // --- Relaciones ---
 
-    @OneToOne(mappedBy = "cupon")
+    @OneToMany(mappedBy = "cupon")
     @ToString.Exclude
-    private Compra compra;
+    private List<CuponCliente> cuponesClientes;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Cliente cliente;
 
     @Builder
-    public Cupon(Float valor_descuento, LocalDate fecha_vencimiento, String descripcion, String criterio, Cliente cliente) {
+    public Cupon(Float valor_descuento, LocalDate fecha_vencimiento, String descripcion, String criterio) {
         this.valor_descuento = valor_descuento;
         this.fecha_vencimiento = fecha_vencimiento;
         this.descripcion = descripcion;
         this.criterio = criterio;
-        this.cliente = cliente;
     }
 }
