@@ -52,32 +52,6 @@ insert into cupon_cliente values (3, 0, 2, 1);
 insert into cupon_cliente values (4, 0, 4, 1);
 insert into cupon_cliente values (5, 1, 4, 3);
 
-
-/*insert into compra values (id,fecha,metodopago,valortotal,clientecedula,cuponid );*/
-insert into compra values (1, '2022-05-03', 'EFECTY',    55200,  1, 1);
-insert into compra values (2, '2022-05-03', 'EFECTY',    40200,  1, 2);
-insert into compra values (3, '2022-05-03', 'VISA',      17000,  3, null);
-insert into compra values (4, '2022-05-03', 'DAVIPLATA', 15500,  4, 1);
-insert into compra values (5, '2022-06-10', 'EFECTY',    25000,  2, 1);
-insert into compra values (6, '2022-06-12', 'EFECTY',    50300,  5, null);
-insert into compra values (7, '2022-06-24', 'VISA',      35080,  3, null);
-insert into compra values (8, '2022-07-13', 'EFECTY',    130170, 2, null);
-insert into compra values (9, '2022-07-17', 'NEQUI',     35012,  4, 3);
-
-/*insert into confiteria_compra values (id,precio,unidades,compraid,confiteria_id);*/
-insert into confiteria_compra values (1, 30000, 2, 1, 1);
-insert into confiteria_compra values (2, 12000, 1, 1, 2);
-insert into confiteria_compra values (3, 30000, 5, 2, 3);
-insert into confiteria_compra values (4, 40000, 1, 3, 4);
-insert into confiteria_compra values (5, 52000, 4, 4, 5);
-insert into confiteria_compra values (6, 6000,  1, 5, 2);
-insert into confiteria_compra values (7, 6000,  1, 6, 2);
-insert into confiteria_compra values (8, 45000, 3, 6, 1);
-insert into confiteria_compra values (9, 45000, 3, 7, 1);
-insert into confiteria_compra values (10, 80000, 2, 8, 4);
-insert into confiteria_compra values (11, 40000, 4, 8, 3);
-insert into confiteria_compra values (12, 10000, 1, 9, 3);
-
 insert into genero values (1, "TERROR");
 insert into genero values (2, "AVENTURA");
 insert into genero values (3, "COMEDIA");
@@ -127,28 +101,53 @@ insert into sala values (7, '_3DX', 3, 4);
 insert into sala values (8, '_2DX', 3, 4);
 insert into sala values (9, 'ESTANDAR', 1, 5);
 
-/*insert into funcion values (id, precio, horarioid, peliculaid, salaid, teatroid);*/
-insert into funcion values (1, 200, 1, 1, 1, 1);
-insert into funcion values (2, 100, 1, 2, 2, 1);
-insert into funcion values (3, 240, 2, 3, 3, 2);
-insert into funcion values (4, 210, 3, 4, 4, 2);
-insert into funcion values (5, 150, 3, 2, 5, 3);
-insert into funcion values (6, 500, 3, 2, 6, 4);
-insert into funcion values (7, 110, 4, 3, 7, 4);
-insert into funcion values (8, 330, 5, 4, 8, 4);
-insert into funcion values (9, 240, 4, 1, 9, 5);
+/*insert into funcion values (id, precio, horarioid, peliculaid, salaid);*/
+insert into funcion values (1, 200, 1, 1, 1);
+insert into funcion values (2, 100, 1, 2, 2);
+insert into funcion values (3, 240, 2, 3, 3);
+insert into funcion values (4, 210, 3, 4, 4);
+insert into funcion values (5, 150, 3, 2, 5);
+insert into funcion values (6, 500, 3, 2, 6);
+insert into funcion values (7, 110, 4, 3, 7);
+insert into funcion values (8, 330, 5, 4, 8);
+insert into funcion values (9, 240, 4, 1, 9);
 
-/*insert into boleta values (id, col, fila, precio, tipo, compraid, funcionid);*/
-insert into boleta values (1, "2", "A", 3200, 'ESTANDAR', 1, 2);
-insert into boleta values (2, "2", "B", 1200, 'ESTANDAR', 1, 2);
-insert into boleta values (3, "3", "A", 2200, 'VIP', 2, 1);
-insert into boleta values (4, "4", "A", 4150, 'ESTANDAR', 3, 1);
-insert into boleta values (5, "2", "F", 3050, 'ESTANDAR', 4, 3);
-insert into boleta values (6, "6", "A", 1000, 'VIP', 4, 4);
-insert into boleta values (7, "8", "E", 1000, 'ESTANDAR', 5, 4);
-insert into boleta values (8, "1", "F", 2200, 'ESTANDAR', 6, 5);
-insert into boleta values (9, "1", "G", 5200, 'DISCAPACITADO', 7, 7);
-insert into boleta values (10, "7", "A", 3200, 'VIP', 7, 6);
-insert into boleta values (11, "4", "B", 5600, 'ESTANDAR', 8, 6);
-insert into boleta values (12, "4", "C", 1100, 'DISCAPACITADO', 9, 6);
+/*insert into compra values (id,fecha,metodopago,valortotal,clientecedula,cuponid,funcionid );*/
+insert into compra values (1, '2022-05-03', 'EFECTY',    55200,  1, 1, 2);
+insert into compra values (2, '2022-05-03', 'EFECTY',    40200,  1, 2, 2);
+insert into compra values (3, '2022-05-03', 'VISA',      17000,  3, null, 1);
+insert into compra values (4, '2022-05-03', 'DAVIPLATA', 15500,  4, 1, 4);
+insert into compra values (5, '2022-06-10', 'EFECTY',    25000,  2, 1, 5);
+insert into compra values (6, '2022-06-12', 'EFECTY',    50300,  5, null, 9);
+insert into compra values (7, '2022-06-24', 'VISA',      35080,  3, null, 1);
+insert into compra values (8, '2022-07-13', 'EFECTY',    130170, 2, null, 3);
+insert into compra values (9, '2022-07-17', 'NEQUI',     35012,  4, 3, 8);
+
+/*insert into confiteria_compra values (id,precio,unidades,compraid,confiteria_id);*/
+insert into confiteria_compra values (1, 30000, 2, 1, 1);
+insert into confiteria_compra values (2, 12000, 1, 1, 2);
+insert into confiteria_compra values (3, 30000, 5, 2, 3);
+insert into confiteria_compra values (4, 40000, 1, 3, 4);
+insert into confiteria_compra values (5, 52000, 4, 4, 5);
+insert into confiteria_compra values (6, 6000,  1, 5, 2);
+insert into confiteria_compra values (7, 6000,  1, 6, 2);
+insert into confiteria_compra values (8, 45000, 3, 6, 1);
+insert into confiteria_compra values (9, 45000, 3, 7, 1);
+insert into confiteria_compra values (10, 80000, 2, 8, 4);
+insert into confiteria_compra values (11, 40000, 4, 8, 3);
+insert into confiteria_compra values (12, 10000, 1, 9, 3);
+
+/*insert into boleta values (id, col, fila, precio, tipo, compraid);*/
+insert into boleta values (1, "2", "A", 3200, 'ESTANDAR', 1);
+insert into boleta values (2, "2", "B", 1200, 'ESTANDAR', 1);
+insert into boleta values (3, "3", "A", 2200, 'VIP', 2);
+insert into boleta values (4, "4", "A", 4150, 'ESTANDAR', 3);
+insert into boleta values (5, "2", "F", 3050, 'ESTANDAR', 4);
+insert into boleta values (6, "6", "A", 1000, 'VIP', 4);
+insert into boleta values (7, "8", "E", 1000, 'ESTANDAR', 5);
+insert into boleta values (8, "1", "F", 2200, 'ESTANDAR', 6);
+insert into boleta values (9, "1", "G", 5200, 'DISCAPACITADO', 7);
+insert into boleta values (10, "7", "A", 3200, 'VIP', 7);
+insert into boleta values (11, "4", "B", 5600, 'ESTANDAR', 8);
+insert into boleta values (12, "4", "C", 1100, 'DISCAPACITADO', 9);
 
