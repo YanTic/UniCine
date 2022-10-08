@@ -29,10 +29,6 @@ public class Funcion implements Serializable {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Teatro teatro;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
     private Horario horario;
 
     @ManyToOne
@@ -45,12 +41,11 @@ public class Funcion implements Serializable {
 
     @OneToMany(mappedBy = "funcion")
     @ToString.Exclude
-    private List<Boleta> boletas;
+    private List<Compra> compras;
 
     @Builder
-    public Funcion(Float precio, Teatro teatro, Horario horario, Pelicula pelicula, Sala sala) {
+    public Funcion(Float precio, Horario horario, Pelicula pelicula, Sala sala) {
         this.precio = precio;
-        this.teatro = teatro;
         this.horario = horario;
         this.pelicula = pelicula;
         this.sala = sala;

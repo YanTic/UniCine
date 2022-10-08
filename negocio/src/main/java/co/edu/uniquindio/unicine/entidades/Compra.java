@@ -51,12 +51,17 @@ public class Compra implements Serializable {
     @ToString.Exclude
     private List<Boleta> boletas;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Funcion funcion;
+
     @Builder
-    public Compra(MetodoPago metodo_pago, List<ConfiteriaCompra> confiteriaCompras, CuponCliente cupon, Cliente cliente) {
+    public Compra(MetodoPago metodo_pago, List<ConfiteriaCompra> confiteriaCompras, CuponCliente cupon, Cliente cliente, Funcion funcion) {
         this.fecha = LocalDateTime.now();
         this.metodo_pago = metodo_pago;
         this.confiteriaCompras = confiteriaCompras;
         this.cupon = cupon;
         this.cliente = cliente;
+        this.funcion = funcion;
     }
 }

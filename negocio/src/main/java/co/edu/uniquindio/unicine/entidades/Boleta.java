@@ -40,16 +40,14 @@ public class Boleta implements Serializable {
     @JoinColumn(nullable = false)
     private Compra compra;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Funcion funcion;
-
 
     @Builder
-    public Boleta(Float precio, Compra compra, Funcion funcion, TipoSilla tipo) {
+    public Boleta(Float precio, String fila, String columna, TipoSilla tipo, Compra compra) {
         this.precio = precio;
-        this.compra = compra;
-        this.funcion = funcion;
+        this.fila = fila;
+        this.columna = columna;
         this.tipo = tipo;
+        this.compra = compra;
     }
+
 }
