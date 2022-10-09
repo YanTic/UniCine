@@ -1,6 +1,8 @@
 package co.edu.uniquindio.unicine.test;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
+import co.edu.uniquindio.unicine.entidades.Compra;
+import co.edu.uniquindio.unicine.entidades.Cupon;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -103,4 +105,16 @@ public class ClienteTest {
         List<Cliente> clientes = clienteRepo.findAll(PageRequest.of(1,2, Sort.by("nombre").descending())).toList();
         clientes.forEach(System.out::println);
     }
+
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerCupones(){
+        List<Cupon> cupones = clienteRepo.obtenerCupones("julian@email.com");
+        cupones.forEach(System.out::println);
+
+        // Si yo se que el correo -> o sea Julia , tiene 2 cupones, la lista debe tener 2 valores
+        Assertions.assertEquals(2, cupones.size());
+    }
+
 }
