@@ -30,6 +30,10 @@ public interface CompraRepo extends JpaRepository<Compra, Integer> {
     @Query("select comp from Cliente c JOIN c.compras comp")
     List<Compra> obtenerComprasTodos();
 
-    @Query("select c.nombre, comp from Cliente c LEFT JOIN c.compras comp")
+    // Con LEFT JOIN, se imprimen tambien los cliente que no tengan compras
+    // Si solo se usa JOIN, esos clientes no apareceran en la consulta
+    // LEFT JOIN -> Conservo registros que están a la izquierda así no se relacionen con registros
+    //              de la derecha. (Conversa todos los clientes (izq))
+    @Query("select c.nombre, c.email, comp from Cliente c LEFT JOIN c.compras comp")
     List<Object[]> obtenerComprasTodos2();
 }

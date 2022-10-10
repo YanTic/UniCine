@@ -46,13 +46,13 @@ public class CompraTest {
         compras.forEach(System.out::println);
     }
 
-    /*@Test
+    @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerComprasPorCliente(){
+    public void obtenerComprasPorCliente2(){
         List<Object[]> compras = compraRepo.obtenerComprasTodos2();
 
         compras.forEach( o ->
-                System.out.println(o[0] + ", "+ o[1])
+                System.out.println(o[0] + ", "+ o[1] + ", "+ o[2])
         );
-    }*/
+    }
 }

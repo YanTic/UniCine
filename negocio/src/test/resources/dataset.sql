@@ -33,12 +33,14 @@ insert into cliente values (2,"3jn1","juan@email.com", 1, "url","Juan Bunny");
 insert into cliente values (3,"34a4","pepe@email.com", 0, "url","Pepe Lipa");
 insert into cliente values (4,"a378","mailo@email.com", 0, "url","Mailo Styles");
 insert into cliente values (5,"b35a","diego@email.com", 1, "url","Diego Cloud");
+insert into cliente values (6,"97Tg","peter@email.com", 1, "url","Peter Parker");
 
 insert into cliente_telefonos values (1,"3353");
 insert into cliente_telefonos values (1,"2441");
 insert into cliente_telefonos values (2,"2451");
 insert into cliente_telefonos values (5,"1111");
 insert into cliente_telefonos values (3,"0282");
+insert into cliente_telefonos values (2,"0282");
 
 /*insert into cupon values (id,criterio,desc,fechavencimiento,valordescuento)*/
 insert into cupon values (1, "Registro", "Cupon por registrarse", '2022-04-12', 10);
