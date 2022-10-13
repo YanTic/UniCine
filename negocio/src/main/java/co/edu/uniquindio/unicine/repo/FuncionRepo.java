@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -30,4 +31,14 @@ public interface FuncionRepo extends JpaRepository<Funcion, Integer> {
     // Utilizando DTO (Data transfer Object)
     @Query("select new co.edu.uniquindio.unicine.dto.FuncionDTO(f.pelicula.nombre, f.pelicula.estado, f.pelicula.imagenURL, f.sala.id, f.sala.teatro.direccion, f.sala.teatro.ciudad.nombre, f.horario) from Funcion f where f.pelicula.id = :idPelicula")
     List<FuncionDTO> listarFunciones2(Integer idPelicula);
+
+
+    //Cree una consulta que permita determinar qué funciones no tienen compras asociadas en un teatro específico. Use IS EMPTY.
+    @Query("select f from Funcion f where f.sala.teatro.id = :idTeatro and f.compras is empty")
+    List<Funcion> obtenerFuncionesSinCompras(Integer idTeatro);
+
+
+    //Cree una consulta que obtenga una lista de funciones que tiene un teatro en un rango de fechas dadas por parámetro.
+    @Query("select f from Funcion f where f.sala.teatro.id = :idTeatro and f.horario.fecha between :fechaInicio and :fechaFin")
+    List<Funcion> obtenerFuncionesPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Integer idTeatro);
 }

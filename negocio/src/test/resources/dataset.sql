@@ -53,6 +53,7 @@ insert into cupon_cliente values (2, 1, 1, 2);
 insert into cupon_cliente values (3, 0, 2, 1);
 insert into cupon_cliente values (4, 0, 4, 1);
 insert into cupon_cliente values (5, 1, 4, 3);
+insert into cupon_cliente values (6, 1, 4, 2);
 
 insert into genero values (1, "TERROR");
 insert into genero values (2, "AVENTURA");
@@ -81,7 +82,7 @@ insert into pelicula_generos values (5, 4);
 insert into pelicula_generos values (6, 4);
 
 /*insert into horario values (id, fecha, horafin, horainicio);*/
-insert into horario values (1, '2022-05-03', '10:30:00', '08:15:00');
+insert into horario values (1, '2022-08-03', '10:30:00', '08:15:00');
 insert into horario values (2, '2022-05-03', '16:30:00', '13:15:00');
 insert into horario values (3, '2022-05-03', '19:30:00', '16:30:00');
 insert into horario values (4, '2022-05-04', '17:15:00', '14:30:00');
@@ -105,7 +106,7 @@ insert into sala values (9, 'ESTANDAR', 1, 5);
 
 /*insert into funcion values (id, precio, horarioid, peliculaid, salaid);*/
 insert into funcion values (1, 200, 1, 1, 1);
-insert into funcion values (2, 100, 1, 2, 2);
+insert into funcion values (2, 100, 2, 2, 2);
 insert into funcion values (3, 240, 2, 3, 3);
 insert into funcion values (4, 210, 3, 4, 4);
 insert into funcion values (5, 150, 3, 2, 5);

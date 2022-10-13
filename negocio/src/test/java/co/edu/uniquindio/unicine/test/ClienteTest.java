@@ -117,4 +117,12 @@ public class ClienteTest {
         Assertions.assertEquals(2, cupones.size());
     }
 
+
+    // Cree una consulta que calcule el valor total que ha gastado un usuario en compras.
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerDineroGastado(){
+        Float dineroGastado = clienteRepo.obtenerDineroGastado(1);
+        System.out.println("Dinero gastado: "+dineroGastado);
+    }
 }

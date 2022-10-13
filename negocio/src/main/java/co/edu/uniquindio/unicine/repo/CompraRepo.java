@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.repo;
 
+import co.edu.uniquindio.unicine.dto.InformacionCompraDTO;
 import co.edu.uniquindio.unicine.entidades.Administrador;
 import co.edu.uniquindio.unicine.entidades.Boleta;
 import co.edu.uniquindio.unicine.entidades.Compra;
@@ -36,4 +37,29 @@ public interface CompraRepo extends JpaRepository<Compra, Integer> {
     //              de la derecha. (Conversa todos los clientes (izq))
     @Query("select c.nombre, c.email, comp from Cliente c LEFT JOIN c.compras comp")
     List<Object[]> obtenerComprasTodos2();
+
+
+
+    // Cree una consulta que permita determinar el número de cupones que han sido redimidos por cada cliente.
+    // @Query("select count(comp.cupon) from Cliente c JOIN c.compras comp")
+    @Query("select c.cedula, count(c) from Cliente c JOIN c.compras comp where comp.cupon is not null group by c")
+    List<Object[]> obtenerCuponesRedimidosTodosClientes();
+
+
+    // Cree una consulta que devuelva la compra más costosa que se ha hecho. Se debe devolver el
+    // cliente y la compra.
+    @Query("select comp.cliente, comp from Compra comp where comp.valorTotal = (select MAX(c.valorTotal) from Compra c)")
+    List<Object[]> obtenerCompraMasCostosa();
+
+    @Query("select comp.cliente.cedula, MAX(comp.valorTotal) from Compra comp group by comp.cliente")
+    List<Object[]> obtenerCompraMasCostosa2();
+
+
+    // Cree una consulta que devuelva una lista de compras de un cliente, la respuesta debe incluir el valor total, la
+    // fecha de la compra, la función, el valor pagado por la confitería y el valor pagado por las entradas, por
+    // separado. Use un DTO para una mejor respuesta.
+    @Query("select new co.edu.uniquindio.unicine.dto.InformacionCompraDTO(comp.valorTotal, comp.fecha, comp.funcion, (select sum(conf.precio * conf.unidades) from ConfiteriaCompra conf where conf.compra.id = comp.id), (select sum(bol.precio) from Boleta bol where bol.compra.id = comp.id)) from Compra comp where comp.cliente.cedula = :idCliente")
+    List<InformacionCompraDTO> obtenerInformacionCompra(Integer idCliente);
+
+
 }

@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test;
 
 import co.edu.uniquindio.unicine.dto.FuncionDTO;
+import co.edu.uniquindio.unicine.entidades.Funcion;
 import co.edu.uniquindio.unicine.entidades.Pelicula;
 import co.edu.uniquindio.unicine.repo.FuncionRepo;
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @DataJpaTest
@@ -51,6 +53,23 @@ public class FuncionTest {
     @Sql("classpath:dataset.sql")
     public void obtenerDatosFuncion2(){
         List<FuncionDTO> funciones = funcionRepo.listarFunciones2(1);
+        funciones.forEach(System.out::println);
+    }
+
+
+    // Cree una consulta que permita determinar qué funciones no tienen compras asociadas en un teatro específico. Use IS EMPTY.
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerFuncionesSinCompras(){
+        List<Funcion> funciones = funcionRepo.obtenerFuncionesSinCompras(4);
+        funciones.forEach(System.out::println);
+    }
+
+    //Cree una consulta que obtenga una lista de funciones que tiene un teatro en un rango de fechas dadas por parámetro.
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerFuncionesPorFecha(){
+        List<Funcion> funciones = funcionRepo.obtenerFuncionesPorFecha(LocalDate.parse("2022-04-03"),LocalDate.parse("2022-06-03"),1);
         funciones.forEach(System.out::println);
     }
 }

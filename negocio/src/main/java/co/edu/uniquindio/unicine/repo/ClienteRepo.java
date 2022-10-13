@@ -32,4 +32,7 @@ public interface ClienteRepo extends JpaRepository<Cliente, Integer> {
     List<Cupon> obtenerCupones(String emailCliente);
 
 
+    // Cree una consulta que calcule el valor total que ha gastado un usuario en compras.
+    @Query("select sum(comp.valorTotal) from Cliente c JOIN c.compras comp where c.cedula = :idCliente")
+    Float obtenerDineroGastado(Integer idCliente);
 }
