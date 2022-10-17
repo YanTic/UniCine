@@ -19,14 +19,15 @@ public class Cliente implements Serializable {
     @EqualsAndHashCode.Include
     private Integer cedula;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String nombre;
 
     @ElementCollection
     private List<String> telefonos;
 
+    @NonNull // Restrinccion a nivel de java
     @Email
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true) // Restrinccion a nivel de sql
     private String email;
 
     private String imagen_perfil;
@@ -51,13 +52,14 @@ public class Cliente implements Serializable {
     private List<Compra> compras;
 
     @Builder
-    public Cliente(Integer cedula, String nombre_completo, List<String> telefonos, String email, String imagen_perfil, String contrasenia) {
+    public Cliente(Integer cedula, String nombre_completo, List<String> telefonos, String email, String imagen_perfil, String contrasenia, boolean estado) {
         this.cedula = cedula;
         this.nombre = nombre_completo;
         this.telefonos = telefonos;
         this.email = email;
         this.imagen_perfil = imagen_perfil;
         this.contrasenia = contrasenia;
+        this.estado = null;
     }
 
 

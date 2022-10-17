@@ -11,7 +11,7 @@ import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CiudadTest {
+public class CiudadRepoTest {
 
     @Autowired
     private CiudadRepo ciudadRepo;

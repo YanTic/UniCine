@@ -1,7 +1,6 @@
 package co.edu.uniquindio.unicine.test;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.Compra;
 import co.edu.uniquindio.unicine.entidades.Cupon;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +18,7 @@ import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ClienteTest {
+public class ClienteRepoTest {
 
     @Autowired
     private ClienteRepo clienteRepo;
@@ -28,7 +27,7 @@ public class ClienteTest {
     @Sql("classpath:dataset.sql")
     public void registrar(){
         String[] tel = new String[] {"214124", "343242"};
-        Cliente cliente = new Cliente(1007, "Julian Acosta", Arrays.asList(tel), "julian@email.com", "ruta", "1234");
+        Cliente cliente = new Cliente(1007, "Julian Acosta", Arrays.asList(tel), "julian@email.com", "ruta", "1234", false);
 
         Cliente guardado = clienteRepo.save(cliente);
 
@@ -71,8 +70,9 @@ public class ClienteTest {
     @Sql("classpath:dataset.sql")
     public void obtenerPorCorreo(){
         /*Cliente cliente = clienteRepo.obtener("juan@email.com");*/
-        Cliente cliente = clienteRepo.findByEmail("juan@email.com");
+        Cliente cliente = clienteRepo.findByEmail("juan@email.com").orElse(null);
         System.out.println(cliente);
+        Assertions.assertNotNull(cliente);
     }
 
     @Test
