@@ -5,7 +5,7 @@ import co.edu.uniquindio.unicine.entidades.Cupon;
 import co.edu.uniquindio.unicine.entidades.Horario;
 import co.edu.uniquindio.unicine.entidades.Teatro;
 
-public interface AdministradorServicio {
+public interface AdministradorGeneralServicio {
 
     Ciudad crearCiudad(Ciudad ciudad);
 

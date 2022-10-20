@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-public class Administrador implements Serializable {
+public class AdministradorGeneral implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
@@ -36,7 +36,7 @@ public class Administrador implements Serializable {
     private Teatro teatro;
 
     @Builder
-    public Administrador(String cedula, String nombre, String correo, String contrasenia, Teatro teatro) {
+    public AdministradorGeneral(String cedula, String nombre, String correo, String contrasenia, Teatro teatro) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.correo = correo;

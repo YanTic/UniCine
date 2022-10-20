@@ -31,6 +31,10 @@ public class Ciudad implements Serializable {
     @ToString.Exclude
     private List<Teatro> teatros;
 
+    @OneToMany(mappedBy = "ciudad")
+    @ToString.Exclude
+    private List<AdministradorTeatro> administradorTeatros;
+
     @Builder
     public Ciudad(String nombre) {
         this.nombre = nombre;

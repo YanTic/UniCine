@@ -10,11 +10,17 @@ insert into teatro values (3, "Carrera 14", "Unicine Cali", 3);
 insert into teatro values (4, "Carrera 12", "Unicine Pereira", 2);
 insert into teatro values (5, "Carrera 13", "Unicine Bogotá", 5);
 
-insert into administrador values (1,"35ad", "harry@email.com", "Harry Styles", 1);
-insert into administrador values (2,"4add", "frank@email.com", "Frank Ocean", 3);
-insert into administrador values (3,"3jka", "rex@email.com", "Rex Orange", 5);
-insert into administrador values (4,"35ba", "pualo@email.com", "Paulo Snezze", 5);
-insert into administrador values (5,"l5yk", "drake@email.com", "Drake yeye", 5);
+insert into administrador_general values (1,"35ad", "harry@email.com", "Harry Styles", 1);
+insert into administrador_general values (2,"4add", "frank@email.com", "Frank Ocean", 3);
+insert into administrador_general values (3,"3jka", "rex@email.com", "Rex Orange", 5);
+insert into administrador_general values (4,"35ba", "pualo@email.com", "Paulo Snezze", 5);
+insert into administrador_general values (5,"l5yk", "drake@email.com", "Drake yeye", 5);
+
+insert into administrador_teatro values (1,"33ks", "bruno@email.com", "Bruno Mars", 1);
+insert into administrador_teatro values (2,"35wa", "ferxxo@email.com", "Feid Mor", 3);
+insert into administrador_teatro values (3,"o705", "steve@email.com", "Steve Wonder", 5);
+insert into administrador_teatro values (4,"046j", "miles@email.com", "Miles Morales", 4);
+insert into administrador_teatro values (5,"3ow9", "fredy@email.com", "Fredy Mercury", 2);
 
 insert into evento values (1, '2022-08-17', '10:30:00', '09:30:00', "url", "Evento Fin de Año", 1);
 insert into evento values (2, '2022-06-10', '04:00:00', '02:15:00', "url", "Evento Familia", 1);

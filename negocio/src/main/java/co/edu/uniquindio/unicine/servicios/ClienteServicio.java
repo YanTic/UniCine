@@ -17,7 +17,7 @@ public interface ClienteServicio {
     Cliente actualizarCliente(Cliente cliente) throws Exception;
 
     void eliminarCliente(Integer idCliente) throws Exception;
-
+    
     List<Cliente> listarClientes();
 
     List<Compra> listarHistorial(Integer idCliente) throws Exception;

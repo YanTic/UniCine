@@ -1,4 +1,5 @@
 package co.edu.uniquindio.unicine.servicios;
 
-public class AdministradorServicioImpl {
+public interface AdministradorTeatroServicio {
+
 }

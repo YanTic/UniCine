@@ -1,10 +1,8 @@
 package co.edu.uniquindio.unicine.repo;
 
 import co.edu.uniquindio.unicine.dto.InformacionCompraDTO;
-import co.edu.uniquindio.unicine.entidades.Administrador;
 import co.edu.uniquindio.unicine.entidades.Boleta;
 import co.edu.uniquindio.unicine.entidades.Compra;
-import co.edu.uniquindio.unicine.entidades.CuponCliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
