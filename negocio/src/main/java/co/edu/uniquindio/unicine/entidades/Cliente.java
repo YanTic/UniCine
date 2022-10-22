@@ -52,14 +52,14 @@ public class Cliente implements Serializable {
     private List<Compra> compras;
 
     @Builder
-    public Cliente(Integer cedula, String nombre_completo, List<String> telefonos, String email, String imagen_perfil, String contrasenia, boolean estado) {
+    public Cliente(Integer cedula, String nombre_completo, List<String> telefonos, String email, String imagen_perfil, String contrasenia) {
         this.cedula = cedula;
         this.nombre = nombre_completo;
         this.telefonos = telefonos;
         this.email = email;
         this.imagen_perfil = imagen_perfil;
         this.contrasenia = contrasenia;
-        this.estado = null;
+        this.estado = false;
     }
 
 

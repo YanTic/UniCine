@@ -10,17 +10,17 @@ insert into teatro values (3, "Carrera 14", "Unicine Cali", 3);
 insert into teatro values (4, "Carrera 12", "Unicine Pereira", 2);
 insert into teatro values (5, "Carrera 13", "Unicine Bogotá", 5);
 
-insert into administrador_general values (1,"35ad", "harry@email.com", "Harry Styles", 1);
-insert into administrador_general values (2,"4add", "frank@email.com", "Frank Ocean", 3);
-insert into administrador_general values (3,"3jka", "rex@email.com", "Rex Orange", 5);
-insert into administrador_general values (4,"35ba", "pualo@email.com", "Paulo Snezze", 5);
-insert into administrador_general values (5,"l5yk", "drake@email.com", "Drake yeye", 5);
+insert into admin_general values (1,"35ad", "harry@email.com", "Harry Styles", 1);
+insert into admin_general values (2,"4add", "frank@email.com", "Frank Ocean", 3);
+insert into admin_general values (3,"3jka", "rex@email.com", "Rex Orange", 5);
+insert into admin_general values (4,"35ba", "pualo@email.com", "Paulo Snezze", 5);
+insert into admin_general values (5,"l5yk", "drake@email.com", "Drake yeye", 5);
 
-insert into administrador_teatro values (1,"33ks", "bruno@email.com", "Bruno Mars", 1);
-insert into administrador_teatro values (2,"35wa", "ferxxo@email.com", "Feid Mor", 3);
-insert into administrador_teatro values (3,"o705", "steve@email.com", "Steve Wonder", 5);
-insert into administrador_teatro values (4,"046j", "miles@email.com", "Miles Morales", 4);
-insert into administrador_teatro values (5,"3ow9", "fredy@email.com", "Fredy Mercury", 2);
+insert into admin_teatro values (1,"33ks", "bruno@email.com", "Bruno Mars", 1);
+insert into admin_teatro values (2,"35wa", "ferxxo@email.com", "Feid Mor", 3);
+insert into admin_teatro values (3,"o705", "steve@email.com", "Steve Wonder", 5);
+insert into admin_teatro values (4,"046j", "miles@email.com", "Miles Morales", 4);
+insert into admin_teatro values (5,"3ow9", "fredy@email.com", "Fredy Mercury", 2);
 
 insert into evento values (1, '2022-08-17', '10:30:00', '09:30:00', "url", "Evento Fin de Año", 1);
 insert into evento values (2, '2022-06-10', '04:00:00', '02:15:00', "url", "Evento Familia", 1);
@@ -52,6 +52,8 @@ insert into cliente_telefonos values (2,"0282");
 insert into cupon values (1, "Registro", "Cupon por registrarse", '2022-04-12', 10);
 insert into cupon values (2, "Cumpleaños", "Cupon por cumpleaños", '2022-11-24', 30);
 insert into cupon values (3, "Premium", "Cupon por cliente premium", '2022-07-18', 35);
+insert into cupon values (4, "Evento", "Cupon asignado por asistir a un evento", '2022-04-28', 5);
+insert into cupon values (5, "Confiteria", "Cupon por comprar 30 combos", '2022-01-07', 70);
 
 /*insert into cupon_cliente values (id, estado, cedulaClie, cuponid);*/
 insert into cupon_cliente values (1, 1, 1, 1);
@@ -60,6 +62,8 @@ insert into cupon_cliente values (3, 0, 2, 1);
 insert into cupon_cliente values (4, 0, 4, 1);
 insert into cupon_cliente values (5, 1, 4, 3);
 insert into cupon_cliente values (6, 1, 4, 2);
+insert into cupon_cliente values (7, 0, 5, 4);
+insert into cupon_cliente values (8, 1, 1, 5);
 
 insert into genero values (1, "TERROR");
 insert into genero values (2, "AVENTURA");
@@ -98,17 +102,19 @@ insert into horario values (5, '2022-05-05', '23:40:00', '21:10:00');
 insert into distribucion_sillas values (1, 10, 10, "ruta", 90);
 insert into distribucion_sillas values (2, 9, 9, "ruta", 75);
 insert into distribucion_sillas values (3, 9, 10, "ruta", 85);
+insert into distribucion_sillas values (4, 4, 4, "ruta", 15);
+insert into distribucion_sillas values (5, 5, 4, "ruta", 18);
 
 /*insert into sala values (id, tipo, distribucion_id,teatroid);*/
-insert into sala values (1, 'ESTANDAR', 1, 1);
-insert into sala values (2, '_3DX', 1, 1);
-insert into sala values (3, '_2DX', 1, 2);
-insert into sala values (4, 'ESTANDAR', 2, 2);
-insert into sala values (5, 'ESTANDAR', 2, 3);
-insert into sala values (6, 'ESTANDAR', 3, 4);
-insert into sala values (7, '_3DX', 3, 4);
-insert into sala values (8, '_2DX', 3, 4);
-insert into sala values (9, 'ESTANDAR', 1, 5);
+insert into sala values (1, "T1Sala1E_EST", 'ESTANDAR', 1, 1);
+insert into sala values (2, "T1Sala2_3DX", '_3DX', 1, 1);
+insert into sala values (3, "T2Sala3_2DX", '_2DX', 1, 2);
+insert into sala values (4, "T2Sala4_EST", 'ESTANDAR', 2, 2);
+insert into sala values (5, "T3Sala5_EST", 'ESTANDAR', 2, 3);
+insert into sala values (6, "T4Sala6_EST", 'ESTANDAR', 3, 4);
+insert into sala values (7, "T4Sala7_3DX", '_3DX', 3, 4);
+insert into sala values (8, "T4Sala8_2Dx", '_2DX', 3, 4);
+insert into sala values (9, "T5Sala9_EST", 'ESTANDAR', 1, 5);
 
 /*insert into funcion values (id, precio, horarioid, peliculaid, salaid);*/
 insert into funcion values (1, 200, 1, 1, 1);

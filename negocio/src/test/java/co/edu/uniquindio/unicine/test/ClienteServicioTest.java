@@ -21,14 +21,14 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void registarClienteTest() {
-        Cliente cliente = Cliente.builder().cedula(224).nombre_completo("The Rock").estado(true).email("pepe@email.com").contrasenia("23Ao2").imagen_perfil("url").build();
+        Cliente cliente = Cliente.builder().cedula(224).nombre_completo("The Rock").email("pepe@email.com").contrasenia("23Ao2").imagen_perfil("url").build();
 
         try {
             Cliente nuevo = clienteServicio.registrarCliente(cliente);
             Assertions.assertNotNull(nuevo);
         } catch (Exception e) {
-            // throw new RuntimeException(e);
-            Assertions.assertTrue(false);
+            throw new RuntimeException(e);
+            //Assertions.assertTrue(false);
         }
     }
 

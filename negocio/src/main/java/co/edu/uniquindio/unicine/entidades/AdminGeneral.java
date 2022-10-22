@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-public class AdministradorGeneral implements Serializable {
+public class AdminGeneral implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
@@ -22,9 +22,10 @@ public class AdministradorGeneral implements Serializable {
     private String nombre;
 
     @Email
-    @Column(nullable = false)
-    private String correo;
+    @Column(nullable = false, unique = true)
+    private String email;
 
+    @ToString.Exclude
     @Column(nullable = false)
     private String contrasenia;
 
@@ -33,14 +34,14 @@ public class AdministradorGeneral implements Serializable {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Teatro teatro;
+    private Ciudad ciudad;
 
     @Builder
-    public AdministradorGeneral(String cedula, String nombre, String correo, String contrasenia, Teatro teatro) {
+    public AdminGeneral(String cedula, String nombre, String email, String contrasenia, Ciudad ciudad) {
         this.cedula = cedula;
         this.nombre = nombre;
-        this.correo = correo;
+        this.email = email;
         this.contrasenia = contrasenia;
-        this.teatro = teatro;
+        this.ciudad = ciudad;
     }
 }

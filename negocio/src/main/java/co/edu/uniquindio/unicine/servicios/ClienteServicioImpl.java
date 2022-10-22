@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.Compra;
+import co.edu.uniquindio.unicine.entidades.Pelicula;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import org.springframework.stereotype.Service;
 
@@ -95,5 +96,15 @@ public class ClienteServicioImpl implements ClienteServicio{
     @Override
     public boolean redimirCupon(Integer idCupon) throws Exception {
         return false;
+    }
+
+    @Override
+    public List<Pelicula> buscarPelicula(String nombre) {
+        return null;
+    }
+
+    @Override
+    public Cliente cambiarContrasenia(Integer idCliente, String contraseniaVieja, String contraseniaNueva) {
+        return null;
     }
 }

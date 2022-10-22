@@ -19,6 +19,9 @@ public class Sala implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
+    @Column(nullable = false, unique = true)
+    private String nombre;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoSala tipo;
@@ -39,7 +42,8 @@ public class Sala implements Serializable {
     private DistribucionSillas distribucionSillas;
 
     @Builder
-    public Sala(TipoSala tipo, Teatro teatro, DistribucionSillas distribucionSillas) {
+    public Sala(String nombre, TipoSala tipo, Teatro teatro, DistribucionSillas distribucionSillas) {
+        this.nombre = nombre;
         this.tipo = tipo;
         this.teatro = teatro;
         this.distribucionSillas = distribucionSillas;

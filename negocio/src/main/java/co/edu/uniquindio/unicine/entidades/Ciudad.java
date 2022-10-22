@@ -33,7 +33,7 @@ public class Ciudad implements Serializable {
 
     @OneToMany(mappedBy = "ciudad")
     @ToString.Exclude
-    private List<AdministradorTeatro> administradorTeatros;
+    private List<AdminGeneral> administradores;
 
     @Builder
     public Ciudad(String nombre) {
