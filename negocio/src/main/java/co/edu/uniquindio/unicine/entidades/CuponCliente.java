@@ -20,6 +20,7 @@ public class CuponCliente implements Serializable {
 
     @Column(nullable = false)
     private Boolean estado;
+    // Digamos que 1 es redimido y 0 es sin redimir
 
 
     // --- Relaciones ---

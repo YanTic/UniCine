@@ -19,8 +19,11 @@ public class Pelicula implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
+    @Column(nullable = false, unique = true)
+    private String nombre;
+
     @Column(nullable = false)
-    private String nombre, imagenURL, trailerURL, sinopsis, reparto;
+    private String imagenURL, trailerURL, sinopsis, reparto;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

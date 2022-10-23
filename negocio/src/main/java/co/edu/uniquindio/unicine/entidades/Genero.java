@@ -19,7 +19,7 @@ public class Genero implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nombre;
 
 
