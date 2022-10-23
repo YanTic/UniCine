@@ -22,7 +22,7 @@ insert into admin_teatro values (3,"o705", "steve@email.com", "Steve Wonder", 5)
 insert into admin_teatro values (4,"046j", "miles@email.com", "Miles Morales", 4);
 insert into admin_teatro values (5,"3ow9", "fredy@email.com", "Fredy Mercury", 2);
 
-insert into evento values (1, '2022-08-17', '10:30:00', '09:30:00', "url", "Evento Fin de Año", 1);
+insert into evento values (1, '2022-08-17', '10:30:00', '09:30:00', "url", "Evento Fin de Anio", 1);
 insert into evento values (2, '2022-06-10', '04:00:00', '02:15:00', "url", "Evento Familia", 1);
 insert into evento values (3, '2022-11-26', '05:30:00', '01:20:00', "url", "Evento Spider-Man", 2);
 insert into evento values (4, '2022-12-01', '07:30:00', '04:30:00', "url", "Evento Arroz y pollo", 3);
@@ -79,6 +79,7 @@ insert into pelicula values (3,'ESTRENO',   "url", "Klaus", "Klaus, Repartidor",
 insert into pelicula values (4,'ESTRENO',   "url", "The Father", "Abuelito, Doctora", "El abuelito vive con alzheimer", "url");
 insert into pelicula values (5,'PROXIMO',   "url", "Free Guy", "NPC, Policia", "El npc se da cuenta que vive en un mundo virtual", "url");
 insert into pelicula values (6,'PROXIMO',   "url", "Tenet", "Negrito, Blanquito", "Salvan el mundo con viajes al futuro y pasado", "url");
+insert into pelicula values (7,'ESTRENO',   "url", "The Amazing SpiderMan", "Peter Parker, Gwen Stacy, May, Electro", "Spidy se enfrenta a electro, increible", "url");
 
 /*insert into pelicula_generos values (peliculaid, generoid);*/
 insert into pelicula_generos values (1, 2);
@@ -90,6 +91,8 @@ insert into pelicula_generos values (4, 6);
 insert into pelicula_generos values (5, 5);
 insert into pelicula_generos values (5, 4);
 insert into pelicula_generos values (6, 4);
+insert into pelicula_generos values (7, 2);
+insert into pelicula_generos values (7, 4);
 
 /*insert into horario values (id, fecha, horafin, horainicio);*/
 insert into horario values (1, '2022-08-03', '10:30:00', '08:15:00');

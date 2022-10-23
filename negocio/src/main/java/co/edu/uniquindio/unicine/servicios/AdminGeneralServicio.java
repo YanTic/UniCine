@@ -11,15 +11,17 @@ public interface AdminGeneralServicio {
     // Crear
     Ciudad crearCiudad(Ciudad ciudad);
 
-    Teatro crearTeatro(Teatro teatro);
+    Teatro crearTeatro(Teatro teatro) throws Exception;
 
-    Cupon crearCupon(Cupon cupon);
+    Cupon crearCupon(Cupon cupon) throws Exception;
 
-    Evento crearEvento(Evento evento);
+    Evento crearEvento(Evento evento) throws Exception;
 
-    Pelicula crearPelicula(Pelicula pelicula);
+    Pelicula crearPelicula(Pelicula pelicula) throws Exception;
 
-    Confiteria crearConfiteria(Confiteria confiteria);
+    Genero crearGenero(Genero genero) throws Exception;
+
+    Confiteria crearConfiteria(Confiteria confiteria) throws Exception;
 
 
     // Actualizar
@@ -29,25 +31,29 @@ public interface AdminGeneralServicio {
 
     Cupon actualizarCupon(Cupon cupon) throws Exception;
 
-    Evento actualizarEvento(Evento evento);
+    Evento actualizarEvento(Evento evento) throws Exception;
 
-    Pelicula actualizarPelicula(Pelicula pelicula);
+    Pelicula actualizarPelicula(Pelicula pelicula) throws Exception;
 
-    Confiteria actualizarConfiteria(Confiteria confiteria);
+    Genero actualizarGenero(Genero genero) throws Exception;
+
+    Confiteria actualizarConfiteria(Confiteria confiteria) throws Exception;
 
 
     // Eliminar
-    void eliminarCiudad(Integer idCiudad);
+    void eliminarCiudad(Integer idCiudad) throws Exception;
 
-    void eliminarTeatro(Integer idTeatro);
+    void eliminarTeatro(Integer idTeatro) throws Exception;
 
-    void eliminarCupon(Integer idCupon);
+    void eliminarCupon(Integer idCupon) throws Exception;
 
-    void eliminarEvento(Integer idEvento);
+    void eliminarEvento(Integer idEvento) throws Exception;
 
-    void eliminarPelicula(Integer idPelicula);
+    void eliminarPelicula(Integer idPelicula) throws Exception;
 
-    void eliminarConfiteria(Integer idConfiteria);
+    void eliminarGenero(Integer idGenero) throws Exception;
+
+    void eliminarConfiteria(Integer idConfiteria) throws Exception;
 
 
     // Listar
@@ -61,9 +67,11 @@ public interface AdminGeneralServicio {
 
     List<Pelicula> listarPeliculas();
 
+    List<Genero> listarGeneros();
+
     List<Confiteria> listarConfiterias();
 
-    List<Compra> listarCompras();
+    // List<Compra> listarCompras();
 
 
     // Obtener
@@ -73,9 +81,11 @@ public interface AdminGeneralServicio {
 
     Cupon obtenerCupon(Integer idCupon) throws Exception;
 
-    Evento obtenerEvento(Integer evento);
+    Evento obtenerEvento(Integer idEvento) throws Exception;
 
-    Pelicula obtenerPelicula(Integer idPelicula);
+    Pelicula obtenerPelicula(Integer idPelicula) throws Exception;
 
-    Confiteria obtenerConfiteria(Integer idConfiteria);
+    Genero obtenerGenero(Integer idGenero) throws Exception;
+
+    Confiteria obtenerConfiteria(Integer idConfiteria) throws Exception;
 }

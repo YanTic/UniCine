@@ -69,22 +69,25 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     @Override
     public Funcion crearFuncion(Funcion funcion) throws Exception {
-        boolean funcionExiste = esFuncionExistente(funcion.getId());
+        boolean funcionDisponible = esFuncionDisponible(funcion);
 
-        if(funcionExiste) {
-            throw new Exception("La funcion ya existe");
+        if(!funcionDisponible) {
+            throw new Exception("La funcion no está disponible [Horario y Sala ya pertenecen a otra funcion]");
         }
 
         return funcionRepo.save(funcion);
     }
 
-    private boolean esFuncionExistente(Integer idFuncion) {
-        return funcionRepo.findById(idFuncion).orElse(null) != null;
+    // Si una función tiene un horario en una sala asignada, otra no puede tener el mismo horario en la misma sala
+    // (pero si diferente sala u horario)
+    private boolean esFuncionDisponible(Funcion funcion) {
+        return funcionRepo.verificarDisponibilidad(funcion.getHorario().getId(), funcion.getSala().getId())
+                          .orElse(null) == null;
     }
 
     @Override
     public DistribucionSillas crearDistribucionSillas(DistribucionSillas distribucionSillas) throws Exception {
-        boolean distribucionSillasExiste = esDistribucionSillasExistente(distribucionSillas.getId());
+        boolean distribucionSillasExiste = esDistribucionSillasExistente(distribucionSillas);
 
         if(distribucionSillasExiste) {
             throw new Exception("La distribucion de sillas ya existe");
@@ -93,8 +96,12 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         return distribucionSillasRepo.save(distribucionSillas);
     }
 
-    private boolean esDistribucionSillasExistente(Integer idDistri) {
-        return distribucionSillasRepo.findById(idDistri).orElse(null) != null;
+    private boolean esDistribucionSillasExistente(DistribucionSillas distri) {
+        return distribucionSillasRepo.verificarExistencia(distri.getFilas(),
+                                                          distri.getColumnas(),
+                                                          distri.getRutaEsquema(),
+                                                          distri.getTotalSillas())
+                                     .orElse(null) != null;
     }
 
 
@@ -146,45 +153,69 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     // Eliminar
     @Override
-    public void eliminarHorario(Integer idHorario) {
+    public void eliminarHorario(Integer idHorario) throws Exception {
+        Optional<Horario> horario = horarioRepo.findById(idHorario);
 
+        if(horario.isEmpty()) {
+            throw new Exception("El horario [id:"+ idHorario+ "] no existe");
+        }
+
+        horarioRepo.delete(horario.get());
     }
 
     @Override
-    public void eliminarSala(Integer idSala) {
+    public void eliminarSala(Integer idSala) throws Exception {
+        Optional<Sala> sala = salaRepo.findById(idSala);
 
+        if(sala.isEmpty()) {
+            throw new Exception("La sala [id:"+ idSala+ "] no existe");
+        }
+
+        salaRepo.delete(sala.get());
     }
 
     @Override
-    public void eliminarFuncion(Integer idFuncion) {
+    public void eliminarFuncion(Integer idFuncion) throws Exception {
+        Optional<Funcion> funcion = funcionRepo.findById(idFuncion);
 
+        if(funcion.isEmpty()) {
+            throw new Exception("La funcion [id:"+ idFuncion+ "] no existe");
+        }
+
+        funcionRepo.delete(funcion.get());
     }
 
     @Override
-    public void eliminarDistribucionSillas(Integer idDistribucionSillas) {
+    public void eliminarDistribucionSillas(Integer idDistribucionSillas) throws Exception{
+        Optional<DistribucionSillas> dist = distribucionSillasRepo.findById(idDistribucionSillas);
 
+        if(dist.isEmpty()) {
+            throw new Exception("La distribucion [id:"+ idDistribucionSillas+ "] no existe");
+        }
+
+        distribucionSillasRepo.delete(dist.get());
     }
 
 
     // Listar
     @Override
     public List<Horario> listarHorarios() {
-        return null;
+        return horarioRepo.findAll();
     }
 
     @Override
-    public List<Sala> listarSala() {
-        return null;
+    public List<Sala> listarSalas() {
+        return salaRepo.findAll();
     }
 
     @Override
-    public List<Funcion> listarFuncion() {
-        return null;
+    public List<Funcion> listarFunciones() {
+        return funcionRepo.findAll();
     }
 
     @Override
     public List<DistribucionSillas> listarDistribucionSillas() {
-        return null;
+        return distribucionSillasRepo.findAll();
     }
 
 

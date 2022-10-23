@@ -8,9 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PeliculaRepo extends JpaRepository<Pelicula, Integer> {
+
+    Optional<Pelicula> findByNombre(String nombrePelicula);
+
+
 
     // Cree una consulta que devuelva una lista con todas las películas que contengan en su nombre una
     // cadena de búsqueda y que tengan un estado (cartelera o próximamente). Use LIKE.

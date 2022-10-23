@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.repo;
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.Compra;
 import co.edu.uniquindio.unicine.entidades.Cupon;
+import co.edu.uniquindio.unicine.entidades.Pelicula;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +37,16 @@ public interface ClienteRepo extends JpaRepository<Cliente, Integer> {
     // Cree una consulta que calcule el valor total que ha gastado un usuario en compras.
     @Query("select sum(comp.valorTotal) from Cliente c JOIN c.compras comp where c.cedula = :idCliente")
     Float obtenerDineroGastado(Integer idCliente);
+
+    @Query("select p from Pelicula p where p.nombre like concat('%', :nombrePelicula, '%')")
+    List<Pelicula> obtenerPelicula(String nombrePelicula);
+
+    @Query("select comp from Compra comp where comp.cliente.cedula = :idCliente")
+    List<Compra> listarHistorialCompras(Integer idCliente);
+
+    @Query("select c from Cliente c where c.cedula = :idCliente and c.contrasenia = :contrasenia")
+    Optional<Cliente> verificarContrasenia(Integer idCliente, String contrasenia);
+
+    @Query("select cup from CuponCliente cup where cup.cliente.cedula = :idCliente and cup.cupon.id = :idCupon and cup.estado = false")
+    Optional<Cupon> verificarDisponibilidadCupon(Integer idCliente, Integer idCupon);
 }

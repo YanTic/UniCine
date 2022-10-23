@@ -30,21 +30,21 @@ public interface AdminTeatroServicio {
 
 
     // Eliminar
-    void eliminarHorario(Integer idHorario);
+    void eliminarHorario(Integer idHorario) throws Exception;
 
-    void eliminarSala(Integer idSala);
+    void eliminarSala(Integer idSala) throws Exception;
 
-    void eliminarFuncion(Integer idFuncion);
+    void eliminarFuncion(Integer idFuncion) throws Exception;
 
-    void eliminarDistribucionSillas(Integer idDistribucionSillas);
+    void eliminarDistribucionSillas(Integer idDistribucionSillas) throws Exception;
 
 
     // Listar
     List<Horario> listarHorarios();
 
-    List<Sala> listarSala();
+    List<Sala> listarSalas();
 
-    List<Funcion> listarFuncion();
+    List<Funcion> listarFunciones();
 
     List<DistribucionSillas> listarDistribucionSillas();
 
