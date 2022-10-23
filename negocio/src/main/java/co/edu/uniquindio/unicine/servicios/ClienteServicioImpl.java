@@ -112,12 +112,13 @@ public class ClienteServicioImpl implements ClienteServicio{
         boolean cuponRedimible = esCuponRedimible(idCliente, idCupon);
 
         if(!cuponRedimible) {
-            throw new Exception("El cupon no está disponible [Cupon ya ha sido redimido]");
+            throw new Exception("El cupon no está disponible [Cupon ya ha sido redimido o no Pertenece a este cliente]");
         }
 
-        CuponCliente cupon = obtenerCuponCliente(idCupon);
+        CuponCliente cupon = obtenerCuponCliente(idCliente, idCupon);
         cupon.setEstado(true); // Redimimos el cupon
         cuponClienteRepo.save(cupon); // Actualizamos el cupon
+        System.out.println("cupon redimido");
         return true;
     }
 
@@ -126,11 +127,11 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     @Override
-    public CuponCliente obtenerCuponCliente(Integer idCupon) throws Exception {
-        Optional<CuponCliente> cupon = cuponClienteRepo.findById(idCupon);
+    public CuponCliente obtenerCuponCliente(Integer idCliente, Integer idCupon) throws Exception {
+        Optional<CuponCliente> cupon = cuponClienteRepo.obtenerPorCuponYCliente(idCliente, idCupon);
 
         if(cupon.isEmpty()) {
-            throw new Exception("El cupon del cliente [idCupon:"+ idCupon+"] no existe");
+            throw new Exception("El cupon del cliente [idCliente:" +idCliente +", idCupon:"+ idCupon+"] no existe");
         }
 
         return cupon.get();

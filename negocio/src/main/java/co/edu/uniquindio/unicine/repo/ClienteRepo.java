@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.repo;
 
-import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.Compra;
-import co.edu.uniquindio.unicine.entidades.Cupon;
-import co.edu.uniquindio.unicine.entidades.Pelicula;
+import co.edu.uniquindio.unicine.entidades.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -48,5 +45,5 @@ public interface ClienteRepo extends JpaRepository<Cliente, Integer> {
     Optional<Cliente> verificarContrasenia(Integer idCliente, String contrasenia);
 
     @Query("select cup from CuponCliente cup where cup.cliente.cedula = :idCliente and cup.cupon.id = :idCupon and cup.estado = false")
-    Optional<Cupon> verificarDisponibilidadCupon(Integer idCliente, Integer idCupon);
+    Optional<CuponCliente> verificarDisponibilidadCupon(Integer idCliente, Integer idCupon);
 }

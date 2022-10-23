@@ -113,7 +113,11 @@ public class ClienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void redimirCuponTest() {
         try {
-            boolean cuponRedimido = clienteServicio.redimirCupon(1, 3);
+            boolean cuponRedimido = clienteServicio.redimirCupon(4, 1);
+
+            CuponCliente cupon = clienteServicio.obtenerCuponCliente(4, 1);
+            System.out.println(cupon);
+
             Assertions.assertEquals(true, cuponRedimido);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -123,7 +127,7 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarCuponesClienteTest() {
-        List<CuponCliente> cupones = clienteServicio.listarCuponesCliente(4);
+        List<CuponCliente> cupones = clienteServicio.listarCuponesCliente(1);
         cupones.forEach(System.out::println);
     }
 

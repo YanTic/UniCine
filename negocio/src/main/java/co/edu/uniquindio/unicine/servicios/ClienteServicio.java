@@ -28,7 +28,7 @@ public interface ClienteServicio {
 
     boolean redimirCupon(Integer idCliente, Integer idCupon) throws Exception;
 
-    CuponCliente obtenerCuponCliente(Integer idCupon) throws Exception;
+    CuponCliente obtenerCuponCliente(Integer idCliente, Integer idCupon) throws Exception;
 
     List<CuponCliente> listarCuponesCliente(Integer idCliente);
 
