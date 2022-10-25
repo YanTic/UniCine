@@ -7,9 +7,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.PrePersist;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -51,9 +54,10 @@ public class AdminTeatroServicioTest {
         Horario horario = Horario.builder()
                 .hora_fin(LocalTime.of(19,30,0))
                 .hora_inicio(LocalTime.of(16,30,0))
-                .fecha(LocalDate.parse("2022-05-03"))
+                .fecha_inicio(LocalDate.parse("2022-05-03"))
+                .fecha_fin(LocalDate.parse("2022-05-13"))
                 .build();
-        // insert into horario values (3, '2022-05-03', '19:30:00', '16:30:00');
+        // insert into horario values (3, '2022-05-13', '2022-05-03', '19:30:00', '16:30:00');
 
         try {
             Horario nuevo = adminTeatroServicio.crearHorario(horario);
@@ -148,8 +152,27 @@ public class AdminTeatroServicioTest {
     public void actualizarHorarioTest() {
         try {
             Horario horario = adminTeatroServicio.obtenerHorario(3);
-            System.out.println(horario);
+            System.out.println("obtenido: "+horario);
+
+            // LO QUE VOY HACER ES OBTENER LOS DATOS DE ESTE HORARIO OBTENIDO CON EL FINDBYID
+            // Y CREAR UN NUEVO HORARIO CON BUILDER, COMPARO ESO VALORES SIN EL ID Y
+            // LUEGO HAGO EL SET EN EL METODO DE ACTUALIZAR DEL SERVICIO, ASÍ YA NO HAY
+            // PROBLEMA CON QUE SE ACTUALICE EL HORARIO ANTES DEL SAVE() [AUNQUE LO HARÁ IGUAL]
+            // PERO SERÁ EN UNA LINEA ANTES, NO UN METODO ANTES
+
+            // Hay un problema con set():
+            //   Al obtener este objeto con obtener() -> findById() del @Repository, se obtiene la instancia de este,
+            //   pero la copia del objeto se encuentra en EntityManager. Al hacerle luego un cambio (con el .set) a
+            //   esa instancia, el EntityManager hace un flush() guardando esos cambios, incluso sin usar el save()
+
             horario.setHora_fin(LocalTime.of(2,4,50));
+
+
+            System.out.println("actualizado: "+ horario);
+
+
+
+
             Horario nuevoHorario = adminTeatroServicio.actualizarHorario(horario);
             System.out.println(nuevoHorario);
 
@@ -163,9 +186,11 @@ public class AdminTeatroServicioTest {
     @Sql("classpath:dataset.sql")
     public void actualizarSalaTest() {
         try {
-            Sala sala = adminTeatroServicio.obtenerSala(50);
+            Sala sala = adminTeatroServicio.obtenerSala(2);
+            System.out.println(sala);
             sala.setTipo(TipoSala.ESTANDAR);
             Sala nuevaSala = adminTeatroServicio.actualizarSala(sala);
+            System.out.println(nuevaSala);
 
             Assertions.assertEquals(TipoSala.ESTANDAR, nuevaSala.getTipo());
         } catch (Exception e) {

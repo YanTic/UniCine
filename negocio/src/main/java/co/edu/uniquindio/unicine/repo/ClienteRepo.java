@@ -46,4 +46,7 @@ public interface ClienteRepo extends JpaRepository<Cliente, Integer> {
 
     @Query("select cup from CuponCliente cup where cup.cliente.cedula = :idCliente and cup.cupon.id = :idCupon and cup.estado = false")
     Optional<CuponCliente> verificarDisponibilidadCupon(Integer idCliente, Integer idCupon);
+
+    @Query("select comp from Compra comp where comp.id = :idCompra and comp.cliente.cedula = :idCliente")
+    Optional<Compra> verificarExistenciaCompraCliente(Integer idCliente, Integer idCompra);
 }

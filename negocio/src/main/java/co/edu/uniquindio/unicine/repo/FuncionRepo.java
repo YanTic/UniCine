@@ -47,6 +47,6 @@ public interface FuncionRepo extends JpaRepository<Funcion, Integer> {
 
 
     //Cree una consulta que obtenga una lista de funciones que tiene un teatro en un rango de fechas dadas por parámetro.
-    @Query("select f from Funcion f where f.sala.teatro.id = :idTeatro and f.horario.fecha between :fechaInicio and :fechaFin")
+    @Query("select f from Funcion f where f.sala.teatro.id = :idTeatro and f.horario.fecha_inicio <= :fechaInicio and f.horario.fecha_fin >= :fechaFin")
     List<Funcion> obtenerFuncionesPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Integer idTeatro);
 }

@@ -69,7 +69,7 @@ public class FuncionRepoTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerFuncionesPorFecha(){
-        List<Funcion> funciones = funcionRepo.obtenerFuncionesPorFecha(LocalDate.parse("2022-04-03"),LocalDate.parse("2022-06-03"),1);
+        List<Funcion> funciones = funcionRepo.obtenerFuncionesPorFecha(LocalDate.parse("2022-08-06"),LocalDate.parse("2022-08-10"),1);
         funciones.forEach(System.out::println);
     }
 }

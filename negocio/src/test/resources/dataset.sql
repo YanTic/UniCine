@@ -94,12 +94,12 @@ insert into pelicula_generos values (6, 4);
 insert into pelicula_generos values (7, 2);
 insert into pelicula_generos values (7, 4);
 
-/*insert into horario values (id, fecha, horafin, horainicio);*/
-insert into horario values (1, '2022-08-03', '10:30:00', '08:15:00');
-insert into horario values (2, '2022-05-03', '16:30:00', '13:15:00');
-insert into horario values (3, '2022-05-03', '19:30:00', '16:30:00');
-insert into horario values (4, '2022-05-04', '17:15:00', '14:30:00');
-insert into horario values (5, '2022-05-05', '23:40:00', '21:10:00');
+/*insert into horario values (id, fechafin, fechainicio, horafin, horainicio);*/
+insert into horario values (1, '2022-08-13', '2022-08-03', '10:30:00', '08:15:00');
+insert into horario values (2, '2022-05-13', '2022-05-03', '16:30:00', '13:15:00');
+insert into horario values (3, '2022-05-13', '2022-05-03', '19:30:00', '16:30:00');
+insert into horario values (4, '2022-05-14', '2022-05-03', '17:15:00', '14:30:00');
+insert into horario values (5, '2022-05-15', '2022-05-03', '23:40:00', '21:10:00');
 
 /*insert into distribucion_sillas values (id, col, fila, rutaEsquema, totalSillas);*/
 insert into distribucion_sillas values (1, 10, 10, "ruta", 90);

@@ -1,10 +1,9 @@
 package co.edu.uniquindio.unicine.servicios;
 
-import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.Compra;
-import co.edu.uniquindio.unicine.entidades.CuponCliente;
-import co.edu.uniquindio.unicine.entidades.Pelicula;
+import co.edu.uniquindio.unicine.entidades.*;
+import co.edu.uniquindio.unicine.repo.BoletaRepo;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
+import co.edu.uniquindio.unicine.repo.CompraRepo;
 import co.edu.uniquindio.unicine.repo.CuponClienteRepo;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,15 @@ public class ClienteServicioImpl implements ClienteServicio{
 
     private final ClienteRepo clienteRepo;
     private final CuponClienteRepo cuponClienteRepo;
+    private final CompraRepo compraRepo;
+    private final BoletaRepo boletaRepo;
 
     // Con esto instanciamos el repositorio, sin usar el @Autowired
-    public ClienteServicioImpl(ClienteRepo clienteRepo, CuponClienteRepo cuponClienteRepo) {
+    public ClienteServicioImpl(ClienteRepo clienteRepo, CuponClienteRepo cuponClienteRepo, CompraRepo compraRepo, BoletaRepo boletaRepo) {
         this.clienteRepo = clienteRepo;
         this.cuponClienteRepo = cuponClienteRepo;
+        this.compraRepo = compraRepo;
+        this.boletaRepo = boletaRepo;
     }
 
     @Override
@@ -88,7 +91,7 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     @Override
-    public List<Compra> listarHistorial(Integer idCliente) throws Exception {
+    public List<Compra> listarHistorialCompras(Integer idCliente) throws Exception {
         boolean clienteExiste = esClienteExistente(idCliente);
 
         if(!clienteExiste){
@@ -103,9 +106,21 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     @Override
-    public Compra realizarCompra(Compra compra) throws Exception {
+    public Compra realizarCompra(Integer idCliente, Compra compra) throws Exception {
+        boolean compraClienteExistente = esCompraClienteExistente(idCliente, compra.getId());
+
         return null;
     }
+
+    private boolean esCompraClienteExistente(Integer idCliente, Integer idCompra){
+        return clienteRepo.verificarExistenciaCompraCliente(idCliente, idCompra).orElse(null) != null;
+    }
+
+    @Override
+    public List<Boleta> listarBoletasCompra(Integer idCompra) {
+        return boletaRepo.obtenerBoletas(idCompra);
+    }
+
 
     @Override
     public boolean redimirCupon(Integer idCliente, Integer idCupon) throws Exception {

@@ -95,7 +95,7 @@ public class ClienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void listarHistorialTest() {
         try {
-            List<Compra> compras = clienteServicio.listarHistorial(16);
+            List<Compra> compras = clienteServicio.listarHistorialCompras(16);
             compras.forEach(System.out::println);
         } catch (Exception e) {
             throw new RuntimeException(e);

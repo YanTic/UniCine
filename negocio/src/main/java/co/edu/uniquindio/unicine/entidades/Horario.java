@@ -28,8 +28,10 @@ public class Horario implements Serializable {
     private LocalTime hora_fin;
 
     @Column(nullable = false)
-    private LocalDate fecha;
+    private LocalDate fecha_inicio;
 
+    @Column(nullable = false)
+    private LocalDate fecha_fin;
 
     // --- Relaciones ---
 
@@ -38,9 +40,10 @@ public class Horario implements Serializable {
     private List<Funcion> funciones;
 
     @Builder
-    public Horario(LocalTime hora_inicio, LocalTime hora_fin, LocalDate fecha) {
+    public Horario(LocalTime hora_inicio, LocalTime hora_fin, LocalDate fecha_inicio, LocalDate fecha_fin) {
         this.hora_inicio = hora_inicio;
         this.hora_fin = hora_fin;
-        this.fecha = fecha;
+        this.fecha_inicio = fecha_inicio;
+        this.fecha_fin = fecha_fin;
     }
 }
