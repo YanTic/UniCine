@@ -122,14 +122,16 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     // Actualizar
     @Override
-    public Horario actualizarHorario(Horario horario) throws Exception {
-        Optional<Horario> guardado = horarioRepo.findById(horario.getId());
+    public Horario actualizarHorario(Integer idHorario, Horario horarioActualizado) throws Exception {
+        Optional<Horario> guardado = horarioRepo.findById(idHorario);
 
         System.out.println("guardado: " + guardado.get());
-        System.out.println("actualizado: " + horario);
+        System.out.println("actualizado: " + horarioActualizado);
 
-
-        boolean horarioRepetido = esHorarioExistente(horario);
+        // Compara los valores actualizados del horario, si existe un horario ya guardado en
+        // la bd exactamente con los mismos valores que otro horario ya guardado, no deberia
+        // dejar actualizar
+        boolean horarioRepetido = esHorarioExistente(horarioActualizado);
 
         if (guardado.isEmpty()) {
             throw new Exception("El horario no existe");
@@ -138,7 +140,18 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
             throw new Exception("Otro horario tiene las mismas caracteristicas [horaInicio, horaFin, fechaInicio, fechaFin]");
         }
 
-        return horarioRepo.save(horario);
+        // Como el horario que se actualizó no tiene exactamente los mismos valores que otro
+        // ahora se hace el .set(), no es necesario el save(), pues porque el EntityManger y/o JPA
+        // ya lo hace automaticamente al hacer .set(), pero igual lo dejé
+
+        // Aquí se le asignan los valores al horario guardado en la bd, solo se le usa el .set()
+        // a valores que están en el builder, porque son los que se pueden cambiar
+        guardado.get().setFecha_inicio(horarioActualizado.getFecha_inicio());
+        guardado.get().setFecha_fin(horarioActualizado.getFecha_fin());
+        guardado.get().setHora_inicio(horarioActualizado.getHora_inicio());
+        guardado.get().setHora_fin(horarioActualizado.getHora_fin());
+
+        return horarioRepo.save(guardado.get());
     }
 
     @Override

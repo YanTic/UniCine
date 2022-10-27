@@ -151,32 +151,40 @@ public class AdminTeatroServicioTest {
     @Sql("classpath:dataset.sql")
     public void actualizarHorarioTest() {
         try {
-            Horario horario = adminTeatroServicio.obtenerHorario(3);
-            System.out.println("obtenido: "+horario);
+            Horario horarioGuardado = adminTeatroServicio.obtenerHorario(3);
+            System.out.println("obtenido: "+horarioGuardado);
 
-            // LO QUE VOY HACER ES OBTENER LOS DATOS DE ESTE HORARIO OBTENIDO CON EL FINDBYID
-            // Y CREAR UN NUEVO HORARIO CON BUILDER, COMPARO ESO VALORES SIN EL ID Y
-            // LUEGO HAGO EL SET EN EL METODO DE ACTUALIZAR DEL SERVICIO, ASÍ YA NO HAY
-            // PROBLEMA CON QUE SE ACTUALICE EL HORARIO ANTES DEL SAVE() [AUNQUE LO HARÁ IGUAL]
-            // PERO SERÁ EN UNA LINEA ANTES, NO UN METODO ANTES
+            Horario horarioActualizado = Horario.builder()
+                    .fecha_inicio(horarioGuardado.getFecha_inicio())
+                    .fecha_fin(horarioGuardado.getFecha_fin())
+                    .hora_inicio(horarioGuardado.getHora_inicio())
+                    .hora_fin(LocalTime.of(2,4,50)) // Agrego el valor que quiero cambiar
+                    .build();
 
-            // Hay un problema con set():
-            //   Al obtener este objeto con obtener() -> findById() del @Repository, se obtiene la instancia de este,
-            //   pero la copia del objeto se encuentra en EntityManager. Al hacerle luego un cambio (con el .set) a
-            //   esa instancia, el EntityManager hace un flush() guardando esos cambios, incluso sin usar el save()
+            // Al hacer esto, crear un nuevo horario con Builder, este horario solo se usuará para asignarle
+            // los valores al Horario ya guardado en la db (dataset.sql) con ayuda del metodo del servicio
+            // (adminTeatroServicio.actualizarHorario()). Porque como se habia hecho anteriormente (revisar
+            // commit anterior), si se obtiene el Horario con el findById que tiene un metodo del servicio,
+            // no se obtiene un objeto nuevo, sino que se obtiene el puntero hacia el objeto, asi que cada vez
+            // que se le realice un cambio al objeto (por ejemplo) con el .set(), el EntityManger y/o JPA
+            // revisa si al objeto se le ha hecho algun cambio y lo guarda, realiza el save() sin uno
+            // haberlo escrito.
 
-            horario.setHora_fin(LocalTime.of(2,4,50));
+            // Igualmente se puede usar con el .set(), pero si se quiere hacer una restrinccion, como de que
+            // cuando se actualice un objeto no quede exactamente igual (con los mismos valores y catacteristicas),
+            // pues se tiene que comparar con ayuda de un @Query para obtener los horarios y compararlos con los
+            // valores del nuevo horario, cosa que va a generar error, porque siempre va a obtener ese objeto
+            // (Horario con los mismos valores al actualizado), porque el EntityManger y/o JPA hizo el save()
+            // al escribir .set();
 
+            // horario.setHora_fin(LocalTime.of(2,4,50));
 
-            System.out.println("actualizado: "+ horario);
+            System.out.println("actualizado: "+ horarioActualizado);
 
+            Horario nuevoHorario = adminTeatroServicio.actualizarHorario(horarioGuardado.getId(), horarioActualizado);
+            System.out.println("nuevo horario: "+nuevoHorario);
 
-
-
-            Horario nuevoHorario = adminTeatroServicio.actualizarHorario(horario);
-            System.out.println(nuevoHorario);
-
-            Assertions.assertEquals(LocalTime.of(2,4,50), horario.getHora_fin());
+            Assertions.assertEquals(LocalTime.of(2,4,50), nuevoHorario.getHora_fin());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

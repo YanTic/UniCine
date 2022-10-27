@@ -20,7 +20,7 @@ public interface AdminTeatroServicio {
 
 
     // Actualizar
-    Horario actualizarHorario(Horario horario) throws Exception;
+    Horario actualizarHorario(Integer idHorario, Horario horarioActualizado) throws Exception;
 
     Sala actualizarSala(Sala sala) throws Exception;
 
