@@ -61,16 +61,16 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     @Override
     public Sala crearSala(Sala sala) throws Exception {
-        boolean salaExiste = esSalaExistente(sala.getNombre());
+        boolean salaDisponible = esSalaDisponible(sala.getNombre());
 
-        if (salaExiste) {
-            throw new Exception("La sala ya existe [Otra sala tiene el mismo nombre]");
+        if (salaDisponible) {
+            throw new Exception("La sala ya existe, no disponible [Otra sala tiene el mismo nombre]");
         }
 
         return salaRepo.save(sala);
     }
 
-    private boolean esSalaExistente(String nombreSala) {
+    private boolean esSalaDisponible(String nombreSala) {
         return salaRepo.findByNombre(nombreSala).orElse(null) != null;
     }
 
@@ -92,20 +92,12 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
                 .orElse(null) == null;
     }
 
-    private boolean esHorarioDisponible(Horario horario) {
-        return horarioRepo.verificarDisponibilidad(horario.getHora_inicio(),
-                        horario.getHora_fin(),
-                        horario.getFecha_inicio(),
-                        horario.getFecha_fin())
-                .orElse(null) != null;
-    }
-
     @Override
     public DistribucionSillas crearDistribucionSillas(DistribucionSillas distribucionSillas) throws Exception {
         boolean distribucionSillasExiste = esDistribucionSillasExistente(distribucionSillas);
 
         if (distribucionSillasExiste) {
-            throw new Exception("La distribucion de sillas ya existe");
+            throw new Exception("La distribucion de sillas ya existe [Otra distribucion tiene las mismas filas, columnas, rutaEsquema, totalSillas]");
         }
 
         return distribucionSillasRepo.save(distribucionSillas);
@@ -155,10 +147,10 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     }
 
     @Override
-    public Sala actualizarSala(Sala sala) throws Exception {
-        Optional<Sala> guardada = salaRepo.findById(sala.getId());
-        boolean salaRepetida = esSalaRepetida(sala);
-        System.out.println("salaRepetida: " + salaRepetida);
+    public Sala actualizarSala(Integer idSala, Sala salaActualizada) throws Exception {
+        Optional<Sala> guardada = salaRepo.findById(idSala);
+        boolean salaRepetida = esSalaExistente(salaActualizada); // Verifica si otra sala tiene exactamente los mismos valores
+        boolean salaDisponible = esSalaActualizadaDisponible(idSala, salaActualizada.getNombre()); // Verifica si otra sala tiene el mismo campo unique
 
         if (guardada.isEmpty()) {
             throw new Exception("La sala no existe");
@@ -166,42 +158,89 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         if (salaRepetida) {
             throw new Exception("Otra sala tiene las mismas caracteristicas [nombre, tipo, teatroid, distSillasid]");
         }
+        if (!salaDisponible) {
+            throw new Exception("La sala ya existe, no disponible [Otra sala tiene el mismo nombre]");
+        }
 
-        return salaRepo.save(sala);
+        guardada.get().setNombre(salaActualizada.getNombre());
+        guardada.get().setTipo(TipoSala.ESTANDAR);
+        guardada.get().setTeatro(salaActualizada.getTeatro());
+        guardada.get().setDistribucionSillas(salaActualizada.getDistribucionSillas());
+
+        return salaRepo.save(guardada.get());
     }
 
-    private boolean esSalaRepetida(Sala sala) {
+    private boolean esSalaExistente(Sala sala) {
         return salaRepo.verificarExistencia(sala.getNombre(),
-                        sala.getTipo(),
-                        sala.getTeatro().getId(),
-                        sala.getDistribucionSillas().getId())
-                .orElse(null) != null;
+                                            sala.getTipo(),
+                                            sala.getTeatro().getId(),
+                                            sala.getDistribucionSillas().getId())
+                       .orElse(null) != null;
+    }
+
+    private boolean esSalaActualizadaDisponible(Integer idSala, String nombreSala) {
+        return salaRepo.verificarDisponibilidadParaActualizadas(idSala, nombreSala).orElse(null) == null;
     }
 
     @Override
-    public Funcion actualizarFuncion(Funcion funcion) throws Exception {
-        Optional<Funcion> guardada = funcionRepo.findById(funcion.getId());
+    public Funcion actualizarFuncion(Integer idFuncion, Funcion funcionActualizada) throws Exception {
+        Optional<Funcion> guardada = funcionRepo.findById(idFuncion);
+        boolean funcionExistente = esFuncionExistente(funcionActualizada);
+        boolean funcionDisponible = esFuncionActualizadaDisponible(idFuncion, funcionActualizada);
 
         System.out.println("guardada: " + guardada);
-        System.out.println("actualiz: " + funcion);
+        System.out.println("actualiz: " + funcionActualizada);
 
         if (guardada.isEmpty()) {
             throw new Exception("La funcion no existe");
         }
+        if (funcionExistente) {
+            throw new Exception("Otra funcion tiene las mismas caracteristicas [precio, horario, pelicula, sala]");
+        }
+        if (!funcionDisponible) {
+            throw new Exception("La funcion no está disponible [Horario y Sala ya pertenecen a otra funcion]");
+        }
 
-        return funcionRepo.save(funcion);
+        guardada.get().setPrecio(funcionActualizada.getPrecio());
+        guardada.get().setHorario(funcionActualizada.getHorario());
+        guardada.get().setPelicula(funcionActualizada.getPelicula());
+        guardada.get().setSala(funcionActualizada.getSala());
+
+        return funcionRepo.save(guardada.get());
+    }
+
+    private boolean esFuncionExistente(Funcion funcion) {
+        return funcionRepo.verificarExistencia(funcion.getPrecio(),
+                funcion.getHorario().getId(),
+                funcion.getPelicula().getId(),
+                funcion.getSala().getId()).orElse(null) != null;
+    }
+
+    private boolean esFuncionActualizadaDisponible(Integer idFuncion, Funcion funcion) {
+        return funcionRepo.verificarDisponibilidadParaActualizadas(idFuncion, funcion.getHorario().getId(), funcion.getSala().getId())
+                .orElse(null) == null;
     }
 
     @Override
-    public DistribucionSillas actualizarDistribucionSillas(DistribucionSillas distribucionSillas) throws Exception {
-        Optional<DistribucionSillas> guardado = distribucionSillasRepo.findById(distribucionSillas.getId());
+    public DistribucionSillas actualizarDistribucionSillas(Integer idDistSillas, DistribucionSillas distribucionSillasActualizada) throws Exception {
+        Optional<DistribucionSillas> guardado = distribucionSillasRepo.findById(idDistSillas);
+        boolean distribucionSillasExiste = esDistribucionSillasExistente(distribucionSillasActualizada);
 
         if (guardado.isEmpty()) {
             throw new Exception("La distribucion de sillas no existe");
         }
+        if(distribucionSillasExiste) {
+            throw new Exception("La distribucion de sillas ya existe [Otra distribucion tiene las mismas filas, columnas, rutaEsquema, totalSillas]");
+        }
 
-        return distribucionSillasRepo.save(distribucionSillas);
+        guardado.get().setFilas(distribucionSillasActualizada.getFilas());
+        guardado.get().setColumnas(distribucionSillasActualizada.getColumnas());
+        guardado.get().setRutaEsquema(distribucionSillasActualizada.getRutaEsquema());
+        guardado.get().setTotalSillas(distribucionSillasActualizada.getTotalSillas());
+
+        return distribucionSillasRepo.save(guardado.get());
     }
+
 
 
     // Eliminar

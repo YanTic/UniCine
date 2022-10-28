@@ -22,11 +22,11 @@ public interface AdminTeatroServicio {
     // Actualizar
     Horario actualizarHorario(Integer idHorario, Horario horarioActualizado) throws Exception;
 
-    Sala actualizarSala(Sala sala) throws Exception;
+    Sala actualizarSala(Integer idSala, Sala salaActualizada) throws Exception;
 
-    Funcion actualizarFuncion(Funcion funcion) throws Exception;
+    Funcion actualizarFuncion(Integer idFuncion, Funcion funcionActualizada) throws Exception;
 
-    DistribucionSillas actualizarDistribucionSillas(DistribucionSillas distribucionSillas) throws Exception;
+    DistribucionSillas actualizarDistribucionSillas(Integer idDistSillas, DistribucionSillas distribucionSillasActualizada) throws Exception;
 
 
     // Eliminar

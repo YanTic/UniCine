@@ -195,10 +195,15 @@ public class AdminTeatroServicioTest {
     public void actualizarSalaTest() {
         try {
             Sala sala = adminTeatroServicio.obtenerSala(2);
-            System.out.println(sala);
-            sala.setTipo(TipoSala.ESTANDAR);
-            Sala nuevaSala = adminTeatroServicio.actualizarSala(sala);
-            System.out.println(nuevaSala);
+
+            Sala salaActualizada = Sala.builder()
+                    .nombre("T4Sala6_EST") // T4Sala6_EST
+                    .tipo(TipoSala.ESTANDAR) // TipoSala.ESTANDAR
+                    .teatro(sala.getTeatro())
+                    .distribucionSillas(sala.getDistribucionSillas())
+                    .build();
+
+            Sala nuevaSala = adminTeatroServicio.actualizarSala(sala.getId(), salaActualizada);
 
             Assertions.assertEquals(TipoSala.ESTANDAR, nuevaSala.getTipo());
         } catch (Exception e) {
@@ -211,8 +216,17 @@ public class AdminTeatroServicioTest {
     public void actualizarFuncionTest() {
         try {
             Funcion funcion = adminTeatroServicio.obtenerFuncion(3);
-            funcion.setPrecio((float) 3451.2);
-            Funcion nuevaFuncion = adminTeatroServicio.actualizarFuncion(funcion);
+            System.out.println("Funcion vieja: "+funcion);
+
+            Funcion funcionActualizada = Funcion.builder()
+                    .precio((float) 3451.2) //(float) 3451.2
+                    .horario(funcion.getHorario())
+                    .pelicula(funcion.getPelicula())
+                    .sala(funcion.getSala())
+                    .build();
+
+            Funcion nuevaFuncion = adminTeatroServicio.actualizarFuncion(funcion.getId(), funcionActualizada);
+            System.out.println("Funcion nueva: "+nuevaFuncion);
 
             Assertions.assertEquals((float)3451.2, nuevaFuncion.getPrecio());
         } catch (Exception e) {
@@ -224,11 +238,18 @@ public class AdminTeatroServicioTest {
     @Sql("classpath:dataset.sql")
     public void actualizarDistribucionSillasTest() {
         try {
-            DistribucionSillas distribucionSillas = adminTeatroServicio.obtenerDistribucionSillas(4);
-            distribucionSillas.setTotalSillas(50);
-            DistribucionSillas nuevaDist = adminTeatroServicio.actualizarDistribucionSillas(distribucionSillas);
+            DistribucionSillas distSillas = adminTeatroServicio.obtenerDistribucionSillas(4);
 
-            Assertions.assertEquals(50, distribucionSillas.getTotalSillas());
+            DistribucionSillas distSillasActualizada = DistribucionSillas.builder()
+                    .filas(distSillas.getFilas())
+                    .columnas(distSillas.getColumnas())
+                    .rutaEsquema(distSillas.getRutaEsquema())
+                    .totalSillas(50)
+                    .build();
+
+            DistribucionSillas nuevaDist = adminTeatroServicio.actualizarDistribucionSillas(distSillas.getId(), distSillasActualizada);
+
+            Assertions.assertEquals(50, nuevaDist.getTotalSillas());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

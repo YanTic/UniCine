@@ -19,4 +19,10 @@ public interface SalaRepo extends JpaRepository<Sala, Integer> {
     // Si una sala tiene unas caracteristicas concretas, no se puede crear o actualizar una sala con esas mismas caracteristicas
     @Query("select s from Sala s where s.nombre = :nombre and s.tipo = :tipo and s.teatro.id = :idTeatro and s.distribucionSillas.id = :idDistribucionSillas")
     Optional<Sala> verificarExistencia(String nombre, TipoSala tipo, Integer idTeatro, Integer idDistribucionSillas);
+
+    // A diferencia de findByNombre(String nombreSala) que es llamado por esSalaDisponible() en la implementacion
+    // de los servicios, esta consulta permite verificar lo mismo pero no con la misma sala porque es la que se
+    // está actualizando
+    @Query("select s from Sala s where s.id <> :idSala and s.nombre = :nombreSala")
+    Optional<Sala> verificarDisponibilidadParaActualizadas(Integer idSala, String nombreSala);
 }
