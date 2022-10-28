@@ -210,8 +210,15 @@ public class AdminGeneralServicioTest {
     public void actualizarTeatroTest() {
         try {
             Teatro teatro = adminGeneralServicio.obtenerTeatro(2);
-            teatro.setDireccion("Por allá detras de la casa roja");
-            Teatro nuevoTeatro = adminGeneralServicio.actualizarTeatro(teatro);
+            System.out.println("Teatro viejo: "+teatro);
+
+            Teatro teatroActualizado = Teatro.builder()
+                    .nombre(teatro.getNombre())
+                    .direccion(teatro.getDireccion()) // "Por allá detras de la casa roja"
+                    .ciudad(teatro.getCiudad()).build();
+
+            Teatro nuevoTeatro = adminGeneralServicio.actualizarTeatro(teatro.getId(), teatroActualizado);
+            System.out.println("Teatro nuevo: "+nuevoTeatro);
 
             Assertions.assertEquals("Por allá detras de la casa roja", nuevoTeatro.getDireccion());
         } catch (Exception e) {
@@ -224,10 +231,19 @@ public class AdminGeneralServicioTest {
     public void actualizarCuponTest() {
         try {
             Cupon cupon = adminGeneralServicio.obtenerCupon(4);
-            cupon.setDescripcion("Cupon porque si");
-            Cupon nuevoCupon = adminGeneralServicio.actualizarCupon(cupon);
+            System.out.println("Cupon viejo: "+ cupon);
 
-            Assertions.assertEquals("Cupon porqe si", nuevoCupon.getDescripcion());
+            Cupon cuponActualizado = Cupon.builder()
+                    .valor_descuento(cupon.getValor_descuento())
+                    .fecha_vencimiento(cupon.getFecha_vencimiento())
+                    .descripcion("Cupon porque si")
+                    .criterio(cupon.getCriterio())
+                    .build();
+
+            Cupon nuevoCupon = adminGeneralServicio.actualizarCupon(cupon.getId(), cuponActualizado);
+            System.out.println("Cupon nuevo: "+nuevoCupon);
+
+            Assertions.assertEquals("Cupon porque si", nuevoCupon.getDescripcion());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -238,8 +254,19 @@ public class AdminGeneralServicioTest {
     public void actualizarEventoTest() {
         try {
             Evento evento = adminGeneralServicio.obtenerEvento(2);
-            evento.setNombre("EVENTO MINECRAFT");
-            Evento nuevoEvento = adminGeneralServicio.actualizarEvento(evento);
+            System.out.println("Evento viejo: "+ evento);
+
+            Evento eventoActualizado = Evento.builder()
+                    .nombre(evento.getNombre()) // "EVENTO MINECRAFT"
+                    .imagenURL(evento.getImagenURL())
+                    .fecha(evento.getFecha())
+                    .hora_inicio(evento.getHora_inicio())
+                    .hora_fin(evento.getHora_fin())
+                    .teatro(evento.getTeatro())
+                    .build();
+
+            Evento nuevoEvento = adminGeneralServicio.actualizarEvento(evento.getId(), eventoActualizado);
+            System.out.println("Evento nuevo: "+ nuevoEvento);
 
             Assertions.assertEquals("EVENTO MINECRAFT", nuevoEvento.getNombre());
         } catch (Exception e) {

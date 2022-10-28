@@ -54,7 +54,7 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
         boolean teatroExiste = esTeatroExistente(teatro);
 
         if(teatroExiste) {
-            throw new Exception("El teatro ya existe");
+            throw new Exception("El teatro ya existe [Otro teatro tiene el mismo nombre, direccion, ciudad]");
         }
 
         return teatroRepo.save(teatro);
@@ -72,7 +72,7 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
         boolean cuponExiste = esCuponExistente(cupon);
 
         if(cuponExiste) {
-            throw new Exception("El cupon ya existe");
+            throw new Exception("El cupon ya existe [Otro cupon tiene el mismo valor_descuento, fecha_vencimiento, criterio]");
         }
 
         return cuponRepo.save(cupon);
@@ -81,41 +81,42 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
     private boolean esCuponExistente(Cupon cupon) {
         return cuponRepo.verificarExistencia(cupon.getValor_descuento(),
                                              cupon.getFecha_vencimiento(),
+                                             cupon.getDescripcion(),
                                              cupon.getCriterio())
                         .orElse(null) != null;
     }
 
     @Override
     public Evento crearEvento(Evento evento) throws Exception {
-        boolean eventoExiste = esEventoExistente(evento);
+        boolean eventoDisponible = esEventoDisponible(evento);
 
-        if(eventoExiste) {
-            throw new Exception("El evento ya existe");
+        if(!eventoDisponible) {
+            throw new Exception("El evento no es disponible [Otro evento tiene la misma fecha, hora_inicio, hora_fin, teatro]");
         }
 
         return eventoRepo.save(evento);
     }
 
-    private boolean esEventoExistente(Evento e) {
-        return eventoRepo.verificarExistencia(e.getFecha(),
-                                              e.getHora_inicio(),
-                                              e.getHora_fin(),
-                                              e.getTeatro().getId())
-                .orElse(null) != null;
+    private boolean esEventoDisponible(Evento e) {
+        return eventoRepo.verificarDisponibilidad(e.getFecha(),
+                        e.getHora_inicio(),
+                        e.getHora_fin(),
+                        e.getTeatro().getId())
+                .orElse(null) == null;
     }
 
     @Override
     public Pelicula crearPelicula(Pelicula pelicula) throws Exception {
-        boolean peliculaExiste = esPeliculaExistente(pelicula.getNombre());
+        boolean peliculaDisponible = esPeliculaDisponible(pelicula.getNombre());
 
-        if (peliculaExiste) {
-            throw new Exception("La pelicula ya existe");
+        if (peliculaDisponible) {
+            throw new Exception("La pelicula ya existe, no disponible [Otra pelicula tiene el mismo nombre]");
         }
 
         return peliculaRepo.save(pelicula);
     }
 
-    private boolean esPeliculaExistente(String nombre) {
+    private boolean esPeliculaDisponible(String nombre) {
         return peliculaRepo.findByNombre(nombre).orElse(null) != null;
     }
 
@@ -136,16 +137,16 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
 
     @Override
     public Confiteria crearConfiteria(Confiteria confiteria) throws Exception {
-        boolean confiteriaExiste = esConfiteriaExistente(confiteria.getProducto());
+        boolean confiteriaDisponible = esConfiteriaDisponible(confiteria.getProducto());
 
-        if(confiteriaExiste) {
-            throw new Exception("La confiteria ya existe");
+        if(confiteriaDisponible) {
+            throw new Exception("La confiteria ya existe [Otra confiteria tiene el mismo producto]");
         }
 
         return confiteriaRepo.save(confiteria);
     }
 
-    private boolean esConfiteriaExistente(String producto) {
+    private boolean esConfiteriaDisponible(String producto) {
         return confiteriaRepo.findByProducto(producto).orElse(null) != null;
     }
 
@@ -155,6 +156,8 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
     public Ciudad actualizarCiudad(Ciudad ciudad) throws Exception {
         Optional<Ciudad> guardada = ciudadRepo.findById(ciudad.getId());
 
+        // Aquí no se usan restrincciones para verificar si otra ciudad tiene el mismo nombre
+        // porque pueden existir ciudades con el mismo nombre
         if(guardada.isEmpty()) {
             throw new Exception("La ciudad no existe");
         }
@@ -163,39 +166,90 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
     }
 
     @Override
-    public Teatro actualizarTeatro(Teatro teatro) throws Exception {
-        Optional<Teatro> guardado = teatroRepo.findById(teatro.getId());
+    public Teatro actualizarTeatro(Integer idTeatro, Teatro teatroActualizado) throws Exception {
+        Optional<Teatro> guardado = teatroRepo.findById(idTeatro);
+        boolean teatroExistente = esTeatroExistente(teatroActualizado);
 
         if(guardado.isEmpty()) {
             throw new Exception("El teatro no existe");
         }
+        if(teatroExistente) {
+            throw new Exception("El teatro ya existe [Otro teatro tiene el mismo nombre, direccion, ciudad]");
+        }
 
-        return teatroRepo.save(teatro);
+        guardado.get().setNombre(teatroActualizado.getNombre());
+        guardado.get().setDireccion(teatroActualizado.getDireccion());
+        guardado.get().setCiudad(teatroActualizado.getCiudad());
+
+        return teatroRepo.save(guardado.get());
     }
 
     @Override
-    public Cupon actualizarCupon(Cupon cupon) throws Exception {
-        Optional<Cupon> guardado = cuponRepo.findById(cupon.getId());
+    public Cupon actualizarCupon(Integer idCupon, Cupon cuponActualizado) throws Exception {
+        Optional<Cupon> guardado = cuponRepo.findById(idCupon);
+        boolean cuponExistente = esCuponExistente(cuponActualizado);
 
         if(guardado.isEmpty()) {
             throw new Exception("El cupon no existe");
         }
+        if(cuponExistente) {
+            throw new Exception("El cupon ya existe [Otro cupon tiene el mismo valor_descuento, fecha_vencimiento, criterio]");
+        }
 
-        return cuponRepo.save(cupon);
+        guardado.get().setValor_descuento(cuponActualizado.getValor_descuento());
+        guardado.get().setFecha_vencimiento(cuponActualizado.getFecha_vencimiento());
+        guardado.get().setDescripcion(cuponActualizado.getDescripcion());
+        guardado.get().setCriterio(cuponActualizado.getCriterio());
+
+        return cuponRepo.save(guardado.get());
     }
 
     @Override
-    public Evento actualizarEvento(Evento evento) throws Exception {
-        Optional<Evento> guardado = eventoRepo.findById(evento.getId());
+    public Evento actualizarEvento(Integer idEvento, Evento eventoActualizado) throws Exception {
+        Optional<Evento> guardado = eventoRepo.findById(idEvento);
+        boolean eventoExistente = esEventoExistente(eventoActualizado);
+        boolean eventoDisponible = esEventoActualizadoDisponible(idEvento, eventoActualizado);
 
         if (guardado.isEmpty()) {
             throw new Exception("El evento no existe");
         }
+        if (eventoExistente) {
+            throw new Exception("Otro evento tiene las mismas caracteristicas [nombre, imagenURL, fecha, hora_inicio, hora_fin, teatro]");
+        }
+        if (!eventoDisponible) {
+            throw new Exception("El evento no es disponible [Otro evento tiene la misma fecha, hora_inicio]");
+        }
 
-        return eventoRepo.save(evento);
+        guardado.get().setNombre(eventoActualizado.getNombre());
+        guardado.get().setImagenURL(eventoActualizado.getImagenURL());
+        guardado.get().setFecha(eventoActualizado.getFecha());
+        guardado.get().setHora_inicio(eventoActualizado.getHora_inicio());
+        guardado.get().setHora_fin(eventoActualizado.getHora_fin());
+        guardado.get().setTeatro(eventoActualizado.getTeatro());
+
+        return eventoRepo.save(guardado.get());
     }
 
-    @Override
+    private boolean esEventoExistente(Evento evento) {
+        return eventoRepo.verificarExistencia(evento.getNombre(),
+                        evento.getImagenURL(),
+                        evento.getFecha(),
+                        evento.getHora_inicio(),
+                        evento.getHora_fin(),
+                        evento.getTeatro().getId())
+                .orElse(null) != null;
+    }
+
+    private boolean esEventoActualizadoDisponible(Integer idEvento, Evento eventoActualizado){
+        return eventoRepo.verificarDisponibilidadParaActualizados(idEvento,
+                        eventoActualizado.getFecha(),
+                        eventoActualizado.getHora_inicio(),
+                        eventoActualizado.getHora_fin(),
+                        eventoActualizado.getTeatro().getId())
+                .orElse(null) == null;
+    }
+
+    @Override 
     public Pelicula actualizarPelicula(Pelicula pelicula) throws Exception {
         Optional<Pelicula> guardada = peliculaRepo.findById(pelicula.getId());
 

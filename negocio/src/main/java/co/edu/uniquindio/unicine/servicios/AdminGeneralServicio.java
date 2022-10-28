@@ -27,11 +27,11 @@ public interface AdminGeneralServicio {
     // Actualizar
     Ciudad actualizarCiudad(Ciudad ciudad) throws Exception;
 
-    Teatro actualizarTeatro(Teatro teatro) throws Exception;
+    Teatro actualizarTeatro(Integer idTeatro, Teatro teatroActualizado) throws Exception;
 
-    Cupon actualizarCupon(Cupon cupon) throws Exception;
+    Cupon actualizarCupon(Integer idCupon, Cupon cuponActualizado) throws Exception;
 
-    Evento actualizarEvento(Evento evento) throws Exception;
+    Evento actualizarEvento(Integer idEvento, Evento eventoActualizado) throws Exception;
 
     Pelicula actualizarPelicula(Pelicula pelicula) throws Exception;
 

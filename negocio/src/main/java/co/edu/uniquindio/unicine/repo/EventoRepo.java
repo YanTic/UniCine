@@ -14,5 +14,11 @@ import java.util.Optional;
 public interface EventoRepo extends JpaRepository<Evento, Integer> {
 
     @Query("select e from Evento e where e.fecha = :fecha and e.hora_inicio = :hora_inicio and e.hora_fin = :hora_fin and e.teatro.id = :idTeatro")
-    Optional<Evento> verificarExistencia(LocalDate fecha, LocalTime hora_inicio, LocalTime hora_fin, Integer idTeatro);
+    Optional<Evento> verificarDisponibilidad(LocalDate fecha, LocalTime hora_inicio, LocalTime hora_fin, Integer idTeatro);
+
+    @Query("select e from Evento e where e.nombre = :nombre and e.imagenURL = :imagenURL and e.fecha = :fecha and e.hora_inicio = :hora_inicio and e.hora_fin = :hora_fin and e.teatro.id = :idTeatro")
+    Optional<Evento> verificarExistencia(String nombre, String imagenURL, LocalDate fecha, LocalTime hora_inicio, LocalTime hora_fin, Integer idTeatro);
+
+    @Query("select e from Evento e where e.id <> :idEvento and e.fecha = :fecha and e.hora_inicio = :hora_inicio and e.hora_fin = :hora_fin and e.teatro.id = :idTeatro")
+    Optional<Evento> verificarDisponibilidadParaActualizados(Integer idEvento, LocalDate fecha, LocalTime hora_inicio, LocalTime hora_fin, Integer idTeatro);
 }
