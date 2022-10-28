@@ -122,24 +122,24 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
 
     @Override
     public Genero crearGenero(Genero genero) throws Exception {
-        boolean generoExiste = esGeneroExistente(genero.getNombre());
+        boolean generoExiste = esGeneroExistente(genero);
 
         if(generoExiste) {
-            throw new Exception("El genero ya existe");
+            throw new Exception("El genero ya existe [Otro genero tiene el mismo nombre]");
         }
 
         return generoRepo.save(genero);
     }
 
-    private boolean esGeneroExistente(String nombre) {
-        return generoRepo.findByNombre(nombre).orElse(null) != null;
+    private boolean esGeneroExistente(Genero genero) {
+        return generoRepo.verificarExistencia(genero.getNombre()).orElse(null) != null;
     }
 
     @Override
     public Confiteria crearConfiteria(Confiteria confiteria) throws Exception {
         boolean confiteriaDisponible = esConfiteriaDisponible(confiteria.getProducto());
 
-        if(confiteriaDisponible) {
+        if(!confiteriaDisponible) {
             throw new Exception("La confiteria ya existe [Otra confiteria tiene el mismo producto]");
         }
 
@@ -147,7 +147,7 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
     }
 
     private boolean esConfiteriaDisponible(String producto) {
-        return confiteriaRepo.findByProducto(producto).orElse(null) != null;
+        return confiteriaRepo.findByProducto(producto).orElse(null) == null;
     }
 
 
@@ -249,37 +249,106 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
                 .orElse(null) == null;
     }
 
-    @Override 
-    public Pelicula actualizarPelicula(Pelicula pelicula) throws Exception {
-        Optional<Pelicula> guardada = peliculaRepo.findById(pelicula.getId());
+    @Override
+    public Pelicula actualizarPelicula(Integer idPelicula, Pelicula peliculaActualizada) throws Exception {
+        Optional<Pelicula> guardada = peliculaRepo.findById(idPelicula);
+        boolean peliculaExistente = esPeliculaExistente(idPelicula, peliculaActualizada);
+        boolean peliculaDisponible = esPeliculaActualizadaDisponible(idPelicula, peliculaActualizada.getNombre());
 
-        if(guardada.isEmpty()) {
+        if (guardada.isEmpty()) {
             throw new Exception("La pelicula no existe");
         }
+        if (peliculaExistente) {
+            throw new Exception("Otra pelicula tiene las mismas caracteristicas [nombre, imagenURL, trailerURL, sinopsis, reparto, estado, generos]");
+        }
+        if (!peliculaDisponible) {
+            throw new Exception("La pelicula ya existe, no disponible [Otra pelicula tiene el mismo nombre]");
+        }
 
-        return peliculaRepo.save(pelicula);
+        guardada.get().setNombre(peliculaActualizada.getNombre());
+        guardada.get().setImagenURL(peliculaActualizada.getImagenURL());
+        guardada.get().setTrailerURL(peliculaActualizada.getTrailerURL());
+        guardada.get().setSinopsis(peliculaActualizada.getSinopsis());
+        guardada.get().setReparto(peliculaActualizada.getReparto());
+        guardada.get().setEstado(peliculaActualizada.getEstado());
+        guardada.get().setGeneros(peliculaActualizada.getGeneros());
+
+        return peliculaRepo.save(guardada.get());
+    }
+
+    // Esta metodo es especial, diferente a los anteriores metodos de existencia, porque este requiere el id del
+    // objeto. Pelicula contiene una lista (generos), por lo que en JPQL no se puede comparar listas, por lo
+    // que ahora no se va a mandar la lista:generos, pero si el id; para comparar con otras peliculas que no
+    // tengan el mismo id a la que se está actualizando. Esta tiene una brecha, que es que si puede tener un
+    // problema (no una excepcion) dejando actualizar la misma pelicula igual (con los mismos valores).
+
+    // Otra solucion es no comparar con el id, ni con la lista, pero cuando actualice la misma pelicula y solo
+    // le cambie los generos, va a tirar una excepcion de existencia, porque al hacer la consulta se encontraria
+    // a si misma (como si existieria otro objeto con los mismos valores)
+    private boolean esPeliculaExistente(Integer idPelicula, Pelicula pelicula) {
+        return peliculaRepo.verificarExistencia(idPelicula,
+                        pelicula.getNombre(),
+                        pelicula.getImagenURL(),
+                        pelicula.getTrailerURL(),
+                        pelicula.getSinopsis(),
+                        pelicula.getReparto(),
+                        pelicula.getEstado())
+                .orElse(null) != null;
+    }
+
+    private boolean esPeliculaActualizadaDisponible(Integer idPelicula, String nombre) {
+        return peliculaRepo.verificarDisponibilidadParaActualizadas(idPelicula, nombre).orElse(null) == null;
     }
 
     @Override
-    public Genero actualizarGenero(Genero genero) throws Exception {
-        Optional<Genero> guardado = generoRepo.findById(genero.getId());
+    public Genero actualizarGenero(Integer idGenero, Genero generoActualizado) throws Exception {
+        Optional<Genero> guardado = generoRepo.findById(idGenero);
+        boolean generoExistente = esGeneroExistente(generoActualizado);
 
-        if(guardado.isEmpty()) {
+        if (guardado.isEmpty()) {
             throw new Exception("El genero no existe");
         }
+        if (generoExistente) {
+            throw new Exception("El genero ya existe [Otro genero tiene el mismo nombre]");
+        }
 
-        return generoRepo.save(genero);
+        guardado.get().setNombre(generoActualizado.getNombre());
+
+        return generoRepo.save(guardado.get());
     }
 
     @Override
-    public Confiteria actualizarConfiteria(Confiteria confiteria) throws Exception {
-        Optional<Confiteria> guardada = confiteriaRepo.findById(confiteria.getId());
+    public Confiteria actualizarConfiteria(Integer idConfiteria, Confiteria confiteriaActualizada) throws Exception {
+        Optional<Confiteria> guardada = confiteriaRepo.findById(idConfiteria);
+        boolean confiteriaExistente = esConfiteriaExistente(confiteriaActualizada);
+        boolean confiteriaDisponible = esConfiteriaActualizadaDisponible(idConfiteria, confiteriaActualizada);
 
-        if(guardada.isEmpty()) {
+        if (guardada.isEmpty()) {
             throw new Exception("La confiteria no existe");
         }
+        if (confiteriaExistente) {
+            throw new Exception("Otra confiteria tiene las mismas caracteristicas [producto, precio, imagenURL]");
+        }
+        if (!confiteriaDisponible) {
+            throw new Exception("La confiteria ya existe, no disponible [Otra confiteria tiene el mismo producto]");
+        }
 
-        return confiteriaRepo.save(confiteria);
+        guardada.get().setProducto(confiteriaActualizada.getProducto());
+        guardada.get().setPrecio(confiteriaActualizada.getPrecio());
+        guardada.get().setImagenURL(confiteriaActualizada.getImagenURL());
+
+        return confiteriaRepo.save(guardada.get());
+    }
+
+    private boolean esConfiteriaExistente(Confiteria confiteria) {
+        return confiteriaRepo.verificarExistencia(confiteria.getProducto(),
+                        confiteria.getPrecio(),
+                        confiteria.getImagenURL())
+                .orElse(null) != null;
+    }
+
+    private boolean esConfiteriaActualizadaDisponible(Integer idConfiteria, Confiteria confiteria) {
+        return confiteriaRepo.verificarDisponibilidadParaActualizadas(idConfiteria, confiteria.getProducto()).orElse(null) == null;
     }
 
 

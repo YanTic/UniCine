@@ -33,11 +33,11 @@ public interface AdminGeneralServicio {
 
     Evento actualizarEvento(Integer idEvento, Evento eventoActualizado) throws Exception;
 
-    Pelicula actualizarPelicula(Pelicula pelicula) throws Exception;
+    Pelicula actualizarPelicula(Integer idPelicula, Pelicula peliculaActualizada) throws Exception;
 
-    Genero actualizarGenero(Genero genero) throws Exception;
+    Genero actualizarGenero(Integer idGenero, Genero generoActualizado) throws Exception;
 
-    Confiteria actualizarConfiteria(Confiteria confiteria) throws Exception;
+    Confiteria actualizarConfiteria(Integer idConfiteria, Confiteria confiteriaActualizada) throws Exception;
 
 
     // Eliminar

@@ -279,8 +279,20 @@ public class AdminGeneralServicioTest {
     public void actualizarPeliculaTest() {
         try {
             Pelicula pelicula = adminGeneralServicio.obtenerPelicula(3);
-            pelicula.setNombre("The Batman");
-            Pelicula nuevaPelicula = adminGeneralServicio.actualizarPelicula(pelicula);
+            System.out.println("Pelicula vieja: "+ pelicula);
+
+            Pelicula peliculaActualizada = Pelicula.builder()
+                    .nombre("The Batman")
+                    .imagenURL(pelicula.getImagenURL())
+                    .trailerURL(pelicula.getTrailerURL())
+                    .sinopsis(pelicula.getSinopsis())
+                    .reparto(pelicula.getReparto())
+                    .estado(pelicula.getEstado())
+                    .generos(pelicula.getGeneros())
+                    .build();
+
+            Pelicula nuevaPelicula = adminGeneralServicio.actualizarPelicula(pelicula.getId(), peliculaActualizada);
+            System.out.println("Pelicula nueva: "+ nuevaPelicula);
 
             Assertions.assertEquals("The Batman", nuevaPelicula.getNombre());
         } catch (Exception e) {
@@ -293,8 +305,12 @@ public class AdminGeneralServicioTest {
     public void actualizarGeneroTest() {
         try {
             Genero genero = adminGeneralServicio.obtenerGenero(2);
-            genero.setNombre("DOCUMENTAL");
-            Genero nuevo = adminGeneralServicio.actualizarGenero(genero);
+            System.out.println("Genero viejo: "+ genero);
+
+            Genero generoActualizado = Genero.builder().nombre("ACCION").build(); // "DOCUMENTAL"
+
+            Genero nuevo = adminGeneralServicio.actualizarGenero(genero.getId(), generoActualizado);
+            System.out.println("Genero nuevo: "+ nuevo);
 
             Assertions.assertEquals("DOCUMENTAL", nuevo.getNombre());
         } catch (Exception e) {
@@ -307,10 +323,18 @@ public class AdminGeneralServicioTest {
     public void actualizarConfiteriaTest() {
         try {
             Confiteria confiteria = adminGeneralServicio.obtenerConfiteria(4);
-            confiteria.setPrecio((float)53530.2);
-            Confiteria nuevaConfiteria = adminGeneralServicio.actualizarConfiteria(confiteria);
+            System.out.println("Confiteria vieja: "+ confiteria);
 
-            Assertions.assertEquals((float)5330.2, nuevaConfiteria.getPrecio());
+            Confiteria confiteriaActualizada = Confiteria.builder()
+                    .producto(confiteria.getProducto())
+                    .precio((float)53530.2)
+                    .imagenURL(confiteria.getImagenURL())
+                    .build();
+
+            Confiteria nuevaConfiteria = adminGeneralServicio.actualizarConfiteria(confiteria.getId(), confiteriaActualizada);
+            System.out.println("Confiteria nueva: "+ nuevaConfiteria);
+
+            Assertions.assertEquals((float)53530.2, nuevaConfiteria.getPrecio());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

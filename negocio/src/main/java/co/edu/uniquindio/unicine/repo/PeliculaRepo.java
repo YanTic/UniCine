@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.repo;
 
 import co.edu.uniquindio.unicine.dto.HorarioSalaDTO;
 import co.edu.uniquindio.unicine.entidades.EstadoPelicula;
+import co.edu.uniquindio.unicine.entidades.Genero;
 import co.edu.uniquindio.unicine.entidades.Pelicula;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,15 @@ import java.util.Optional;
 public interface PeliculaRepo extends JpaRepository<Pelicula, Integer> {
 
     Optional<Pelicula> findByNombre(String nombrePelicula);
+
+    @Query("select p from Pelicula p where p.id <> :idPelicula and p.nombre = :nombre")
+    Optional<Pelicula> verificarDisponibilidadParaActualizadas(Integer idPelicula, String nombre);
+
+    @Query("select p from Pelicula p where p.id <> :idPelicula and p.nombre = :nombre and p.imagenURL = :imagenURL and p.trailerURL = :trailerURL and p.sinopsis = :sinopsis and p.reparto = :reparto and p.estado = :estado")
+    Optional<Pelicula> verificarExistencia(Integer idPelicula, String nombre, String imagenURL, String trailerURL, String sinopsis, String reparto, EstadoPelicula estado);
+
+
+
 
 
 
