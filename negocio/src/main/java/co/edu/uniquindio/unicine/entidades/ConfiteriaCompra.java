@@ -43,5 +43,6 @@ public class ConfiteriaCompra implements Serializable {
         this.unidades = unidades;
         this.confiteria = confiteria;
         this.compra = compra;
+        this.precio = confiteria.getPrecio() * unidades;
     }
 }
