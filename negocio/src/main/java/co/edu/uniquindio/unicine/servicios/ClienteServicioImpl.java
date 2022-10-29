@@ -16,15 +16,17 @@ public class ClienteServicioImpl implements ClienteServicio{
     private final BoletaRepo boletaRepo;
     private final ConfiteriaRepo confiteriaRepo;
     private final ConfiteriaCompraRepo confiteriaCompraRepo;
+    private final EmailServicio emailServicio;
 
     // Con esto instanciamos el repositorio, sin usar el @Autowired
-    public ClienteServicioImpl(ClienteRepo clienteRepo, CuponClienteRepo cuponClienteRepo, CompraRepo compraRepo, BoletaRepo boletaRepo, ConfiteriaRepo confiteriaRepo, ConfiteriaCompraRepo confiteriaCompraRepo) {
+    public ClienteServicioImpl(ClienteRepo clienteRepo, CuponClienteRepo cuponClienteRepo, CompraRepo compraRepo, BoletaRepo boletaRepo, ConfiteriaRepo confiteriaRepo, ConfiteriaCompraRepo confiteriaCompraRepo, EmailServicio emailServicio) {
         this.clienteRepo = clienteRepo;
         this.cuponClienteRepo = cuponClienteRepo;
         this.compraRepo = compraRepo;
         this.boletaRepo = boletaRepo;
         this.confiteriaRepo = confiteriaRepo;
         this.confiteriaCompraRepo = confiteriaCompraRepo;
+        this.emailServicio = emailServicio;
     }
 
     @Override
@@ -57,7 +59,16 @@ public class ClienteServicioImpl implements ClienteServicio{
             throw new Exception("El correo ya está en uso");
         }
 
+        //emailServicio.enviarEmail("Bienvenido a Unicine | Activar Cuenta!", "Para activar su cuenta haz click en la imagen, o ingresa al siguiente link",)
+
         return clienteRepo.save(cliente);
+    }
+
+    public Cliente activarCuenta() {
+        //emailServicio.enviarEmail("Cuenta activada!", "Gracias por activar su cuenta. Unicine le ha hecho un regalo:")
+
+                // Y PUES AHÍ LE MANDA EL CUPON AL CLIENTE (MOSTRANDO LA IMG DEL CUPON), ASIGNADOLE EL CUPON EN LA BD
+        return null;
     }
 
     private boolean esRepetido(String email) {
@@ -184,6 +195,11 @@ public class ClienteServicioImpl implements ClienteServicio{
 
         float precioTotalCompra = precioBoletas + precioBoletas;
         compra.setValorTotal(precioTotalCompra);
+
+
+        // Se envia el correo con la compra
+        //emailServicio.enviarEmail("Compra Realizada Exitosa!", "Usted ha comprado ",);
+
 
         return compraRepo.save(compra);
     }

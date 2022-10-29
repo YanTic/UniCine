@@ -4,6 +4,7 @@ import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.servicios.AdminGeneralServicio;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
+import co.edu.uniquindio.unicine.servicios.EmailServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class ClienteServicioTest {
 
     @Autowired
     private ClienteServicio clienteServicio;
+
+    @Autowired
+    private EmailServicio emailServicio;
 
     // Estos servicios se utilizan para obtener (ejemplo:) funciones, confiterias  para crear objetos que corresponden a este test
     @Autowired
@@ -161,6 +165,7 @@ public class ClienteServicioTest {
             List<ConfiteriaCompra> confiterias = clienteServicio.listarConfiteriasCompra(nueva.getId());
             confiterias.forEach(System.out::println);
 
+            Assertions.assertNotNull(nueva);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -208,5 +213,10 @@ public class ClienteServicioTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    public void enviarCorreoTest() {
+        emailServicio.enviarEmail("Prueba de envio", "Este es un mensaje", "julian.acostat@uqvirtual.edu.co");
     }
 }
