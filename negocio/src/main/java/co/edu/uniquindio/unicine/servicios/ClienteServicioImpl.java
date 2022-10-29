@@ -112,8 +112,15 @@ public class ClienteServicioImpl implements ClienteServicio{
         Optional<Cliente> cliente = clienteRepo.findById(idCliente);
 
         boolean cuponRedimible;
-        if (compra.getCupon() == null) {cuponRedimible = false;}
-        else {cuponRedimible = esCuponRedimible(idCliente, compra.getCupon().getId());}
+        if (compra.getCupon() == null) {
+            cuponRedimible = false;
+        }
+        else {
+            cuponRedimible = esCuponRedimible(idCliente, compra.getCupon().getId());
+            // Si no puede ser redimido la compra no puede tener el cupon
+            if (!cuponRedimible)
+                compra.setCupon(null);
+        }
 
 //        boolean compraClienteExistente = esCompraClienteExistente(idCliente, compra.getId());
 
@@ -181,15 +188,6 @@ public class ClienteServicioImpl implements ClienteServicio{
         return compraRepo.save(compra);
     }
 
-    private boolean esCompraClienteExistente(Integer idCliente, Integer idCompra){
-        return clienteRepo.verificarExistenciaCompraCliente(idCliente, idCompra)
-                .orElse(null) != null;
-    }
-
-    private Boleta crearBoleta(Boleta boleta) {
-        return null;
-    }
-
     private boolean esConfiteriaExistente(Integer idConfiteria) {
         return confiteriaRepo.findById(idConfiteria).orElse(null) != null;
     }
@@ -230,7 +228,7 @@ public class ClienteServicioImpl implements ClienteServicio{
         Optional<CuponCliente> cupon = cuponClienteRepo.obtenerPorCuponYCliente(idCliente, idCupon);
 
         if(cupon.isEmpty()) {
-            throw new Exception("El cupon del cliente [idCliente:" +idCliente +", idCupon:"+ idCupon+"] no existe");
+            throw new Exception("El cupon del cliente [idCliente:" +idCliente +", idCupon:"+ idCupon+"] no existe, el cliente no tiene este cupon");
         }
 
         return cupon.get();
@@ -239,6 +237,11 @@ public class ClienteServicioImpl implements ClienteServicio{
     @Override
     public List<CuponCliente> listarCuponesCliente(Integer idCliente) {
         return cuponClienteRepo.obtenerCuponesCliente(idCliente);
+    }
+
+    @Override
+    public List<ConfiteriaCompra> listarConfiteriasCompra(Integer idCompra) {
+        return confiteriaCompraRepo.obtenerConfiteriasCompra(idCompra);
     }
 
 

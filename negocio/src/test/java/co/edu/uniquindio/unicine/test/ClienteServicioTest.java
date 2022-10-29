@@ -117,8 +117,7 @@ public class ClienteServicioTest {
                     .cliente(clienteServicio.obtenerCliente(2))
                     .funcion(adminTeatroServicio.obtenerFuncion(1))
                     .metodo_pago(MetodoPago.EFECTY)
-                    .cupon(null)
-
+                    .cupon(clienteServicio.obtenerCuponCliente(2, 1))
                     .build();
 
             Boleta boleta1 = Boleta.builder()
@@ -155,9 +154,12 @@ public class ClienteServicioTest {
 
             Compra nueva = clienteServicio.realizarCompra(compra,boletas,confiteriaCompras);
             System.out.println("Compra Realizada: "+ nueva);
-            
+
             List<Boleta> boletasCompra = clienteServicio.listarBoletasCompra(nueva.getId());
             boletasCompra.forEach(System.out::println);
+
+            List<ConfiteriaCompra> confiterias = clienteServicio.listarConfiteriasCompra(nueva.getId());
+            confiterias.forEach(System.out::println);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

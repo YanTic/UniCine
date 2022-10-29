@@ -31,6 +31,8 @@ public interface ClienteServicio {
 
     List<CuponCliente> listarCuponesCliente(Integer idCliente);
 
+    List<ConfiteriaCompra> listarConfiteriasCompra(Integer idCompra);
+
     List<Pelicula> buscarPelicula(String nombre);
 
     Cliente cambiarContrasenia(Integer idCliente, String contraseniaAnterior, String contraseniaNueva) throws Exception;
