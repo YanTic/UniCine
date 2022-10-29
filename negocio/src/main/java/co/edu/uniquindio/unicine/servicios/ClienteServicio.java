@@ -21,7 +21,7 @@ public interface ClienteServicio {
 
     List<Compra> listarHistorialCompras(Integer idCliente) throws Exception;
 
-    Compra realizarCompra(Integer idCliente, Compra compra) throws Exception;
+    Compra realizarCompra(Compra compra, List<Boleta> boletas, List<ConfiteriaCompra> confiteriaCompras) throws Exception;
 
     List<Boleta> listarBoletasCompra(Integer idCompra);
 

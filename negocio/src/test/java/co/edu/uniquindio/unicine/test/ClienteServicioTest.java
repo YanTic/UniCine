@@ -1,9 +1,8 @@
 package co.edu.uniquindio.unicine.test;
 
-import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.Compra;
-import co.edu.uniquindio.unicine.entidades.CuponCliente;
-import co.edu.uniquindio.unicine.entidades.Pelicula;
+import co.edu.uniquindio.unicine.entidades.*;
+import co.edu.uniquindio.unicine.servicios.AdminGeneralServicio;
+import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -21,6 +21,12 @@ public class ClienteServicioTest {
     @Autowired
     private ClienteServicio clienteServicio;
 
+    // Estos servicios se utilizan para obtener (ejemplo:) funciones, confiterias  para crear objetos que corresponden a este test
+    @Autowired
+    private AdminTeatroServicio adminTeatroServicio;
+
+    @Autowired
+    private AdminGeneralServicio adminGeneralServicio;
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -106,7 +112,56 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void realizarCompraTest() {
+        try {
+            Compra compra = Compra.builder()
+                    .cliente(clienteServicio.obtenerCliente(2))
+                    .funcion(adminTeatroServicio.obtenerFuncion(1))
+                    .metodo_pago(MetodoPago.EFECTY)
+                    .cupon(null)
 
+                    .build();
+
+            Boleta boleta1 = Boleta.builder()
+                    .precio((float)2440)
+                    .fila("H")
+                    .columna("2")
+                    .tipo(TipoSilla.ESTANDAR)
+                    .build(); // Luego se le asigna la compra al crear hacer save(compra)
+
+            Boleta boleta2 = Boleta.builder()
+                    .precio((float)2440)
+                    .fila("H")
+                    .columna("3")
+                    .tipo(TipoSilla.ESTANDAR)
+                    .build();
+
+            ConfiteriaCompra confiteria1 = ConfiteriaCompra.builder()
+                    .unidades(2)
+                    .confiteria(adminGeneralServicio.obtenerConfiteria(2))
+                    .build(); // Luego se le asigna la compra al crear hacer save(compra)
+
+            ConfiteriaCompra confiteria2 = ConfiteriaCompra.builder()
+                    .unidades(2)
+                    .confiteria(adminGeneralServicio.obtenerConfiteria(3))
+                    .build();
+
+            ArrayList<Boleta> boletas = new ArrayList<>();
+            boletas.add(boleta1);
+            boletas.add(boleta2);
+
+            ArrayList<ConfiteriaCompra> confiteriaCompras = new ArrayList<>();
+            confiteriaCompras.add(confiteria1);
+            confiteriaCompras.add(confiteria2);
+
+            Compra nueva = clienteServicio.realizarCompra(compra,boletas,confiteriaCompras);
+            System.out.println("Compra Realizada: "+ nueva);
+            
+            List<Boleta> boletasCompra = clienteServicio.listarBoletasCompra(nueva.getId());
+            boletasCompra.forEach(System.out::println);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
