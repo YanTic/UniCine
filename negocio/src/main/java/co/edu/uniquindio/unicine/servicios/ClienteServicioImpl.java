@@ -127,7 +127,7 @@ public class ClienteServicioImpl implements ClienteServicio{
             cuponRedimible = false;
         }
         else {
-            cuponRedimible = esCuponRedimible(idCliente, compra.getCupon().getId());
+            cuponRedimible = esCuponRedimible(idCliente, compra.getCupon().getCupon().getId());
             // Si no puede ser redimido la compra no puede tener el cupon
             if (!cuponRedimible)
                 compra.setCupon(null);
@@ -139,7 +139,7 @@ public class ClienteServicioImpl implements ClienteServicio{
             throw new Exception("El cliente [id:"+ idCliente+ "] no existe");
         }
         if (cuponRedimible) {
-            redimirCupon(idCliente, compra.getId());
+            redimirCupon(idCliente, compra.getCupon().getCupon().getId());
         }
         else{ // No tiro una excepcion, porque la compra se puede realizar sin cupon igualmente
             System.out.println("El cupon no está disponible [Cupon ya ha sido redimido o no Pertenece a este cliente]");
@@ -177,8 +177,8 @@ public class ClienteServicioImpl implements ClienteServicio{
         compra.setValorTotal((float)1);
         compraRepo.save(compra); // Este save() es para obtener el id de la compra y asignarselo a las boletas y confiterias
         System.out.println("Compra sin boletas, Confiterias, ni Valor_Total: "+ compra);
-        // Ahora que las boletas con las que se va a realizar la compra son disponibles
-        // les agrego el id de la nueva compra
+
+        // Ahora que las boletas con las que se va a realizar la compra son disponibles les agrego el id de la nueva compra
         float precioBoletas = 0;
         for (Boleta b : boletas) {
             b.setCompra(compra);
@@ -193,9 +193,17 @@ public class ClienteServicioImpl implements ClienteServicio{
             confiteriaCompraRepo.save(c);
         }
 
-        float precioTotalCompra = precioBoletas + precioBoletas;
+        float precioTotalCompra = 0;
+        if (cuponRedimible)
+            precioTotalCompra = precioBoletas + precioConfiteria - ((precioBoletas + precioConfiteria) * compra.getCupon().getCupon().getValor_descuento());
+        else
+            precioTotalCompra = precioBoletas + precioConfiteria;
+
         compra.setValorTotal(precioTotalCompra);
 
+        System.out.println("precioBoletas: "+ precioBoletas);
+        System.out.println("precioConfiteria: "+ precioConfiteria);
+        System.out.println("precioTotalCompra: "+ precioTotalCompra);
 
         // Se envia el correo con la compra
         //emailServicio.enviarEmail("Compra Realizada Exitosa!", "Usted ha comprado ",);

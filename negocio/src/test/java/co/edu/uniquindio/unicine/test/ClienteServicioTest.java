@@ -118,10 +118,10 @@ public class ClienteServicioTest {
     public void realizarCompraTest() {
         try {
             Compra compra = Compra.builder()
-                    .cliente(clienteServicio.obtenerCliente(2))
+                    .cliente(clienteServicio.obtenerCliente(5))
                     .funcion(adminTeatroServicio.obtenerFuncion(1))
                     .metodo_pago(MetodoPago.EFECTY)
-                    .cupon(clienteServicio.obtenerCuponCliente(2, 1))
+                    .cupon(clienteServicio.obtenerCuponCliente(5, 4))
                     .build();
 
             Boleta boleta1 = Boleta.builder()

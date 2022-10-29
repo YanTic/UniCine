@@ -77,9 +77,9 @@ public class AdminGeneralServicioTest {
     @Sql("classpath:dataset.sql")
     public void crearCuponTest() {
 
-        // insert into cupon values (1, "Registro", "Cupon por registrarse", '2022-04-12', 10);
+        // insert into cupon values (1, "Registro", "Cupon por registrarse", '2022-04-12', 0.10);
         Cupon cupon = Cupon.builder()
-                .valor_descuento((float)10)
+                .valor_descuento((float)0.10)
                 .criterio("Registro")
                 .descripcion("Descripcion")
                 .fecha_vencimiento(LocalDate.parse("2022-04-12"))
