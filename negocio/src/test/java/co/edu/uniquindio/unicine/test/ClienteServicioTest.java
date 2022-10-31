@@ -48,7 +48,7 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void registarClienteTest() {
-        Cliente cliente = Cliente.builder().cedula(224).nombre_completo("The Rock").email("pepe@email.com").contrasenia("23Ao2").imagen_perfil("url").build();
+        Cliente cliente = Cliente.builder().cedula(224).nombre_completo("The Rock").email("rock@email.com").contrasenia("23Ao2").imagen_perfil("url").build();
 
         try {
             Cliente nuevo = clienteServicio.registrarCliente(cliente);
@@ -61,11 +61,37 @@ public class ClienteServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
+    public void activarCuentaTest() {
+        try {
+            Cliente cliente = clienteServicio.obtenerCliente(3);
+            System.out.println("Cliente sin activar: "+cliente);
+
+            Cliente clienteActivado = clienteServicio.activarCuenta(cliente);
+            System.out.println("Cliente activado: "+clienteActivado);
+
+            Assertions.assertNotNull(clienteActivado);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+            //Assertions.assertTrue(false);
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
     public void actualizarClienteTest() {
         try {
             Cliente cliente = clienteServicio.obtenerCliente(4);
-            cliente.setNombre("NUEVO NOMBRE");
-            Cliente nuevo = clienteServicio.actualizarCliente(cliente);
+
+            Cliente clienteActualizado = Cliente.builder()
+                    .cedula(cliente.getCedula())
+                    .nombre_completo("NUEVO NOMBRE")
+                    .telefonos(cliente.getTelefonos())
+                    .email(cliente.getEmail())
+                    .imagen_perfil(cliente.getImagen_perfil())
+                    .contrasenia(cliente.getContrasenia())
+                    .build();
+
+            Cliente nuevo = clienteServicio.actualizarCliente(cliente.getCedula(), clienteActualizado);
 
             Assertions.assertEquals("NUEVO NOMBRE", nuevo.getNombre());
         } catch (Exception e) {

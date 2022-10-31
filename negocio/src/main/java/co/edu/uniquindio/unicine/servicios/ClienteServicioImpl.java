@@ -53,37 +53,107 @@ public class ClienteServicioImpl implements ClienteServicio{
 
     @Override
     public Cliente registrarCliente(Cliente cliente) throws Exception {
-        boolean correoExiste = esRepetido(cliente.getEmail());
+        boolean correoExiste = esEmailRepetido(cliente.getEmail());
 
         if(correoExiste){
             throw new Exception("El correo ya está en uso");
         }
 
-        //emailServicio.enviarEmail("Bienvenido a Unicine | Activar Cuenta!", "Para activar su cuenta haz click en la imagen, o ingresa al siguiente link",)
+        emailServicio.enviarEmail("Bienvenido a Unicine | Registro Exitoso!"
+                ,"<!DOCTYPE html>\n" +
+                        "<html>\n" +
+                        "    <head>\n" +
+                        "        <title>Registro</title>\n" +
+                        "    </head>\n" +
+                        "    <body>\n" +
+                        "        <p><strong>Hola, "+ cliente.getNombre()+ "Bienvenido a Unicine!</strong></p>\n" +
+                        "        <p>Solo falta un paso más, ahora debes activar tu cuenta para verificar tu identidad. Haz click en la imagen: </p>\n" +
+                        "        <a href=#><img src=\"\" alt=\"Activar Cuenta\"></a>\n" +
+                        "        <p>Si no puedes ingresar usa este link: <a href=#>link</a> </p>\n" +
+                        "    </body>\n" +
+                        "</html>"
+                ,"julian.acostat@uqvirtual.edu.co");
 
         return clienteRepo.save(cliente);
-    }
-
-    public Cliente activarCuenta() {
-        //emailServicio.enviarEmail("Cuenta activada!", "Gracias por activar su cuenta. Unicine le ha hecho un regalo:")
-
-                // Y PUES AHÍ LE MANDA EL CUPON AL CLIENTE (MOSTRANDO LA IMG DEL CUPON), ASIGNADOLE EL CUPON EN LA BD
-        return null;
-    }
-
-    private boolean esRepetido(String email) {
-        return clienteRepo.findByEmail(email).orElse(null) != null ;
     }
 
     @Override
-    public Cliente actualizarCliente(Cliente cliente) throws Exception {
+    public Cliente activarCuenta(Cliente cliente) throws Exception {
         Optional<Cliente> guardado = clienteRepo.findById(cliente.getCedula());
 
-        if(guardado.isEmpty()) {
-            throw new Exception("El cliente no existe");
+        if (guardado.isEmpty()) {
+            throw new Exception("El cliente no existe, no se ha registrado");
         }
 
-        return clienteRepo.save(cliente);
+        // Ahora se le asigna el un cupon por registro al cliente
+        CuponCliente cuponRegistro = asignarCuponACliente(cliente.getCedula(), 1);
+        guardado.get().setEstado(true);
+        guardado.get().getCupones().add(cuponRegistro);
+
+        emailServicio.enviarEmail("Cuenta activada!"
+                , "<!DOCTYPE html>\n" +
+                        "<html>\n" +
+                        "    <head>\n" +
+                        "        <title>Cuenta Activada</title>\n" +
+                        "    </head>\n" +
+                        "    <body>\n" +
+                        "        <p>Su cuenta ha sido activada exitosamente</p>\n" +
+                        "        <p>Unicine le ha hecho un regalo por su registro: </p>\n" +
+                        "        <a href=#><img src=\"\" alt=\"Cupon Registro\"></a>\n" +
+                        "    </body>\n" +
+                        "</html>"
+                ,"julian.acostat@uqvirtual.edu.co");
+
+        return clienteRepo.save(guardado.get());
+    }
+
+    private boolean esEmailRepetido(String email) {
+        return clienteRepo.findByEmail(email).orElse(null) != null ;
+    }
+
+    private boolean esCedulaRepetida(Integer cedula) {
+        return clienteRepo.findById(cedula).orElse(null) != null;
+    }
+
+    private CuponCliente asignarCuponACliente(Integer idCliente, Integer idCupon) throws Exception{
+        Optional<CuponCliente> cuponAsignado = cuponClienteRepo.obtenerPorCuponYCliente(idCliente, idCupon);
+
+        if (!cuponAsignado.isEmpty()) {
+            throw new Exception("Este cupon [id:"+idCupon+"] ya ha sido asignado a este cliente [id:"+idCliente+"]");
+        }
+
+        CuponCliente nuevoCuponCliente = CuponCliente.builder()
+                .cliente(obtenerCliente(idCliente))
+                .cupon(clienteRepo.obtenerCupon(idCupon))
+                .estado(false)
+                .build();
+
+        return cuponClienteRepo.save(nuevoCuponCliente);
+    }
+
+    @Override
+    public Cliente actualizarCliente(Integer idCliente, Cliente clienteActualizado) throws Exception {
+        Optional<Cliente> guardado = clienteRepo.findById(idCliente);
+        boolean emailDisponible = esEmailRepetido(clienteActualizado.getEmail());
+        boolean cedulaRepetida = esCedulaRepetida(clienteActualizado.getCedula());
+
+        if (guardado.isEmpty()) {
+            throw new Exception("El cliente no existe");
+        }
+        if (emailDisponible) {
+            throw new Exception("Otro cliente ya tiene este email");
+        }
+        if (cedulaRepetida) {
+            throw new Exception("Otro cliente ya tiene esta cedula");
+        }
+
+        guardado.get().setCedula(clienteActualizado.getCedula());
+        guardado.get().setNombre(clienteActualizado.getNombre());
+        guardado.get().setTelefonos(clienteActualizado.getTelefonos());
+        guardado.get().setImagen_perfil(clienteActualizado.getImagen_perfil());
+        guardado.get().setContrasenia(clienteActualizado.getContrasenia());
+
+        return clienteRepo.save(guardado.get());
     }
 
     @Override
@@ -285,6 +355,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         if(!contraseniaCorrecta) {
             throw new Exception("La contraseña anterior es Incorrecta!");
         }
+
+//        Tambien enviar un correo cuando el usuario quiera cambiar la contraseña y luego este: (diciendo que se cambió correctamente)
+//        emailServicio.enviarEmail("Cambio de Contraseña Existoso!","","");
 
         Cliente cliente = obtenerCliente(idCliente);
         cliente.setContrasenia(contraseniaNueva);

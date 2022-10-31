@@ -11,7 +11,9 @@ public interface ClienteServicio {
 
     Cliente registrarCliente(Cliente cliente) throws Exception;
 
-    Cliente actualizarCliente(Cliente cliente) throws Exception;
+    Cliente activarCuenta(Cliente cliente) throws Exception;
+
+    Cliente actualizarCliente(Integer idCliente, Cliente clienteActualizado) throws Exception;
 
     void eliminarCliente(Integer idCliente) throws Exception;
     

@@ -22,9 +22,11 @@ public interface ClienteRepo extends JpaRepository<Cliente, Integer> {
 
     Cliente findByEmailAndContrasenia(String email, String contrasenia); // Metodo por inferencia
 
+    @Query("select c from Cupon c where c.id = :idCupon")
+    Cupon obtenerCupon(Integer idCupon);
+
     @Query("select c from Cliente c where c.estado = :estado")
     List<Cliente> obtenerPorEstado(boolean estado, Pageable paginador);
-
 
     // Puede parecer confusa la consulta, pero es porque es una relacion de muchos a muchos
     @Query("select cup.cupon from Cliente c JOIN c.cupones cup where c.email = :emailCliente")
