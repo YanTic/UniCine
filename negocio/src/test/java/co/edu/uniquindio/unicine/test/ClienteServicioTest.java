@@ -151,17 +151,15 @@ public class ClienteServicioTest {
                     .build();
 
             Boleta boleta1 = Boleta.builder()
-                    .precio((float)2440)
                     .fila("H")
                     .columna("2")
                     .tipo(TipoSilla.ESTANDAR)
                     .build(); // Luego se le asigna la compra al crear hacer save(compra)
 
             Boleta boleta2 = Boleta.builder()
-                    .precio((float)2440)
                     .fila("H")
                     .columna("3")
-                    .tipo(TipoSilla.ESTANDAR)
+                    .tipo(TipoSilla.VIP)
                     .build();
 
             ConfiteriaCompra confiteria1 = ConfiteriaCompra.builder()

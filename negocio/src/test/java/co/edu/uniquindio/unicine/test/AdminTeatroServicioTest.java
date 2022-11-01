@@ -53,7 +53,7 @@ public class AdminTeatroServicioTest {
 
         Horario horario = Horario.builder()
                 .hora_fin(LocalTime.of(19,30,0))
-                .hora_inicio(LocalTime.of(16,30,0))
+                .hora_inicio(LocalTime.of(17,30,0))
                 .fecha_inicio(LocalDate.parse("2022-05-03"))
                 .fecha_fin(LocalDate.parse("2022-05-13"))
                 .build();

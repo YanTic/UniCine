@@ -47,6 +47,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         if(cliente == null) {
             throw new Exception("Los datos son incorrectos");
         }
+        if(cliente.getEstado() == false) {
+            throw new Exception("La cuenta del clientes está desactivada [Debe activarla]");
+        }
 
         return cliente;
     }
@@ -96,6 +99,7 @@ public class ClienteServicioImpl implements ClienteServicio{
                         "    <head>\n" +
                         "        <title>Cuenta Activada</title>\n" +
                         "    </head>\n" +
+                        " <style></style>"+
                         "    <body>\n" +
                         "        <p>Su cuenta ha sido activada exitosamente</p>\n" +
                         "        <p>Unicine le ha hecho un regalo por su registro: </p>\n" +
@@ -192,27 +196,8 @@ public class ClienteServicioImpl implements ClienteServicio{
         Integer idCliente = compra.getCliente().getCedula();
         Optional<Cliente> cliente = clienteRepo.findById(idCliente);
 
-        boolean cuponRedimible;
-        if (compra.getCupon() == null) {
-            cuponRedimible = false;
-        }
-        else {
-            cuponRedimible = esCuponRedimible(idCliente, compra.getCupon().getCupon().getId());
-            // Si no puede ser redimido la compra no puede tener el cupon
-            if (!cuponRedimible)
-                compra.setCupon(null);
-        }
-
-//        boolean compraClienteExistente = esCompraClienteExistente(idCliente, compra.getId());
-
         if (cliente.isEmpty()) {
             throw new Exception("El cliente [id:"+ idCliente+ "] no existe");
-        }
-        if (cuponRedimible) {
-            redimirCupon(idCliente, compra.getCupon().getCupon().getId());
-        }
-        else{ // No tiro una excepcion, porque la compra se puede realizar sin cupon igualmente
-            System.out.println("El cupon no está disponible [Cupon ya ha sido redimido o no Pertenece a este cliente]");
         }
 
         // Se Verifica la disponibilidad de cada boleta que se hace en la compra
@@ -243,6 +228,26 @@ public class ClienteServicioImpl implements ClienteServicio{
         if (!confiteriasNoDisponibles.isEmpty()) {
             throw new Exception("La compra no se puedo realizar. Confiteria/s no existente/s\n"+ confiteriasNoDisponibles);
         }
+
+
+        boolean cuponRedimible;
+        if (compra.getCupon() == null) {
+            cuponRedimible = false;
+        }
+        else {
+            cuponRedimible = esCuponRedimible(idCliente, compra.getCupon().getCupon().getId());
+
+            if (cuponRedimible) {
+                redimirCupon(idCliente, compra.getCupon().getCupon().getId());
+            }
+            else{
+                // No tiro una excepcion, porque la compra se puede realizar sin cupon igualmente
+                System.out.println("El cupon no está disponible [Cupon ya ha sido redimido o no Pertenece a este cliente]");
+                // Si no puede ser redimido la compra no puede tener el cupon
+                compra.setCupon(null);
+            }
+        }
+
 
         compra.setValorTotal((float)1);
         compraRepo.save(compra); // Este save() es para obtener el id de la compra y asignarselo a las boletas y confiterias

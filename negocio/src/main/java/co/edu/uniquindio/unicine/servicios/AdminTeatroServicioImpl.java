@@ -40,9 +40,13 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     @Override
     public Horario crearHorario(Horario horario) throws Exception {
         boolean horarioExiste = esHorarioExistente(horario);
+        boolean horarioDisponible = esHorarioDisponible(horario);
 
         if (horarioExiste) {
             throw new Exception("El horario ya existe [Otro horario tiene los mismos horaInicio, horaFin, fechaInicio, fechaFin]");
+        }
+        if (!horarioDisponible) {
+            throw new Exception("El horario se encuentra en una fecha que comparte la misma hora inicio y fin de otro horario [Cambie la hora o la fecha]");
         }
 
         return horarioRepo.save(horario);
@@ -54,6 +58,27 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
                         horario.getFecha_inicio(),
                         horario.getFecha_fin())
                 .orElse(null) != null;
+    }
+
+    private boolean esHorarioDisponible(Horario horario) {
+        // Esto obtiene los horarios que esten entre las fechas de inicio y fin del horario [que se mandó por parametro]
+        List<Horario> horariosPorFecha = horarioRepo.obtenerHorariosPorFecha(horario.getFecha_inicio(), horario.getFecha_fin());
+
+        boolean horarioDisponible = true;
+        for (Horario h : horariosPorFecha) {
+            // Comparo si la horainicio está entre otra horainicio y horafin
+            if(horario.getHora_inicio().isAfter(h.getHora_inicio()) && horario.getHora_inicio().isBefore(h.getHora_fin())) {
+                horarioDisponible = false; // La hora inicio está en un intervalo de hora que tiene otro horario [Horario que está en algun dia de la fecha del horario a crear]
+                break;
+            }
+            // Comparo si la horafin está entre otra horainicio y horafin
+            if(horario.getHora_fin().isAfter(h.getHora_inicio()) && horario.getHora_fin().isBefore(h.getHora_fin())) {
+                horarioDisponible = false; // La hora fin está en un intervalo de hora que tiene otro horario [Horario que está en algun dia de la fecha del horario a crear]
+                break;
+            }
+        }
+
+        return horarioDisponible;
     }
 
     @Override
@@ -113,6 +138,7 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     @Override
     public Horario actualizarHorario(Integer idHorario, Horario horarioActualizado) throws Exception {
         Optional<Horario> guardado = horarioRepo.findById(idHorario);
+        boolean horarioDisponible = esHorarioDisponible(horarioActualizado);
 
         System.out.println("guardado: " + guardado.get());
         System.out.println("actualizado: " + horarioActualizado);
@@ -127,6 +153,9 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         }
         if (horarioRepetido) {
             throw new Exception("Otro horario tiene las mismas caracteristicas [horaInicio, horaFin, fechaInicio, fechaFin]");
+        }
+        if (horarioDisponible) {
+            throw new Exception("El horario se encuentra en una fecha que comparte la misma hora inicio y fin de otro horario [Cambie la hora o la fecha]");
         }
 
         // Como el horario que se actualizó no tiene exactamente los mismos valores que otro

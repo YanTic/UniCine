@@ -156,8 +156,8 @@ insert into confiteria_compra values (11, 40000, 4, 8, 3);
 insert into confiteria_compra values (12, 10000, 1, 9, 3);
 
 /*insert into boleta values (id, col, fila, precio, tipo, compraid);*/
-insert into boleta values (1, "2", "A", 3200, 'ESTANDAR', 1);
-insert into boleta values (2, "2", "B", 1200, 'ESTANDAR', 1);
+insert into boleta values (1, "2", "A", 200, 'ESTANDAR', 1);
+insert into boleta values (2, "2", "B", 200, 'ESTANDAR', 1);
 insert into boleta values (3, "3", "A", 2200, 'VIP', 2);
 insert into boleta values (4, "4", "A", 4150, 'ESTANDAR', 3);
 insert into boleta values (5, "2", "F", 3050, 'ESTANDAR', 4);
