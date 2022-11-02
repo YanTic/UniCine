@@ -308,7 +308,7 @@ public class ClienteServicioImpl implements ClienteServicio{
         boolean cuponRedimible = esCuponRedimible(idCliente, idCupon);
 
         if(!cuponRedimible) {
-            throw new Exception("El cupon no está disponible [Cupon ya ha sido redimido o no Pertenece a este cliente]");
+            throw new Exception("El cupon no está disponible [Cupon ya ha sido redimido, no Pertenece a este cliente o está vencido]");
         }
 
 

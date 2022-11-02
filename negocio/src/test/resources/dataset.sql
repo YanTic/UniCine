@@ -49,7 +49,7 @@ insert into cliente_telefonos values (3,"0282");
 insert into cliente_telefonos values (2,"0282");
 
 /*insert into cupon values (id,criterio,desc,fechavencimiento,valordescuento)*/
-insert into cupon values (1, "Registro", "Cupon por registrarse", '2022-04-12', 0.10);
+insert into cupon values (1, "Registro", "Cupon por registrarse", '2022-12-12', 0.10);
 insert into cupon values (2, "Cumpleaños", "Cupon por cumpleaños", '2022-11-24', 0.30);
 insert into cupon values (3, "Premium", "Cupon por cliente premium", '2022-07-18', 0.35);
 insert into cupon values (4, "Evento", "Cupon asignado por asistir a un evento", '2022-04-28', 0.5);
