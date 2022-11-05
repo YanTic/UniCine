@@ -62,7 +62,8 @@ public class ClienteServicioImpl implements ClienteServicio{
             throw new Exception("El correo ya está en uso");
         }
 
-        emailServicio.enviarEmail("Bienvenido a Unicine | Registro Exitoso!"
+        Cliente registro = clienteRepo.save(cliente);
+        /*emailServicio.enviarEmail("Bienvenido a Unicine | Registro Exitoso!"
                 ,"<!DOCTYPE html>\n" +
                         "<html>\n" +
                         "    <head>\n" +
@@ -75,9 +76,9 @@ public class ClienteServicioImpl implements ClienteServicio{
                         "        <p>Si no puedes ingresar usa este link: <a href=#>link</a> </p>\n" +
                         "    </body>\n" +
                         "</html>"
-                ,"julian.acostat@uqvirtual.edu.co");
-
-        return clienteRepo.save(cliente);
+                ,"julian.acostat@uqvirtual.edu.co");*/
+        System.out.println("Se ha enviado el correo");
+        return registro;
     }
 
     @Override

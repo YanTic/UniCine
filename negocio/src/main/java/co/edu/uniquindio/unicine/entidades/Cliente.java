@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.entidades;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,6 +20,7 @@ public class Cliente implements Serializable {
     @EqualsAndHashCode.Include
     private Integer cedula;
 
+    @Length(max = 100)
     @Column(nullable = false, length = 100)
     private String nombre;
 
@@ -33,7 +35,8 @@ public class Cliente implements Serializable {
     private String imagen_perfil;
 
     @ToString.Exclude // Porque es inseguro
-    @Column(nullable = false, length = 100)
+    @Length(max = 40)
+    @Column(nullable = false, length = 40)
     private String contrasenia;
 
     @Column(nullable = false)
