@@ -11,7 +11,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Página de Inicio</title>
 </h:head>
+
+
+<style>
+    .formulario {
+        background: coral;
+    }
+    #caja1 {
+        background: greenyellow;
+    }
+</style>
+
 <h:body>
   <h1>#{inicioBean.msg}</h1>
+  <input id="caja1" class="formulario" type="text"/>
+  <input id="caja2" class="formulario" type="text"/>
+  <input id="caja3" class="formulario" type="text"/>
+  <br/>
+
+<!-- FORMULARIO EN JSF NATIVO
+  <h:form>
+    <h:inputText value="#{inicioBean.dato1}"/>
+    <h:inputText value="#{inicioBean.dato2}"/>
+    <h:commandButton value="Aceptar" action="#{inicioBean.cambiarValores()}"/>
+  </h:form>-->
+
+<!-- FORMULARIO CON PRIMEFACES Y AJAX-->
+  <h:form>
+    <h:panelGrid columns="2" cellpadding="5">
+      <p:outputLabel for="input1" value="Dato1: "/>
+      <p:inputText id="input1" value="#{inicioBean.dato1}" required="true"/>
+
+      <p:outputLabel for="input2" value="Dato2: "/>
+      <p:inputText id="input2" value="#{inicioBean.dato2}" required="true"/>
+    </h:panelGrid>
+
+    <p:commandButton value="Aceptar" action="#{inicioBean.cambiarValores()}" update="@form"/>
+    <!--<p:messages />  MENSAJE DE ERROR-->
+    <p:growl /> <!--ALERTA-->
+  </h:form>
+
 </h:body>
 </html>
