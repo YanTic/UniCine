@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.test;
 
+import co.edu.uniquindio.unicine.dto.PeliculaFuncionDTO;
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.servicios.AdminGeneralServicio;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
@@ -221,6 +222,13 @@ public class ClienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void buscarPeliculaTest() {
         List<Pelicula> peliculas = clienteServicio.buscarPelicula("spider");
+        peliculas.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculaFuncionTest() {
+        List<PeliculaFuncionDTO> peliculas = clienteServicio.buscarPeliculaFuncion("spider");
         peliculas.forEach(System.out::println);
     }
 

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.servicios;
 
+import co.edu.uniquindio.unicine.dto.PeliculaFuncionDTO;
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
 import org.springframework.stereotype.Service;
@@ -348,6 +349,11 @@ public class ClienteServicioImpl implements ClienteServicio{
     @Override
     public List<Pelicula> buscarPelicula(String nombre) {
         return clienteRepo.obtenerPelicula(nombre);
+    }
+
+    @Override
+    public List<PeliculaFuncionDTO> buscarPeliculaFuncion(String nombre) {
+        return clienteRepo.obtenerPeliculaFuncion(nombre);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.repo;
 
+import co.edu.uniquindio.unicine.dto.PeliculaFuncionDTO;
 import co.edu.uniquindio.unicine.entidades.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,6 +40,10 @@ public interface ClienteRepo extends JpaRepository<Cliente, Integer> {
 
     @Query("select p from Pelicula p where p.nombre like concat('%', :nombrePelicula, '%')")
     List<Pelicula> obtenerPelicula(String nombrePelicula);
+
+    // Si no se muestra una pelicula, es porque no tiene asociada una funcion, para esto se puede usar left join
+    @Query("select new co.edu.uniquindio.unicine.dto.PeliculaFuncionDTO(p,f) from Pelicula p left join p.funciones f where p.nombre like concat('%', :nombrePelicula, '%')")
+    List<PeliculaFuncionDTO> obtenerPeliculaFuncion(String nombrePelicula);
 
     @Query("select comp from Compra comp where comp.cliente.cedula = :idCliente")
     List<Compra> listarHistorialCompras(Integer idCliente);
