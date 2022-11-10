@@ -14,7 +14,40 @@
 
 <h:body>
 
-  <p:panel header="Creacion Teatro">
+  <h:form id="crud_teatro">
+
+    <p:toolbar>
+      <p:toolbarGroup>
+        <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success"
+                         onclick="PF('crear_teatro').show()" />
+      </p:toolbarGroup>
+    </p:toolbar>
+
+    <p:dataTable id="tabla_teatros" value="#{teatroBean.teatros}" var="teatro" paginator="true" paginatorPosition="bottom"
+                 rows="10" rowKey="#{teatro.id}" rowSelectMode="add" selection="#{teatroBean.teatrosSeleccionados}"
+                 reflow="true">
+
+      <p:column headerText="Codigo" >
+        <h:outputText value="#{teatro.id}"/>
+      </p:column>
+
+      <p:column headerText="Nombre" >
+        <h:outputText value="#{teatro.nombre}"/>
+      </p:column>
+
+      <p:column headerText="Direccion" >
+        <h:outputText value="#{teatro.direccion}"/>
+      </p:column>
+
+      <p:column headerText="Ciudad" >
+        <h:outputText value="#{teatro.ciudad.nombre}"/>
+      </p:column>
+
+    </p:dataTable>
+  </h:form>
+
+
+  <p:dialog widgetVar="crear_teatro" modal="true" header="Crear teatro" showEffect="fade">
     <h:form>
       <h:panelGrid columns="3" cellpadding="5">
         <p:outputLabel for="nombre_teatro" value="Nombre: "/>
@@ -26,18 +59,19 @@
         <p:message for="direccion_teatro"/>
 
         <p:outputLabel for="ciudad_teatro" value="Direccion: "/>
-        <p:selectOneMenu id="ciudad_teatro" value="#{teatroBean.teatro.ciudad}" converter="#{ciudadConverter}">
+        <p:selectOneMenu id="ciudad_teatro" value="#{teatroBean.teatro.ciudad}" converter="#{ciudadConverter}" required="true" requiredMessage="La ciudad es obligatoria">
+          <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true"/>
           <f:selectItems value="#{teatroBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
         </p:selectOneMenu>
         <p:message for="ciudad_teatro"/>
 
       </h:panelGrid>
 
-      <p:commandButton value="Crear nueva pelicula" action="#{teatroBean.crearTeatro()}" icon="pi pi-plus-circle" iconPos="left" update="@form"/>
+      <p:commandButton value="Crear nueva pelicula" action="#{teatroBean.crearTeatro()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_teatro:tabla_teatros"/>
       <!--<p:messages />  MENSAJE DE ERROR-->
       <p:growl for="mensaje_bean" showDetail="true"/> <!--ALERTA-->
     </h:form>
-  </p:panel>
+  </p:dialog>
 
 </h:body>
 

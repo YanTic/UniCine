@@ -25,6 +25,12 @@ public class TeatroBean implements Serializable {
     @Getter @Setter
     private List<Ciudad> ciudades;
 
+    @Getter @Setter
+    private List<Teatro> teatros;
+
+    @Getter @Setter
+    private List<Teatro> teatrosSeleccionados;
+
     @Autowired
     private AdminGeneralServicio adminGeneralServicio;
 
@@ -32,11 +38,14 @@ public class TeatroBean implements Serializable {
     public void init() {
         teatro = new Teatro();
         ciudades = adminGeneralServicio.listarCiudades();
+        teatros = adminGeneralServicio.listarTeatros();
     }
 
     public void crearTeatro() {
         try {
-            adminGeneralServicio.crearTeatro(teatro);
+            Teatro registro = adminGeneralServicio.crearTeatro(teatro);
+            teatros.add(registro); // Actualizamos los datos de la tabla que está en la web
+
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Teatro creado con exito!");
             FacesContext.getCurrentInstance().addMessage("mensaje_bean", fm);
         } catch (Exception e) {
