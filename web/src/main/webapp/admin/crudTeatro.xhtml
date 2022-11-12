@@ -18,14 +18,15 @@
 <h:body>
 
   <h:form id="crud_teatro">
+    <p:growl id="mensajes" showDetail="true"/>
 
     <p:toolbar>
       <p:toolbarGroup>
-        <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3"
-                         onclick="PF('crear_teatro').show()"/>
+        <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_teatro"
+                         oncomplete="PF('crear_teatro').show()" action="#{teatroBean.crearTeatroDialogo()}"/>
         <p:commandButton id="btn_eliminar" value="#{teatroBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
                          action="#{teatroBean.eliminarTeatros()}" disabled="#{teatroBean.teatrosSeleccionados.size()==0}"
-                         update="crud_teatro:tabla_teatros"/>
+                         update="crud_teatro:tabla_teatros, @this"/>
       </p:toolbarGroup>
     </p:toolbar>
 
@@ -58,11 +59,16 @@
         <h:outputText value="#{teatro.ciudad.nombre}"/>
       </p:column>
 
+      <p:column headerText="" >
+        <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                         action="#{teatroBean.editarTeatroDialogo(teatro)}" update="dialogo_teatro" oncomplete="PF('crear_teatro').show()"/>
+      </p:column>
+
     </p:dataTable>
   </h:form>
 
 
-  <p:dialog widgetVar="crear_teatro" modal="true" header="Crear teatro" showEffect="fade">
+  <p:dialog id="dialogo_teatro" widgetVar="crear_teatro" modal="true" header="#{teatroBean.msgDialogoTeatro}" showEffect="fade">
     <h:form>
       <h:panelGrid columns="3" cellpadding="5">
         <p:outputLabel for="nombre_teatro" value="Nombre: "/>
@@ -82,7 +88,7 @@
 
       </h:panelGrid>
 
-      <p:commandButton value="Crear nueva pelicula" action="#{teatroBean.crearTeatro()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_teatro:tabla_teatros"/>
+      <p:commandButton value="#{teatroBean.msgDialogoTeatro}" action="#{teatroBean.crearTeatro()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_teatro:tabla_teatros"/>
       <!--<p:messages />  MENSAJE DE ERROR-->
       <p:growl for="mensaje_bean" showDetail="true"/> <!--ALERTA-->
     </h:form>
