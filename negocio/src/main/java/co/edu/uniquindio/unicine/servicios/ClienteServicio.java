@@ -38,6 +38,8 @@ public interface ClienteServicio {
 
     List<Pelicula> buscarPelicula(String nombre);
 
+    List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula, Integer idCiudad);
+
     List<PeliculaFuncionDTO> buscarPeliculaFuncion(String nombre);
 
     Cliente cambiarContrasenia(Integer idCliente, String contraseniaAnterior, String contraseniaNueva) throws Exception;

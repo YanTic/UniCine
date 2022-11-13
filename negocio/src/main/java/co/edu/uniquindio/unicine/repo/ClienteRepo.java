@@ -45,6 +45,9 @@ public interface ClienteRepo extends JpaRepository<Cliente, Integer> {
     @Query("select new co.edu.uniquindio.unicine.dto.PeliculaFuncionDTO(p,f) from Pelicula p left join p.funciones f where p.nombre like concat('%', :nombrePelicula, '%')")
     List<PeliculaFuncionDTO> obtenerPeliculaFuncion(String nombrePelicula);
 
+    @Query("select distinct f.pelicula from Funcion f where f.pelicula.estado = :estadoPelicula and f.sala.teatro.ciudad.id = :idCiudad")
+    List<Pelicula> obtenerPeliculasPorEstado(EstadoPelicula estadoPelicula, Integer idCiudad);
+
     @Query("select comp from Compra comp where comp.cliente.cedula = :idCliente")
     List<Compra> listarHistorialCompras(Integer idCliente);
 
