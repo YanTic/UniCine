@@ -29,13 +29,26 @@
         <p:inputTextarea id="reparto_pelicula" value="#{peliculaBean.pelicula.reparto}" required="true"/>
         <p:message for="reparto_pelicula"/>
 
-        <p:outputLabel for="url_img_pelicula" value="Imagen: "/>
+        <p:outputLabel for="url_img_pelicula" value="URL Imagen: "/>
         <p:inputText id="url_img_pelicula" value="#{peliculaBean.pelicula.imagenURL}" required="true" toggleMask="true"/>
         <p:message for="url_img_pelicula"/>
 
-        <p:outputLabel for="url_trailer_pelicula" value="Trailer: "/>
+        <p:outputLabel for="url_trailer_pelicula" value="URL Trailer: "/>
         <p:inputText id="url_trailer_pelicula" value="#{peliculaBean.pelicula.trailerURL}" required="true" toggleMask="true"/>
         <p:message for="url_trailer_pelicula"/>
+
+        <p:outputLabel for="estado_pelicula" value="Estado: "/>
+        <p:selectOneMenu id="estado_pelicula" value="#{peliculaBean.pelicula.estado}" required="true" requiredMessage="El estado es obligatorio">
+          <f:selectItem itemLabel="Seleccione el estado" noSelectionOption="true"/>
+          <f:selectItems value="#{peliculaBean.estadoPeliculas}" var="estado" itemLabel="#{estado}" itemValue="#{estado}"/>
+        </p:selectOneMenu>
+        <p:message for="estado_pelicula"/>
+
+        <p:outputLabel for="generos_pelicula" value="Generos: "/>
+        <p:selectManyCheckbox id="generos_pelicula" value="#{peliculaBean.pelicula.generos}" converter="#{generoConverter}" layout="grid" columns="3">
+          <f:selectItems value="#{peliculaBean.generos}" var="genero" itemLabel="#{genero.nombre}" itemValue="#{genero}"/>
+        </p:selectManyCheckbox>
+        <p:message for="generos_pelicula"/>
 
       </h:panelGrid>
 

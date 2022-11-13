@@ -2,6 +2,11 @@
     max-width: 60px;
 }
 
+.img-icon-ciudad {
+    max-width: 100px;
+    align-items: center;
+}
+
 .form-busqueda {
     width: 500px;
 }

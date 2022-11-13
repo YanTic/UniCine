@@ -1,6 +1,6 @@
 package co.edu.uniquindio.unicine.converter;
 
-import co.edu.uniquindio.unicine.entidades.Pelicula;
+import co.edu.uniquindio.unicine.entidades.Genero;
 import co.edu.uniquindio.unicine.servicios.AdminGeneralServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,28 +13,28 @@ import javax.faces.convert.ConverterException;
 import java.io.Serializable;
 
 @Component
-public class PeliculaConverter implements Converter<Pelicula>, Serializable {
+public class GeneroConverter implements Converter<Genero>, Serializable {
 
     @Autowired
     private AdminGeneralServicio adminGeneralServicio;
 
     @Override
-    public Pelicula getAsObject(FacesContext context, UIComponent component, String value) {
-        Pelicula pelicula = null;
+    public Genero getAsObject(FacesContext context, UIComponent component, String value) {
+        Genero genero = null;
 
         if (value != null && !"".equals(value)) {
             try {
-                pelicula = adminGeneralServicio.obtenerPelicula(Integer.parseInt(value));
+                genero = adminGeneralServicio.obtenerGenero(Integer.parseInt(value));
             } catch (Exception e) {
                 throw new ConverterException(new FacesMessage(component.getId()+ ": id no es valido"));
             }
         }
 
-        return pelicula;
+        return genero;
     }
 
     @Override
-    public String getAsString(FacesContext context, UIComponent component, Pelicula value) {
+    public String getAsString(FacesContext context, UIComponent component, Genero value) {
         if (value != null) {
             return ""+value.getId();
         }

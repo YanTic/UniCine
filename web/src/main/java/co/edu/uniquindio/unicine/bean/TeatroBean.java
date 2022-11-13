@@ -82,6 +82,7 @@ public class TeatroBean implements Serializable {
             catch (Exception e) {
                 // Esto es en caso de que al hacer el delete(), el jdbc tire error, ya sea porque no se puede eliminar
                 // el teatro, porque ya existen objetos que están relacionados o dependen de este
+                // Es mejor hacerlo de esta forma, solo decirle al usuario "no se puede", que hacer una peligrosa eliminacion por cascada
                 teatrosNoEliminados += "Teatro [Id: "+t.getId()+ "] ";
             }
 

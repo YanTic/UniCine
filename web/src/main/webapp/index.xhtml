@@ -5,6 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -18,6 +19,26 @@
 <h:body>
   <div id="barra_nav">
 
+    <nav class="py-0 bg-light border-bottom">
+      <div class="container d-flex flex-wrap">
+        <ul class="nav me-auto">
+          <li class="nav-item">
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="blank" class="nav-link link-dark px-2"> <span class="pi pi-youtube" /> </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link link-dark px-2"> <span class="pi pi-twitter" /> </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://github.com/YanTic" target="blank" class="nav-link link-dark px-2"> <span class="pi pi-github" /> </a>
+          </li>
+        </ul>
+        <ul class="nav">
+          <li class="nav-item "><a href="#" class="nav-link link-dark px-2">ELIJA EL CIUDAD TEATRO</a></li>
+        </ul>
+      </div>
+    </nav>
+
+
     <header>
       <div class="text-bg-dark">
         <div class="container">
@@ -27,29 +48,34 @@
               <span class="fs-4">Unicine</span>
             </a>
 
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 menu-ppal">
               <li>
-                <a href="#" class="nav-link text-secondary">
+                <a href="#" class="nav-link text-secondary text-center">
+                  <i class="pi pi-home"/> <br/>
                   Inicio
                 </a>
               </li>
               <li>
-                <a href="/admin/crudPelicula.xhtml" class="nav-link text-white">
+                <a href="/admin/crudPelicula.xhtml" class="nav-link text-white text-center">
+                  <i class="pi pi-cog"/> <br/>
                   CRUD Peliculas
                 </a>
               </li>
               <li>
-                <a href="/admin/crudTeatro.xhtml" class="nav-link text-white">
+                <a href="/admin/crudTeatro.xhtml" class="nav-link text-white text-center">
+                  <i class="pi pi-cog" /> <br/>
                   CRUD Teatros
                 </a>
               </li>
               <li>
-                <a href="/admin_teatro/crudSala.xhtml" class="nav-link text-white">
+                <a href="/admin_teatro/crudSala.xhtml" class="nav-link text-white text-center">
+                  <i class="pi pi-cog" /> <br/>
                   CRUD Salas
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-link text-white">
+                <a href="#" class="nav-link text-white text-center">
+                  <i class="pi pi-user" /> <br/>
                   Perfil
                 </a>
               </li>
@@ -78,19 +104,48 @@
 
   </div>
 
-  <div class="container">
+  <div jsf:id="listas_peliculas" class="container">
 
     <div>
       <h1>En cartelera</h1>
-      <div></div>
+
+      <p:repeat value="#{inicioBean.peliculasEstreno}" var="pelicula" >
+        <p>#{pelicula.nombre}</p>
+      </p:repeat>
+
     </div>
 
     <div>
       <h1>Proximamente</h1>
-      <div></div>
+      <p:repeat value="#{inicioBean.peliculasProximas}" var="pelicula" >
+        <p>#{pelicula.nombre}</p>
+      </p:repeat>
     </div>
 
   </div>
+
+  <p:dialog id="dialogo_ciudad" widgetVar="dialogo_ciudad" modal="true" header="Seleccionar Ciudad" showEffect="fade" visible="true">
+    <h:form>
+      <h:panelGrid columns="3" cellpadding="5">
+
+        <div>
+          <h:graphicImage library="img" name="icono_black_font.png" styleClass="img-icon-ciudad"/>
+        </div>
+
+        <p:outputLabel for="ciudad_inicio" value="Ciudad: "/>
+        <p:selectOneMenu id="ciudad_inicio" value="#{inicioBean.ciudad}" converter="#{ciudadConverter}" required="true" requiredMessage="La ciudad es obligatoria">
+          <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true"/>
+          <f:selectItems value="#{inicioBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
+        </p:selectOneMenu>
+        <p:message for="ciudad_inicio"/>
+
+      </h:panelGrid>
+
+      <p:commandButton value="Seleccionar Ciudad" action="#{inicioBean.elegirCiudad()}" icon="pi pi-check" iconPos="left" update="@form, listas_peliculas" oncomplete="PF('dialogo_ciudad').hide()"/>
+      <!--<p:messages />  MENSAJE DE ERROR-->
+      <p:growl for="mensaje_bean" showDetail="true"/> <!--ALERTA-->
+    </h:form>
+  </p:dialog>
 
 
 </h:body>

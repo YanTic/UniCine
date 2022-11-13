@@ -26,7 +26,7 @@ public class CiudadConverter implements Converter<Ciudad>, Serializable {
             try {
                 ciudad = adminGeneralServicio.obtenerCiudad(Integer.parseInt(value));
             } catch (Exception e) {
-                throw new ConverterException(new FacesMessage(component.getId() + ":id no valido"));
+                throw new ConverterException(new FacesMessage(component.getId() + ": id no es valido"));
             }
         }
 
@@ -35,7 +35,7 @@ public class CiudadConverter implements Converter<Ciudad>, Serializable {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Ciudad value) {
-        if(value != null) {
+        if (value != null) {
             return ""+value.getId();
         }
         return "";
