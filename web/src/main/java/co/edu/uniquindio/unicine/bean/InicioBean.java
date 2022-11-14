@@ -38,17 +38,25 @@ public class InicioBean implements Serializable {
     @Getter @Setter
     private Ciudad ciudad;
 
+    @Getter @Setter
+    private List<String> imagenes;
+
     @PostConstruct
     public void init() {
-        peliculasEstreno = new ArrayList<>();
-        peliculasProximas = new ArrayList<>();
+        peliculasEstreno = clienteServicio.listarPeliculasPorEstado(EstadoPelicula.ESTRENO);
+        peliculasProximas = clienteServicio.listarPeliculasPorEstado(EstadoPelicula.PROXIMO);
         ciudades = adminGeneralServicio.listarCiudades();
+
+        imagenes = new ArrayList<>();
+        imagenes.add("");
+        imagenes.add("");
+        imagenes.add("");
     }
 
     public void elegirCiudad() {
         if (ciudad != null) {
-            peliculasEstreno = clienteServicio.listarPeliculasPorEstado(EstadoPelicula.ESTRENO, ciudad.getId());
-            peliculasProximas = clienteServicio.listarPeliculasPorEstado(EstadoPelicula.PROXIMO, ciudad.getId());
+            peliculasEstreno = clienteServicio.listarPeliculasPorEstadoCiudad(EstadoPelicula.ESTRENO, ciudad.getId());
+            peliculasProximas = clienteServicio.listarPeliculasPorEstadoCiudad(EstadoPelicula.PROXIMO, ciudad.getId());
         }
 
     }

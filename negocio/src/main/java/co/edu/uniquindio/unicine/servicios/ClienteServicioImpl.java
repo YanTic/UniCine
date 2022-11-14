@@ -352,8 +352,13 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     @Override
-    public List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula, Integer idCiudad) {
-        return clienteRepo.obtenerPeliculasPorEstado(estadoPelicula, idCiudad);
+    public List<Pelicula> listarPeliculasPorEstadoCiudad(EstadoPelicula estadoPelicula, Integer idCiudad) {
+        return clienteRepo.obtenerPeliculasPorEstadoCiudad(estadoPelicula, idCiudad);
+    }
+
+    @Override
+    public List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula) {
+        return clienteRepo.obtenerPeliculasPorEstado(estadoPelicula);
     }
 
     @Override

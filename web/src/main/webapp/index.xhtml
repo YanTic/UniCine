@@ -17,13 +17,13 @@
 </h:head>
 
 <h:body>
-  <div id="barra_nav">
 
-    <nav class="py-0 bg-light border-bottom">
-      <div class="container d-flex flex-wrap">
+  <div class="barra-principal">
+    <nav class="py-0 bg-light border-bottom ">
+      <div class="container d-flex flex-wrap barra-principal">
         <ul class="nav me-auto">
           <li class="nav-item">
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="blank" class="nav-link link-dark px-2"> <span class="pi pi-youtube" /> </a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="blank" class="nav-link link-dark px-2"> <span class="pi pi-youtube"/> </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link link-dark px-2"> <span class="pi pi-twitter" /> </a>
@@ -37,8 +37,10 @@
         </ul>
       </div>
     </nav>
+  </div>
 
 
+  <div id="barra_nav">
     <header>
       <div class="text-bg-dark">
         <div class="container">
@@ -84,7 +86,7 @@
           </div>
         </div>
       </div>
-      <div class="px-3 py-2 border-bottom mb-3">
+      <div class="px-3 py-2 border-bottom">
         <div class="container d-flex flex-wrap justify-content-center">
 
           <h:form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
@@ -104,24 +106,68 @@
 
   </div>
 
-  <div jsf:id="listas_peliculas" class="container">
 
-    <div>
-      <h1>En cartelera</h1>
-
-      <p:repeat value="#{inicioBean.peliculasEstreno}" var="pelicula" >
-        <p>#{pelicula.nombre}</p>
-      </p:repeat>
-
+  <p:carousel value="#{inicioBean.imagenes}" var="imagen" numScroll="1" numVisible="1">
+    <div class="item-carrusel">
+      <h1>TEST</h1>
     </div>
+  </p:carousel>
 
-    <div>
-      <h1>Proximamente</h1>
-      <p:repeat value="#{inicioBean.peliculasProximas}" var="pelicula" >
-        <p>#{pelicula.nombre}</p>
-      </p:repeat>
-    </div>
+  <div class="separador-pag">
+    <div jsf:id="listas_peliculas" class="container ">
 
+      <div class="cartelera">
+        <h1 class="mt-4 mb-4">Cartelera</h1>
+
+        <div class="row">
+          <p:repeat value="#{inicioBean.peliculasEstreno}" var="pelicula" >
+            <div class="col-md-6">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative item-pelicula">
+                <div class="col p-4 d-flex flex-column position-static" >
+                  <div class="d-inline-block mb-2" >
+                    <p:repeat value="#{pelicula.generos}" var="genero" ><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+                  </div>
+                  <h3 class="mb-0">#{pelicula.nombre}</h3>
+                  <p class="card-text mb-auto">#{pelicula.sinopsis}</p>
+                  <a href="#" class="stretched-link">Continue reading</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                </div>
+              </div>
+            </div>
+          </p:repeat>
+        </div>
+      </div>
+
+      <hr class="mt-4"/>
+
+      <div class="proximamente">
+        <h1 class="mt-4 mb-4">Proximamente</h1>
+
+        <div class="row">
+          <p:repeat value="#{inicioBean.peliculasProximas}" var="pelicula" >
+            <div class="col-md-6">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative item-pelicula">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <div class="d-inline-block mb-2 ">
+                    <p:repeat value="#{pelicula.generos}" var="genero"><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+                  </div>
+                  <h3 class="mb-0">#{pelicula.nombre}</h3>
+                  <!--<div class="mb-1 text-muted">Nov 12</div>-->
+                  <p class="card-text mb-auto">#{pelicula.sinopsis}</p>
+                  <a href="#" class="stretched-link">Continue reading</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                </div>
+              </div>
+            </div>
+          </p:repeat>
+        </div>
+      </div>
+
+</div>
   </div>
 
   <p:dialog id="dialogo_ciudad" widgetVar="dialogo_ciudad" modal="true" header="Seleccionar Ciudad" showEffect="fade" visible="true">
@@ -147,6 +193,28 @@
     </h:form>
   </p:dialog>
 
+
+
+
+  <div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <div class="col-md-4 d-flex align-items-center">
+        <span class="mb-3 mb-md-0 text-muted">&copy; 2022 Unicine, Inc</span>
+      </div>
+
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+        <li class="ms-3">
+          <a class="text-muted" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"> <i class="pi pi-youtube"/> </a>
+        </li>
+        <li class="ms-3">
+          <a class="text-muted" href="#"> <i class="pi pi-twitter"/> </a>
+        </li>
+        <li class="ms-3">
+          <a class="text-muted" href="https://github.com/YanTic"> <i class="pi pi-github"/> </a>
+        </li>
+      </ul>
+    </footer>
+  </div>
 
 </h:body>
 </html>

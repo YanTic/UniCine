@@ -38,7 +38,9 @@ public interface ClienteServicio {
 
     List<Pelicula> buscarPelicula(String nombre);
 
-    List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula, Integer idCiudad);
+    List<Pelicula> listarPeliculasPorEstadoCiudad(EstadoPelicula estadoPelicula, Integer idCiudad);
+
+    List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula);
 
     List<PeliculaFuncionDTO> buscarPeliculaFuncion(String nombre);
 
