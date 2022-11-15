@@ -43,9 +43,9 @@ public class FuncionRepoTest {
     public void obtenerDatosFuncion(){
         List<Object[]> funciones = funcionRepo.listarFunciones(1);
 
-        // f.pelicula.nombre, f.pelicula.estado, f.pelicula.imagenURL, f.sala.id, f.sala.teatro.direccion, f.sala.teatro.ciudad.nombre, f.horario
+        // f.pelicula.nombre, f.pelicula.estado, f.sala.id, f.sala.teatro.direccion, f.sala.teatro.ciudad.nombre, f.horario
         funciones.forEach(o ->
-            System.out.println(o[0] + ", "+ o[1] + ", "+ o[2] + ", "+ o[3] + ", "+ o[4] + ", "+ o[5] + ", "+ o[6])
+            System.out.println(o[0] + ", "+ o[1] + ", "+ o[2] + ", "+ o[3] + ", "+ o[4] + ", "+ o[5])
         );
     }
 

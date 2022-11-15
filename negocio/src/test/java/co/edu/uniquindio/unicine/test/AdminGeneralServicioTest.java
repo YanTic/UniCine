@@ -138,7 +138,6 @@ public class AdminGeneralServicioTest {
         Pelicula pelicula = Pelicula.builder()
                 .nombre("StarWars: Rogue One")
                 .estado(EstadoPelicula.PRESTRENO)
-                .imagenURL("url")
                 .trailerURL("url")
                 .generos(generos)
                 .reparto("Andor, Darth Vader")
@@ -283,7 +282,6 @@ public class AdminGeneralServicioTest {
 
             Pelicula peliculaActualizada = Pelicula.builder()
                     .nombre("The Batman")
-                    .imagenURL(pelicula.getImagenURL())
                     .trailerURL(pelicula.getTrailerURL())
                     .sinopsis(pelicula.getSinopsis())
                     .reparto(pelicula.getReparto())

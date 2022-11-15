@@ -73,13 +73,13 @@ insert into genero values (5, "ANIMACION");
 insert into genero values (6, "DRAMA");
 
 /*insert into pelicula values (id,estado,imagen,nombre,reparto,sinopsis,trailerurl);*/
-insert into pelicula values (1,'PRESTRENO', "url", "SpiderMan-NoWayHome","Tom, Andrew, Tobey", "Spiderman pelea con ayuda de los otros spidermans", "url");
-insert into pelicula values (2,'PRESTRENO', "url", "StarWars: Rogue One","Andor, Darth Vader", "Pelean por los planos de destruccion de la death star", "url");
-insert into pelicula values (3,'ESTRENO',   "url", "Klaus", "Klaus, Repartidor", "El repartidor salva la navidad de una aldea", "url");
-insert into pelicula values (4,'ESTRENO',   "url", "The Father", "Abuelito, Doctora", "El abuelito vive con alzheimer", "url");
-insert into pelicula values (5,'PROXIMO',   "url", "Free Guy", "NPC, Policia", "El npc se da cuenta que vive en un mundo virtual", "url");
-insert into pelicula values (6,'PROXIMO',   "url", "Tenet", "Negrito, Blanquito", "Salvan el mundo con viajes al futuro y pasado", "url");
-insert into pelicula values (7,'ESTRENO',   "url", "The Amazing SpiderMan", "Peter Parker, Gwen Stacy, May, Electro", "Spidy se enfrenta a electro, increible", "url");
+insert into pelicula values (1,'PRESTRENO', "SpiderMan-NoWayHome","Tom, Andrew, Tobey", "Spiderman pelea con ayuda de los otros spidermans", "url");
+insert into pelicula values (2,'PRESTRENO', "StarWars: Rogue One","Andor, Darth Vader", "Pelean por los planos de destruccion de la death star", "url");
+insert into pelicula values (3,'ESTRENO',   "Klaus", "Klaus, Repartidor", "El repartidor salva la navidad de una aldea", "url");
+insert into pelicula values (4,'ESTRENO',   "The Father", "Abuelito, Doctora", "El abuelito vive con alzheimer", "url");
+insert into pelicula values (5,'PROXIMO',   "Free Guy", "NPC, Policia", "El npc se da cuenta que vive en un mundo virtual", "url");
+insert into pelicula values (6,'PROXIMO',   "Tenet", "Negrito, Blanquito", "Salvan el mundo con viajes al futuro y pasado", "url");
+insert into pelicula values (7,'ESTRENO',   "The Amazing SpiderMan", "Peter Parker, Gwen Stacy, May, Electro", "Spidy se enfrenta a electro, increible", "url");
 
 /*insert into pelicula_generos values (peliculaid, generoid);*/
 insert into pelicula_generos values (1, 2);
@@ -93,6 +93,14 @@ insert into pelicula_generos values (5, 4);
 insert into pelicula_generos values (6, 4);
 insert into pelicula_generos values (7, 2);
 insert into pelicula_generos values (7, 4);
+
+insert into pelicula_imagenes values (1, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
+insert into pelicula_imagenes values (2, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
+insert into pelicula_imagenes values (3, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
+insert into pelicula_imagenes values (4, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
+insert into pelicula_imagenes values (5, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
+insert into pelicula_imagenes values (6, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
+insert into pelicula_imagenes values (7, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
 
 /*insert into horario values (id, fechafin, fechainicio, horafin, horainicio);*/
 insert into horario values (1, '2022-08-13', '2022-08-03', '10:30:00', '08:15:00');
@@ -130,6 +138,7 @@ insert into funcion values (7, 110, 4, 3, 7);
 insert into funcion values (8, 330, 5, 4, 8);
 insert into funcion values (9, 240, 4, 1, 9);
 insert into funcion values (10, 300, 1, 7, 8);
+insert into funcion values (11, 310, 2, 6, 5);
 
 /*insert into compra values (id,fecha,metodopago,valortotal,clientecedula,cuponClienteid,funcionid );*/
 insert into compra values (1, '2022-05-03', 'EFECTY',    42200,  1, 1, 2);
