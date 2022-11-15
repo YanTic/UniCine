@@ -122,19 +122,23 @@
         <div class="row">
           <p:repeat value="#{inicioBean.peliculasEstreno}" var="pelicula" >
             <div class="col-md-6">
-              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative item-pelicula">
-                <div class="col p-4 d-flex flex-column position-static" >
-                  <div class="d-inline-block mb-2" >
-                    <p:repeat value="#{pelicula.generos}" var="genero" ><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+              <a href="/detalle_pelicula.xhtml?pelicula_id=#{pelicula.id}" class="text-decoration-none text-black">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative item-pelicula">
+
+                  <div class="col-lg-8 p-4 d-flex flex-column position-static" >
+                    <div class="d-inline-block mb-2" >
+                      <p:repeat value="#{pelicula.generos}" var="genero" ><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+                    </div>
+                    <h3 class="mb-0">#{pelicula.nombre}</h3>
+                    <p class="card-text mb-auto">#{pelicula.sinopsis}</p>
                   </div>
-                  <h3 class="mb-0">#{pelicula.nombre}</h3>
-                  <p class="card-text mb-auto">#{pelicula.sinopsis}</p>
-                  <a href="#" class="stretched-link">Continue reading</a>
+
+                  <div class="col-md-4 d-none d-lg-block img-pelicula">
+                    <img src="#{pelicula.imagenPrincipal}" alt="#{pelicula.nombre}" />
+                  </div>
+
                 </div>
-                <div class="col-auto d-none d-lg-block">
-                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                </div>
-              </div>
+              </a>
             </div>
           </p:repeat>
         </div>
@@ -148,26 +152,28 @@
         <div class="row">
           <p:repeat value="#{inicioBean.peliculasProximas}" var="pelicula" >
             <div class="col-md-6">
-              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative item-pelicula">
-                <div class="col p-4 d-flex flex-column position-static">
-                  <div class="d-inline-block mb-2 ">
-                    <p:repeat value="#{pelicula.generos}" var="genero"><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+              <a href="/detalle_pelicula.xhtml?pelicula_id=#{pelicula.id}" class="text-decoration-none text-black">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative item-pelicula">
+                  <div class="col-lg-8 p-4 d-flex flex-column position-static" >
+                    <div class="d-inline-block mb-2" >
+                      <p:repeat value="#{pelicula.generos}" var="genero" ><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+                    </div>
+                    <h3 class="mb-0">#{pelicula.nombre}</h3>
+                    <p class="card-text mb-auto">#{pelicula.sinopsis}</p>
                   </div>
-                  <h3 class="mb-0">#{pelicula.nombre}</h3>
-                  <!--<div class="mb-1 text-muted">Nov 12</div>-->
-                  <p class="card-text mb-auto">#{pelicula.sinopsis}</p>
-                  <a href="#" class="stretched-link">Continue reading</a>
+
+                  <div class="col-md-4 d-none d-lg-block img-pelicula">
+                    <img src="#{pelicula.imagenPrincipal}" alt="#{pelicula.nombre}" />
+                  </div>
+
                 </div>
-                <div class="col-auto d-none d-lg-block">
-                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                </div>
-              </div>
+              </a>
             </div>
           </p:repeat>
         </div>
       </div>
 
-</div>
+    </div>
   </div>
 
   <p:dialog id="dialogo_ciudad" widgetVar="dialogo_ciudad" modal="true" header="Seleccionar Ciudad" showEffect="fade" visible="true">

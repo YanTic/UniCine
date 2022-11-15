@@ -46,6 +46,10 @@ public class RegistroBean implements Serializable {
             String[] tel = new String[] {"214124", "343242"};
             cliente.setTelefonos(Arrays.asList(tel));
 
+            // HACER LO MISMO QUE EN PELICULA PARA AGREGAR UNA FOTA DE PERFIL, TAMBIEN
+            // SE TIENE QUE CREAR UNA NUEVA CARPETA EN CLOUDINARY
+
+
             if(cliente.getContrasenia().equals(confirmacionContrasenia)) {
                 clienteServicio.registrarCliente(cliente);
 

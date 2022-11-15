@@ -31,3 +31,12 @@
     size: 3px;
 }
 
+.img-pelicula {
+
+}
+
+.img-pelicula img {
+    width: 100%;
+    height: auto;
+}
+
