@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -22,8 +23,12 @@ public class Pelicula implements Serializable {
     @Column(nullable = false, unique = true, length = 200)
     private String nombre;
 
+    @ElementCollection
     @Column(nullable = false)
-    private String imagenURL, trailerURL;
+    private Map<String, String> imagenes;
+
+    @Column(nullable = false)
+    private String trailerURL;
 
     @Lob
     @Column(nullable = false)
@@ -45,13 +50,20 @@ public class Pelicula implements Serializable {
     private List<Genero> generos;
 
     @Builder
-    public Pelicula(String nombre, String imagenURL, String trailerURL, String sinopsis, String reparto, EstadoPelicula estado, List<Genero> generos) {
+    public Pelicula(String nombre, String trailerURL, String sinopsis, String reparto, EstadoPelicula estado, List<Genero> generos) {
         this.nombre = nombre;
-        this.imagenURL = imagenURL;
         this.trailerURL = trailerURL;
         this.sinopsis = sinopsis;
         this.reparto = reparto;
         this.estado = estado;
         this.generos = generos;
+    }
+
+    public String getImagenPrincipal() {
+        if (!imagenes.isEmpty()) {
+            String primeraImg = imagenes.keySet().toArray()[0].toString();
+            return imagenes.get(primeraImg);
+        }
+        return "";
     }
 }

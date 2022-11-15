@@ -19,8 +19,8 @@ public interface PeliculaRepo extends JpaRepository<Pelicula, Integer> {
     @Query("select p from Pelicula p where p.id <> :idPelicula and p.nombre = :nombre")
     Optional<Pelicula> verificarDisponibilidadParaActualizadas(Integer idPelicula, String nombre);
 
-    @Query("select p from Pelicula p where p.id <> :idPelicula and p.nombre = :nombre and p.imagenURL = :imagenURL and p.trailerURL = :trailerURL and p.sinopsis = :sinopsis and p.reparto = :reparto and p.estado = :estado")
-    Optional<Pelicula> verificarExistencia(Integer idPelicula, String nombre, String imagenURL, String trailerURL, String sinopsis, String reparto, EstadoPelicula estado);
+    @Query("select p from Pelicula p where p.id <> :idPelicula and p.nombre = :nombre and p.trailerURL = :trailerURL and p.sinopsis = :sinopsis and p.reparto = :reparto and p.estado = :estado")
+    Optional<Pelicula> verificarExistencia(Integer idPelicula, String nombre, String trailerURL, String sinopsis, String reparto, EstadoPelicula estado);
 
 
 

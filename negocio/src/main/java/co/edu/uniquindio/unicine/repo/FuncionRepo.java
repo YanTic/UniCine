@@ -38,11 +38,11 @@ public interface FuncionRepo extends JpaRepository<Funcion, Integer> {
 
 
     // Utilizando Object[]
-    @Query("select f.pelicula.nombre, f.pelicula.estado, f.pelicula.imagenURL, f.sala.id, f.sala.teatro.direccion, f.sala.teatro.ciudad.nombre, f.horario from Funcion f where f.pelicula.id = :idPelicula")
+    @Query("select f.pelicula.nombre, f.pelicula.estado, f.sala.id, f.sala.teatro.direccion, f.sala.teatro.ciudad.nombre, f.horario from Funcion f where f.pelicula.id = :idPelicula")
     List<Object[]> listarFunciones(Integer idPelicula);
 
     // Utilizando DTO (Data transfer Object)
-    @Query("select new co.edu.uniquindio.unicine.dto.FuncionDTO(f.pelicula.nombre, f.pelicula.estado, f.pelicula.imagenURL, f.sala.id, f.sala.teatro.direccion, f.sala.teatro.ciudad.nombre, f.horario) from Funcion f where f.pelicula.id = :idPelicula")
+    @Query("select new co.edu.uniquindio.unicine.dto.FuncionDTO(f.pelicula.nombre, f.pelicula.estado, f.sala.id, f.sala.teatro.direccion, f.sala.teatro.ciudad.nombre, f.horario) from Funcion f where f.pelicula.id = :idPelicula")
     List<FuncionDTO> listarFunciones2(Integer idPelicula);
 
 

@@ -266,7 +266,6 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
         }
 
         guardada.get().setNombre(peliculaActualizada.getNombre());
-        guardada.get().setImagenURL(peliculaActualizada.getImagenURL());
         guardada.get().setTrailerURL(peliculaActualizada.getTrailerURL());
         guardada.get().setSinopsis(peliculaActualizada.getSinopsis());
         guardada.get().setReparto(peliculaActualizada.getReparto());
@@ -288,7 +287,6 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
     private boolean esPeliculaExistente(Integer idPelicula, Pelicula pelicula) {
         return peliculaRepo.verificarExistencia(idPelicula,
                         pelicula.getNombre(),
-                        pelicula.getImagenURL(),
                         pelicula.getTrailerURL(),
                         pelicula.getSinopsis(),
                         pelicula.getReparto(),

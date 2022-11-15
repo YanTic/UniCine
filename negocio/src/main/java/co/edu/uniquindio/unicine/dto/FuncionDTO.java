@@ -15,7 +15,6 @@ public class FuncionDTO {
     // f.pelicula.nombre, f.pelicula.estado, f.pelicula.imagenURL, f.sala.id, f.sala.teatro.direccion, f.sala.teatro.ciudad.nombre, f.horario
     private String nombrePelicula;
     private EstadoPelicula estadoPelicula;
-    private String imagenURL;
     private Integer idSala;
     private String direccionTeatro;
     private String nombreCiudad;
