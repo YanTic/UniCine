@@ -40,7 +40,31 @@
   </div>
 
 
-  <p>#{detalleCompraBean.pelicula}</p>
+  <div class="container">
+    <!--Hace que se centre todos los div, txt, img, funcional para pantallas pequeñas-grande-..  haciendo que no existan
+        distorsiones importantes, utilizando 1320px como tamaño maximo-->
+    <div class="row">
+      <!--Recordar que las columnas de un div, se dividen en 12 columnas maximo. (Si se crea un div dentro de otro ese
+          div va a tener sus propias 12 columnas)-->
+
+      <div class="col-4">
+        <div class="shadow p-3"> <!--p es padding, se usa para que no quede pegado al borde-->
+
+        </div>
+      </div>
+
+      <div class="col-8">
+        <div class="shadow p-3">
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <p>#{detallePeliculaBean.pelicula}</p>
 
 
   <iframe width="560" height="315" src="https://www.youtube.com/embed/_Z3QKkl1WyM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>

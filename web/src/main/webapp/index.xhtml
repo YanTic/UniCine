@@ -11,14 +11,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <h:outputStylesheet name="styles.css" library="css" />
+  <h:outputStylesheet name="carousel.css" library="css" />
   <h:outputStylesheet name="bootstrap.min.css" library="css" />
   <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+  <h:outputScript name="index.js" library="js" />
   <title>Página de Inicio</title>
 </h:head>
 
-<h:body>
+<!--El scrollTO hace que la pagina inicie siempre en la parte superior, mas abajo del primer div ('barra_principal') -> (x:0, y:div.altura)-->
+<h:body onload="scrollTo(0, document.getElementById('barra_principal').clientHeight)" >
 
-  <div class="barra-principal">
+  <div id="barra_principal" class="barra-principal">
     <nav class="py-0 bg-light border-bottom ">
       <div class="container d-flex flex-wrap barra-principal">
         <ul class="nav me-auto">
@@ -82,7 +85,6 @@
                 </a>
               </li>
             </ul>
-            <div class="col-md-3 text-end"/>
           </div>
         </div>
       </div>
@@ -106,12 +108,58 @@
 
   </div>
 
+  <div class="img-inicio">
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
 
-  <p:carousel value="#{inicioBean.imagenes}" var="imagen" numScroll="1" numVisible="1">
-    <div class="item-carrusel">
-      <h1>TEST</h1>
+          <div class="container">
+            <div class="carousel-caption text-start">
+              <h1>Example headline.</h1>
+              <p>Some representative placeholder content for the first slide of the carousel.</p>
+              <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Another example headline.</h1>
+              <p>Some representative placeholder content for the second slide of the carousel.</p>
+              <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+          <div class="container">
+            <div class="carousel-caption text-end">
+              <h1>One more for good measure.</h1>
+              <p>Some representative placeholder content for the third slide of this carousel.</p>
+              <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-  </p:carousel>
+  </div>
 
   <div class="separador-pag">
     <div jsf:id="listas_peliculas" class="container ">

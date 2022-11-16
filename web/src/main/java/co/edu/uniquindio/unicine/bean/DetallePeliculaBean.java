@@ -16,7 +16,7 @@ import java.util.List;
 
 @Component
 @ViewScoped
-public class DetalleCompraBean implements Serializable {
+public class DetallePeliculaBean implements Serializable {
 
     @Value("#{param['pelicula_id']}")
     private String peliculaId;
