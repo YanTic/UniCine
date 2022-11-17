@@ -33,7 +33,7 @@
           </li>
         </ul>
         <ul class="nav">
-          <li class="nav-item "><a href="#" class="nav-link link-dark px-2">ELIJA EL CIUDAD TEATRO</a></li>
+          <li class="nav-item "><a href="#" class="nav-link link-dark px-2">ELIJA LA CIUDAD</a></li>
         </ul>
       </div>
     </nav>
@@ -87,27 +87,44 @@
 
                 <p:outputLabel for="ciudad_pelicula" value="Ciudad: "/>
                 <p:selectOneMenu id="ciudad_pelicula" value="#{detallePeliculaBean.ciudad}" converter="#{ciudadConverter}">
-                  <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true"/>
+                  <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true" itemValue="#{null}"/>
                   <f:selectItems value="#{detallePeliculaBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
                   <p:ajax event="change" listener="#{detallePeliculaBean.actualizarFunciones()}" update="mensajes"/>
                 </p:selectOneMenu>
-
-                <div class="funciones-pelicula">
-                  <h:form>
-
-                  </h:form>
-
-                  <div class="teatros-pelicula">
-                    <p:accordionPanel id="lista-teatros">
-
-                    </p:accordionPanel>
-                  </div>
-
-                </div>
-
               </h:panelGrid>
-
             </h:form>
+
+            <div class="funciones-pelicula">
+              <h:form>
+                <p:repeat value="#{detallePeliculaBean.fechas}" var="fecha" >
+                  <p:commandButton value="#{detallePeliculaBean.getMsgBtnDiaFunciones(fecha)}" action="#{detallePeliculaBean.actualizarTeatroSalas(fecha)}" update="lista-teatros"/>
+                </p:repeat>
+              </h:form>
+
+              <div class="teatros-pelicula">
+                <p:accordionPanel id="lista-teatros" value="#{detallePeliculaBean.teatros}" var="teatro">
+
+                  <p:tab title="#{detallePeliculaBean.getMsgTeatro(teatro)}">
+                    <p:repeat value="#{detallePeliculaBean.salas}" var="sala" >
+                      <div class="mb-4">
+                        <div class="shadow-sm">
+                          <p>#{sala.nombre}:</p>
+
+                          VERIFICAR QUE TRAIGA LAS FUNCIONES QUE LE LE PERTENECEN A ESA SALA DE ACUERDO A LA PELICULA
+
+                          <p:repeat value="#{sala.funciones}" var="funcion" >
+                            <p:commandButton value="#{funcion.horario.hora_inicio}" action="#{detallePeliculaBean.realizarCompra()}"/>
+                          </p:repeat>
+
+                        </div>
+                      </div>
+                    </p:repeat>
+                  </p:tab>
+
+                </p:accordionPanel>
+              </div>
+
+            </div>
 
           </div>
 
