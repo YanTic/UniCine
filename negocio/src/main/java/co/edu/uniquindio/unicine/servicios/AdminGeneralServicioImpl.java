@@ -4,6 +4,7 @@ import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -438,6 +439,17 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
     @Override
     public List<Teatro> listarTeatros() {
         return teatroRepo.findAll();
+    }
+
+    @Override
+    public List<Teatro> listarTeatrosPorCiudadPeliculaFecha(Integer idCiudad, Integer idPelicula, LocalDate fecha) throws Exception {
+        List<Teatro> teatros = teatroRepo.obtenerTeatrosPorCiudadPeliculaFecha(idCiudad, idPelicula, fecha);
+
+        if(teatros.isEmpty()) {
+            throw new Exception("La pelicula [id:"+idPelicula+ "] en el fecha ["+fecha+"] y en la ciudad [id:"+idCiudad+"] no tienen ningun teatro asociado");
+        }
+
+        return teatros;
     }
 
     @Override

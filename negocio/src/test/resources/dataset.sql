@@ -108,6 +108,9 @@ insert into horario values (2, '2022-05-13', '2022-05-03', '16:30:00', '13:15:00
 insert into horario values (3, '2022-05-13', '2022-05-03', '19:30:00', '16:30:00');
 insert into horario values (4, '2022-05-14', '2022-05-03', '17:15:00', '14:30:00');
 insert into horario values (5, '2022-05-15', '2022-05-03', '23:40:00', '21:10:00');
+insert into horario values (6, '2022-12-31', '2022-05-03', '23:40:00', '21:10:00');
+insert into horario values (7, '2023-01-15', '2022-05-03', '21:00:00', '17:15:00');
+insert into horario values (8, '2023-01-30', '2022-05-03', '20:10:00', '16:10:00');
 
 /*insert into distribucion_sillas values (id, col, fila, rutaEsquema, totalSillas);*/
 insert into distribucion_sillas values (1, 10, 10, "ruta", 90);
@@ -139,6 +142,10 @@ insert into funcion values (8, 330, 5, 4, 8);
 insert into funcion values (9, 240, 4, 1, 9);
 insert into funcion values (10, 300, 1, 7, 8);
 insert into funcion values (11, 310, 2, 6, 5);
+
+insert into funcion values (12, 220, 7, 3, 2);
+insert into funcion values (13, 250, 6, 3, 5);
+insert into funcion values (14, 210, 8, 2, 5);
 
 /*insert into compra values (id,fecha,metodopago,valortotal,clientecedula,cuponClienteid,funcionid );*/
 insert into compra values (1, '2022-05-03', 'EFECTY',    42200,  1, 1, 2);

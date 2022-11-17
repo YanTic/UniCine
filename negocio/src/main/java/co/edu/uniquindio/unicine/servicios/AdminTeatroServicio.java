@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AdminTeatroServicio {
@@ -43,6 +44,8 @@ public interface AdminTeatroServicio {
     List<Horario> listarHorarios();
 
     List<Sala> listarSalas();
+
+    List<Sala> listarSalasPorCiudadPeliculaFecha(Integer idCiudad, Integer idPelicula, LocalDate fecha) throws Exception;
 
     List<Funcion> listarFunciones();
 

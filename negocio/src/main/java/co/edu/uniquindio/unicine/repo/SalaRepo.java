@@ -2,12 +2,13 @@ package co.edu.uniquindio.unicine.repo;
 
 import co.edu.uniquindio.unicine.entidades.DistribucionSillas;
 import co.edu.uniquindio.unicine.entidades.Sala;
-import co.edu.uniquindio.unicine.entidades.Teatro;
 import co.edu.uniquindio.unicine.entidades.TipoSala;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -25,4 +26,7 @@ public interface SalaRepo extends JpaRepository<Sala, Integer> {
     // está actualizando
     @Query("select s from Sala s where s.id <> :idSala and s.nombre = :nombreSala")
     Optional<Sala> verificarDisponibilidadParaActualizadas(Integer idSala, String nombreSala);
+
+    @Query("select distinct s from Sala s join s.funciones f where s.teatro.ciudad.id = :idCiudad and f.pelicula.id = :idPelicula and f.horario.fecha_fin >= :fecha and f.horario.fecha_inicio <= :fecha")
+    List<Sala> obtenerSalasPorCiudadPeliculaFecha(Integer idCiudad, Integer idPelicula, LocalDate fecha);
 }
