@@ -40,7 +40,7 @@
   </div>
 
 
-  <div class="container">
+  <div class="container mt-3">
     <!--Hace que se centre todos los div, txt, img, funcional para pantallas pequeñas-grande-..  haciendo que no existan
         distorsiones importantes, utilizando 1320px como tamaño maximo-->
     <div class="row">
@@ -50,11 +50,66 @@
       <div class="col-4">
         <div class="shadow p-3"> <!--p es padding, se usa para que no quede pegado al borde-->
 
+          <div class="img-pelicula mb-2">
+            <img src="#{detallePeliculaBean.pelicula.imagenPrincipal}" alt="#{detallePeliculaBean.pelicula.nombre}" />
+          </div>
+
+          <div>
+            <h3 class="mb-md-4">#{detallePeliculaBean.pelicula.nombre}</h3>
+
+            <h4>Reparto</h4>
+            <p>#{detallePeliculaBean.pelicula.reparto}</p>
+
+            <h4>Sinopsis</h4>
+            <p>#{detallePeliculaBean.pelicula.sinopsis}</p>
+
+            <h4>Generos</h4>
+            <div class="d-inline-block mb-2" >
+              <p:repeat value="#{detallePeliculaBean.pelicula.generos}" var="genero" ><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+            </div>
+
+          </div>
+
         </div>
       </div>
 
       <div class="col-8">
-        <div class="shadow p-3">
+        <div class="shadow">
+
+          <div class="trailer-detalle-pelicula">
+            <iframe src="https://www.youtube.com/embed/_Z3QKkl1WyM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          </div>
+
+          <div class="p-3">
+            <h:form>
+              <p:growl id="mensajes" showDetail="true"/>
+              <h:panelGrid columns="3" cellpadding="5">
+
+                <p:outputLabel for="ciudad_pelicula" value="Ciudad: "/>
+                <p:selectOneMenu id="ciudad_pelicula" value="#{detallePeliculaBean.ciudad}" converter="#{ciudadConverter}">
+                  <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true"/>
+                  <f:selectItems value="#{detallePeliculaBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
+                  <p:ajax event="change" listener="#{detallePeliculaBean.actualizarFunciones()}" update="mensajes"/>
+                </p:selectOneMenu>
+
+                <div class="funciones-pelicula">
+                  <h:form>
+
+                  </h:form>
+
+                  <div class="teatros-pelicula">
+                    <p:accordionPanel id="lista-teatros">
+
+                    </p:accordionPanel>
+                  </div>
+
+                </div>
+
+              </h:panelGrid>
+
+            </h:form>
+
+          </div>
 
         </div>
       </div>
@@ -66,8 +121,6 @@
 
   <p>#{detallePeliculaBean.pelicula}</p>
 
-
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/_Z3QKkl1WyM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
 
 
