@@ -35,6 +35,11 @@ public interface FuncionRepo extends JpaRepository<Funcion, Integer> {
     @Query("select f from Funcion f where f.precio = :precio and f.horario.id = :idHorario and f.pelicula.id = :idPelicula and f.sala.id = :idSala")
     Optional<Funcion> verificarExistencia(Float precio, Integer idHorario, Integer idPelicula, Integer idSala);
 
+    @Query("select f from Funcion f where f.pelicula.id = :idPelicula and f.sala.teatro.ciudad.id = :idCiudad")
+    List<Funcion> obtenerFuncionesPorPeliculaCiudad(Integer idPelicula, Integer idCiudad);
+
+
+
 
 
     // Utilizando Object[]

@@ -46,6 +46,8 @@ public interface AdminTeatroServicio {
 
     List<Funcion> listarFunciones();
 
+    List<Funcion> listarFuncionesPorPeliculaCiudad(Integer idPelicula, Integer idCiudad) throws Exception;
+
     List<DistribucionSillas> listarDistribucionSillas();
 
 

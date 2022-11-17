@@ -332,6 +332,17 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     }
 
     @Override
+    public List<Funcion> listarFuncionesPorPeliculaCiudad(Integer idPelicula, Integer idCiudad) throws Exception {
+        List<Funcion> funciones = funcionRepo.obtenerFuncionesPorPeliculaCiudad(idPelicula, idCiudad);
+
+        if(funciones.isEmpty()) {
+            throw new Exception("La pelicula [id:"+idPelicula+"] en la ciudad [id:"+idCiudad+"] no tiene funciones");
+        }
+
+        return funciones;
+    }
+
+    @Override
     public List<DistribucionSillas> listarDistribucionSillas() {
         return distribucionSillasRepo.findAll();
     }
