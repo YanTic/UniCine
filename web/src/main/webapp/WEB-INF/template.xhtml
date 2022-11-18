@@ -16,13 +16,17 @@
   <h:outputStylesheet name="bootstrap.min.css" library="css" />
   <h:outputScript name="bootstrap.bundle.min.js" library="js" />
   <h:outputScript name="index.js" library="js" />
-  <title> <ui:insert name="titulo">Titulo</ui:insert></title>
+  <title>Unicine | <ui:insert name="titulo">Titulo</ui:insert></title>
 </h:head>
 
 
 <h:body onload="#{onLoadJS}">
 
   <ui:param name="onLoadJS" value=".." />
+
+  <div id="pre-header">
+    <ui:insert name="pre-header"> </ui:insert>
+  </div>
 
   <div id="header">
     <ui:insert name="header">
@@ -92,6 +96,8 @@
 
     </ui:insert>
   </div>
+
+
 
   <div id="contenido" class="separador-pag">
     <ui:insert name="content">

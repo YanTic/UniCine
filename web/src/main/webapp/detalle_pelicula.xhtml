@@ -11,7 +11,7 @@
 
 <ui:composition template="/WEB-INF/template.xhtml">
 
-  <ui:define name="titulo">Detalle pelicula</ui:define>
+  <ui:define name="titulo">#{detallePeliculaBean.pelicula.nombre}</ui:define>
 
   <ui:define name="content">
 
@@ -85,9 +85,8 @@
                           <div class="shadow-sm p-3">
                             <p>#{sala.nombre}:</p>
                             <p:repeat value="#{sala.funciones}" var="funcion" >
-                              <p:commandButton value="#{funcion.horario.hora_inicio}" action="#{detallePeliculaBean.realizarCompra()}"/>
+                              <p:commandButton value="#{funcion.horario.hora_inicio}" action="#{detallePeliculaBean.realizarCompra(funcion)}" />
                             </p:repeat>
-
                           </div>
                         </div>
                       </p:repeat>

@@ -20,7 +20,7 @@
 
   <ui:define name="titulo">Pagina principal</ui:define>
 
-  <ui:define name="header" >
+  <ui:define name="pre-header" >
 
     <div id="barra_principal" class="barra-principal">
       <nav class="py-0 bg-light border-bottom ">
@@ -41,70 +41,6 @@
           </ul>
         </div>
       </nav>
-    </div>
-
-    <div id="barra_nav">
-      <header>
-        <div class="text-bg-dark">
-          <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-              <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
-                <h:graphicImage library="img" name="icono.png" styleClass="img-icon me-2"/>
-                <span class="fs-4">Unicine</span>
-              </a>
-
-              <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 menu-ppal">
-                <li>
-                  <a href="#" class="nav-link text-secondary text-center">
-                    <i class="pi pi-home"/> <br/>
-                    Inicio
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/crudPelicula.xhtml" class="nav-link text-white text-center">
-                    <i class="pi pi-cog"/> <br/>
-                    CRUD Peliculas
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/crudTeatro.xhtml" class="nav-link text-white text-center">
-                    <i class="pi pi-cog" /> <br/>
-                    CRUD Teatros
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin_teatro/crudSala.xhtml" class="nav-link text-white text-center">
-                    <i class="pi pi-cog" /> <br/>
-                    CRUD Salas
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="nav-link text-white text-center">
-                    <i class="pi pi-user" /> <br/>
-                    Perfil
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="px-3 py-2 border-bottom">
-          <div class="container d-flex flex-wrap justify-content-center">
-
-            <h:form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
-              <div class="input-search ui-inputgroup">
-                <p:inputText placeholder="¿Qué pelicula está buscando" required="true" value="#{busquedaBean.busqueda}" styleClass="form-busqueda"/>
-                <p:commandButton update="@form" icon="pi pi-search" action="#{busquedaBean.buscar()}"/>
-              </div>
-            </h:form>
-
-            <div class="text-end">
-              <button type="button" class="btn btn-light text-dark me-2">Login</button>
-              <p:linkButton value="Registrarse" href="/registro.xhtml"/>
-            </div>
-          </div>
-        </div>
-      </header>
     </div>
   </ui:define>
 

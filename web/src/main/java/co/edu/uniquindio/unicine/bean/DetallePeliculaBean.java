@@ -156,7 +156,7 @@ public class DetallePeliculaBean implements Serializable {
         String dia = fecha.getDayOfWeek().toString();
         String fechaCompleta = ""+ fecha.getDayOfMonth()+" "+ fecha.getMonth().name()+" "+ fecha.getYear();
 
-        System.out.println(dia + "\n"+ fechaCompleta);
+        //System.out.println(dia + "\n"+ fechaCompleta);
 
         return dia + "\n"+ fechaCompleta;
     }
@@ -165,8 +165,18 @@ public class DetallePeliculaBean implements Serializable {
         return t.getNombre() + " - "+ t.getDireccion();
     }
 
-    public void realizarCompra() {
-        System.out.println("compre pues mor");
+    public String realizarCompra(Funcion funcion) {
+        //return "/proceso_compra?faces-redirect=true&parametro1=2&parametro2=hola";
+        if(!funcion.equals(null) || funcion != null) {
+            return "/proceso_compra?faces-redirect=true&amp;funcion_id="+funcion.getId();
+        }
+        else{
+            return "";
+        }
+    }
+
+    public void testmor() {
+        System.out.println("FUNCIONA EL HIJUEPUTA BOTON");
     }
 
 }

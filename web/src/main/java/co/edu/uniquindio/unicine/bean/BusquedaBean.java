@@ -45,7 +45,7 @@ public class BusquedaBean implements Serializable {
         // Redireccion pero sin pasar el parametro
         //return "/resultados_busqueda?faces-redirect=true";
 
-        // Esta es una forma para pasar varios parametros con '&', porque no se puede usar '?' mas de una vez
+        // Esta es una forma para pasar varios parametros con '&', porque no se puede usar '?' mas de una vez.
         // Esta forma puede ocasionar errores por el tipo de codificacion del archivo, por lo que se usar '&amp;'
         //return "/resultados_busqueda?faces-redirect=true&parametro1=2&parametro2=hola";
 
