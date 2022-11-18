@@ -73,26 +73,33 @@ public class DetallePeliculaBean implements Serializable {
         }
     }
 
-
-    public void actualizarFunciones() {
+    // Este metodo solo se ejecuta cuando el usuario click en el boton de las fechas, este si no recibe un ciudad para
+    // listar las funciones (es decir: el usuario no escogió una ciudad, por lo tanto es null) este va a tirar la excepcion
+    // y no va a hacer nada de lo que está despues de la linea de 'funciones = adminTeatroSer...', por lo que no se van
+    // a setear ni los teatros ni salas que están asociados a las funciones.
+    // Este metodo es muy importante si se quieren obtener las funciones disponibles de una pelicula en una fecha especifica, para
+    // un teatro y salas en una ciudad. Al setear las funciones, sus teatros y sus salas, en la vista (el xhtml) a traves del
+    // bean se facilita la obtencion de todos esos elementos
+    public void actualizarTeatroSalasFunciones(LocalDate fecha) {
         try {
-            funciones = adminTeatroServicio.listarFuncionesPorPeliculaCiudad(Integer.parseInt(peliculaId), ciudad.getId());
+            funciones = adminTeatroServicio.listarFuncionesPorPeliculaCiudadFecha(Integer.parseInt(peliculaId), ciudad.getId(), fecha);
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("mensajes", fm);
-        }
-    }
+            // Agregamos a una lista los teatros y salas de las funciones, sin repetir teatro o sala
+            for(Funcion f : funciones) {
+                if (!teatros.contains(f.getSala().getTeatro())) {
+                    teatros.add(f.getSala().getTeatro());
+                }
+                if (!salas.contains(f.getSala())) {
+                    salas.add(f.getSala());
+                }
+            }
 
-    public void actualizarTeatroSalas(LocalDate fecha) {
-        try {
-            teatros = adminGeneralServicio.listarTeatrosPorCiudadPeliculaFecha(ciudad.getId(), Integer.parseInt(peliculaId),fecha);
-            salas = adminTeatroServicio.listarSalasPorCiudadPeliculaFecha(ciudad.getId(), Integer.parseInt(peliculaId),fecha); // Es la misma consulta solo para obtener las salas
-
+            // Pruebas para verificar con los datos en la BD
+            funciones.forEach(System.out::println);
             teatros.forEach(System.out::println);
             salas.forEach(System.out::println);
 
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
@@ -100,6 +107,13 @@ public class DetallePeliculaBean implements Serializable {
         }
     }
 
+    // Se utiliza cuando se cambie la ciudad, cuando se cambia se deberia volver a reiniciar los datos de las
+    // funciones salas y teatros, para que no queden con los datos de una busqueda anterior con otra ciudad
+    public void actualizarFunciones() {
+        funciones = new ArrayList<>();
+        teatros = new ArrayList<>();
+        salas = new ArrayList<>();
+    }
 
     public void llenarFechas() {
         fechas.add(LocalDate.now());

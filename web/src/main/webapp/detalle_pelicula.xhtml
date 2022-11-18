@@ -89,15 +89,15 @@
                 <p:selectOneMenu id="ciudad_pelicula" value="#{detallePeliculaBean.ciudad}" converter="#{ciudadConverter}">
                   <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true" itemValue="#{null}"/>
                   <f:selectItems value="#{detallePeliculaBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
-                  <p:ajax event="change" listener="#{detallePeliculaBean.actualizarFunciones()}" update="mensajes"/>
+                  <p:ajax event="change" listener="#{detallePeliculaBean.actualizarFunciones()}" update="mensajes, lista-teatros"/>
                 </p:selectOneMenu>
               </h:panelGrid>
             </h:form>
 
-            <div class="funciones-pelicula">
+            <div class="funciones-pelicula" >
               <h:form>
                 <p:repeat value="#{detallePeliculaBean.fechas}" var="fecha" >
-                  <p:commandButton value="#{detallePeliculaBean.getMsgBtnDiaFunciones(fecha)}" action="#{detallePeliculaBean.actualizarTeatroSalas(fecha)}" update="lista-teatros"/>
+                  <p:commandButton value="#{detallePeliculaBean.getMsgBtnDiaFunciones(fecha)}" action="#{detallePeliculaBean.actualizarTeatroSalasFunciones(fecha)}" update="lista-teatros"/>
                 </p:repeat>
               </h:form>
 
@@ -109,10 +109,7 @@
                       <div class="mb-4">
                         <div class="shadow-sm">
                           <p>#{sala.nombre}:</p>
-
-                          VERIFICAR QUE TRAIGA LAS FUNCIONES QUE LE LE PERTENECEN A ESA SALA DE ACUERDO A LA PELICULA
-
-                          <p:repeat value="#{sala.funciones}" var="funcion" >
+                          <p:repeat value="#{detallePeliculaBean.funciones}" var="funcion" >
                             <p:commandButton value="#{funcion.horario.hora_inicio}" action="#{detallePeliculaBean.realizarCompra()}"/>
                           </p:repeat>
 
@@ -135,7 +132,8 @@
   </div>
 
 
-
+  <p>Ole mor no se le olvide agregar alguna que otra funcion con una fecha que sirva, ademas de su teatro y ciudad</p>
+  <p>Ya todo va quedando bellaco, siga asi, me quiero mucho</p>
   <p>#{detallePeliculaBean.pelicula}</p>
 
 
