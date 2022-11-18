@@ -28,14 +28,12 @@ public class DetallePeliculaBean implements Serializable {
     @Getter @Setter
     private Pelicula pelicula;
 
-    @Getter @Setter
     private List<Funcion> funciones; // Traer las funciones dada la pelicula y la ciudad
                                      // Y dada la pelicula y ciudad, traer los teatros
 
-    @Getter @Setter
+    @Getter @Setter // Le dejamos solo el getter-setter a teatro, para que la xhtml solo obtenga la lista de teatros con sus salas y funciones
     private List<Teatro> teatros;
 
-    @Getter @Setter
     private List<Sala> salas;
 
     @Getter @Setter
@@ -94,10 +92,39 @@ public class DetallePeliculaBean implements Serializable {
                 }
             }
 
-            // Pruebas para verificar con los datos en la BD
-            funciones.forEach(System.out::println);
+            // Y ahí eliminamos los datos que vienen de la BD (como las salas del teatro y las funciones de la sala) y se relaciona
+            // cada una entre si, ejem: a los teatros se les agrega las salas que (como se verificó antes) tengan una asociacion
+            // con las funciones, y se le agregan a la sala las funciones que tengan relacion
+            //
+            // Esto se hace más que tod para que desde la web obtenga las salas-teatros-funciones correspondientes de cada una,
+            // porque sino mostrará en un teatro todas las salas (sin importar si son del teatro) y en las salas todas las
+            // funciones (sin importar si son de esa sala)
+            for(Teatro t : teatros) {
+                // Eliminamos las salas asociadas que llegan de la BD y así conectarle las salas que tienen relacion
+                // con las funciones. porque sino, la pagweb mostrará datos iguales,
+                t.getSalas().clear();
+
+                for(Sala s : salas) {
+                    if(!t.getSalas().contains(s) && s.getTeatro().getId() == t.getId()) {
+                        t.getSalas().add(s);
+                    }
+
+                    // Eliminamos las funciones asociadas que llegan de la BD y así conectarle las funciones que tienen relacion
+                    // con las salas. porque sino.
+                    s.getFunciones().clear();
+
+                    for(Funcion f : funciones) {
+                        if (!s.getFunciones().contains(f) && f.getSala().getId() == s.getId()) {
+                           s.getFunciones().add(f);
+                        }
+                    }
+                }
+            }
+
+            // Pruebas para verificar con los datos en la B
+         /* funciones.forEach(System.out::println);
             teatros.forEach(System.out::println);
-            salas.forEach(System.out::println);
+            salas.forEach(System.out::println); */
 
 
         } catch (Exception e) {

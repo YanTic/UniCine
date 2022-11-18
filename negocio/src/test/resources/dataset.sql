@@ -146,6 +146,8 @@ insert into funcion values (11, 310, 2, 6, 5);
 insert into funcion values (12, 220, 7, 3, 2);
 insert into funcion values (13, 250, 6, 3, 5);
 insert into funcion values (14, 210, 8, 2, 5);
+insert into funcion values (15, 222, 8, 3, 4);
+
 
 /*insert into compra values (id,fecha,metodopago,valortotal,clientecedula,cuponClienteid,funcionid );*/
 insert into compra values (1, '2022-05-03', 'EFECTY',    42200,  1, 1, 2);

@@ -7,16 +7,115 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <h:outputStylesheet name="styles.css" library="css" />
-  <h:outputStylesheet name="bootstrap.min.css" library="css" />
-  <h:outputScript name="bootstrap.bundle.min.js" library="js" />
-  <title>Detalle pelicula</title>
-</h:head>
 
-<h:body>
+
+<ui:composition template="/WEB-INF/template.xhtml">
+
+  <ui:define name="titulo">Detalle pelicula</ui:define>
+
+  <ui:define name="content">
+
+    <div class="container mt-3 mb-3">
+      <!--Hace que se centre todos los div, txt, img, funcional para pantallas pequeñas-grande-..  haciendo que no existan
+          distorsiones importantes, utilizando 1320px como tamaño maximo-->
+      <div class="row">
+        <!--Recordar que las columnas de un div, se dividen en 12 columnas maximo. (Si se crea un div dentro de otro ese
+            div va a tener sus propias 12 columnas)-->
+
+        <div class="col-4 detalle-info-pelicula">
+          <div class="shadow p-3"> <!--p es padding, se usa para que no quede pegado al borde-->
+
+            <div class="img-pelicula mb-2">
+              <img src="#{detallePeliculaBean.pelicula.imagenPrincipal}" alt="#{detallePeliculaBean.pelicula.nombre}" />
+            </div>
+
+            <div>
+              <h3 class="mb-md-4">#{detallePeliculaBean.pelicula.nombre}</h3>
+
+              <h4>Reparto</h4>
+              <p>#{detallePeliculaBean.pelicula.reparto}</p>
+
+              <h4>Sinopsis</h4>
+              <p>#{detallePeliculaBean.pelicula.sinopsis}</p>
+
+              <h4>Generos</h4>
+              <div class="d-inline-block mb-2" >
+                <p:repeat value="#{detallePeliculaBean.pelicula.generos}" var="genero" ><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-8 detalle-info-pelicula">
+          <div class="shadow">
+
+            <div class="trailer-detalle-pelicula">
+              <iframe src="https://www.youtube.com/embed/_Z3QKkl1WyM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            </div>
+
+            <div class="p-3">
+              <h:form>
+                <p:growl id="mensajes" showDetail="true"/>
+                <h:panelGrid columns="3" cellpadding="5">
+
+                  <p:outputLabel for="ciudad_pelicula" value="Ciudad: "/>
+                  <p:selectOneMenu id="ciudad_pelicula" value="#{detallePeliculaBean.ciudad}" converter="#{ciudadConverter}">
+                    <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true" itemValue="#{null}"/>
+                    <f:selectItems value="#{detallePeliculaBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
+                    <p:ajax event="change" listener="#{detallePeliculaBean.actualizarFunciones()}" update="mensajes, lista-teatros"/>
+                  </p:selectOneMenu>
+                </h:panelGrid>
+              </h:form>
+
+              <div class="funciones-pelicula p-1" >
+                <h:form>
+                  <p:repeat value="#{detallePeliculaBean.fechas}" var="fecha">
+                    <p:commandButton value="#{detallePeliculaBean.getMsgBtnDiaFunciones(fecha)}" action="#{detallePeliculaBean.actualizarTeatroSalasFunciones(fecha)}" update="lista-teatros"/>
+                  </p:repeat>
+                </h:form>
+
+                <div class="teatros-pelicula">
+                  <p:accordionPanel id="lista-teatros" value="#{detallePeliculaBean.teatros}" var="teatro">
+
+                    <p:tab title="#{detallePeliculaBean.getMsgTeatro(teatro)}">
+                      <p:repeat value="#{teatro.salas}" var="sala" >
+                        <div class="mb-4">
+                          <div class="shadow-sm p-3">
+                            <p>#{sala.nombre}:</p>
+                            <p:repeat value="#{sala.funciones}" var="funcion" >
+                              <p:commandButton value="#{funcion.horario.hora_inicio}" action="#{detallePeliculaBean.realizarCompra()}"/>
+                            </p:repeat>
+
+                          </div>
+                        </div>
+                      </p:repeat>
+                    </p:tab>
+
+                  </p:accordionPanel>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </ui:define>
+
+</ui:composition>
+
+
+
+
+
+
+<!--<h:body>
 
   <div class="barra-principal">
     <nav class="py-0 bg-light border-bottom ">
@@ -40,15 +139,16 @@
   </div>
 
 
+
   <div class="container mt-3">
-    <!--Hace que se centre todos los div, txt, img, funcional para pantallas pequeñas-grande-..  haciendo que no existan
-        distorsiones importantes, utilizando 1320px como tamaño maximo-->
+    &lt;!&ndash;Hace que se centre todos los div, txt, img, funcional para pantallas pequeñas-grande-..  haciendo que no existan
+        distorsiones importantes, utilizando 1320px como tamaño maximo&ndash;&gt;
     <div class="row">
-      <!--Recordar que las columnas de un div, se dividen en 12 columnas maximo. (Si se crea un div dentro de otro ese
-          div va a tener sus propias 12 columnas)-->
+      &lt;!&ndash;Recordar que las columnas de un div, se dividen en 12 columnas maximo. (Si se crea un div dentro de otro ese
+          div va a tener sus propias 12 columnas)&ndash;&gt;
 
       <div class="col-4">
-        <div class="shadow p-3"> <!--p es padding, se usa para que no quede pegado al borde-->
+        <div class="shadow p-3"> &lt;!&ndash;p es padding, se usa para que no quede pegado al borde&ndash;&gt;
 
           <div class="img-pelicula mb-2">
             <img src="#{detallePeliculaBean.pelicula.imagenPrincipal}" alt="#{detallePeliculaBean.pelicula.nombre}" />
@@ -105,11 +205,11 @@
                 <p:accordionPanel id="lista-teatros" value="#{detallePeliculaBean.teatros}" var="teatro">
 
                   <p:tab title="#{detallePeliculaBean.getMsgTeatro(teatro)}">
-                    <p:repeat value="#{detallePeliculaBean.salas}" var="sala" >
+                    <p:repeat value="#{teatro.salas}" var="sala" >
                       <div class="mb-4">
                         <div class="shadow-sm">
                           <p>#{sala.nombre}:</p>
-                          <p:repeat value="#{detallePeliculaBean.funciones}" var="funcion" >
+                          <p:repeat value="#{sala.funciones}" var="funcion" >
                             <p:commandButton value="#{funcion.horario.hora_inicio}" action="#{detallePeliculaBean.realizarCompra()}"/>
                           </p:repeat>
 
@@ -131,14 +231,6 @@
     </div>
   </div>
 
-
-  <p>Ole mor no se le olvide agregar alguna que otra funcion con una fecha que sirva, ademas de su teatro y ciudad</p>
-  <p>Ya todo va quedando bellaco, siga asi, me quiero mucho</p>
-  <p>#{detallePeliculaBean.pelicula}</p>
-
-
-
-
   <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
       <div class="col-md-4 d-flex align-items-center">
@@ -159,5 +251,6 @@
     </footer>
   </div>
 
-</h:body>
+</h:body>-->
+
 </html>
