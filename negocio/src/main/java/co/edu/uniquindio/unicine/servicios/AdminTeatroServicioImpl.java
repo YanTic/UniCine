@@ -328,27 +328,16 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     }
 
     @Override
-    public List<Sala> listarSalasPorCiudadPeliculaFecha(Integer idCiudad, Integer idPelicula, LocalDate fecha) throws Exception {
-        List<Sala> salas = salaRepo.obtenerSalasPorCiudadPeliculaFecha(idCiudad, idPelicula, fecha);
-
-        if(salas.isEmpty()) {
-            throw new Exception("La pelicula [id:"+idPelicula+ "] en el fecha ["+fecha+"] y en la ciudad [id:"+idCiudad+"] no tienen ningun teatro asociado");
-        }
-
-        return salas;
-    }
-
-    @Override
     public List<Funcion> listarFunciones() {
         return funcionRepo.findAll();
     }
 
     @Override
-    public List<Funcion> listarFuncionesPorPeliculaCiudad(Integer idPelicula, Integer idCiudad) throws Exception {
-        List<Funcion> funciones = funcionRepo.obtenerFuncionesPorPeliculaCiudad(idPelicula, idCiudad);
+    public List<Funcion> listarFuncionesPorPeliculaCiudadFecha(Integer idPelicula, Integer idCiudad, LocalDate fecha) throws Exception {
+        List<Funcion> funciones = funcionRepo.obtenerFuncionesPorPeliculaCiudadFecha(idPelicula, idCiudad, fecha);
 
         if(funciones.isEmpty()) {
-            throw new Exception("La pelicula [id:"+idPelicula+"] en la ciudad [id:"+idCiudad+"] no tiene funciones");
+            throw new Exception("La pelicula [id:"+idPelicula+"] en la ciudad [id:"+idCiudad+"] y en la fecha ["+fecha+"] no tiene funciones");
         }
 
         return funciones;

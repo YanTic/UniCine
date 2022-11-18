@@ -27,6 +27,4 @@ public interface SalaRepo extends JpaRepository<Sala, Integer> {
     @Query("select s from Sala s where s.id <> :idSala and s.nombre = :nombreSala")
     Optional<Sala> verificarDisponibilidadParaActualizadas(Integer idSala, String nombreSala);
 
-    @Query("select distinct s from Sala s join s.funciones f where s.teatro.ciudad.id = :idCiudad and f.pelicula.id = :idPelicula and f.horario.fecha_fin >= :fecha and f.horario.fecha_inicio <= :fecha")
-    List<Sala> obtenerSalasPorCiudadPeliculaFecha(Integer idCiudad, Integer idPelicula, LocalDate fecha);
 }

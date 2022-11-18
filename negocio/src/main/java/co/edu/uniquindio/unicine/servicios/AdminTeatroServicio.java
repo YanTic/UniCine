@@ -45,11 +45,9 @@ public interface AdminTeatroServicio {
 
     List<Sala> listarSalas();
 
-    List<Sala> listarSalasPorCiudadPeliculaFecha(Integer idCiudad, Integer idPelicula, LocalDate fecha) throws Exception;
-
     List<Funcion> listarFunciones();
 
-    List<Funcion> listarFuncionesPorPeliculaCiudad(Integer idPelicula, Integer idCiudad) throws Exception;
+    List<Funcion> listarFuncionesPorPeliculaCiudadFecha(Integer idPelicula, Integer idCiudad, LocalDate fecha) throws Exception;
 
     List<DistribucionSillas> listarDistribucionSillas();
 

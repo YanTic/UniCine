@@ -62,8 +62,6 @@ public interface AdminGeneralServicio {
 
     List<Teatro> listarTeatros();
 
-    List<Teatro> listarTeatrosPorCiudadPeliculaFecha(Integer idCiudad, Integer idPelicula, LocalDate fecha) throws Exception;
-
     List<Cupon> listarCupones();
 
     List<Evento> listarEventos();

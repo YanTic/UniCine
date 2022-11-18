@@ -442,17 +442,6 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
     }
 
     @Override
-    public List<Teatro> listarTeatrosPorCiudadPeliculaFecha(Integer idCiudad, Integer idPelicula, LocalDate fecha) throws Exception {
-        List<Teatro> teatros = teatroRepo.obtenerTeatrosPorCiudadPeliculaFecha(idCiudad, idPelicula, fecha);
-
-        if(teatros.isEmpty()) {
-            throw new Exception("La pelicula [id:"+idPelicula+ "] en el fecha ["+fecha+"] y en la ciudad [id:"+idCiudad+"] no tienen ningun teatro asociado");
-        }
-
-        return teatros;
-    }
-
-    @Override
     public List<Cupon> listarCupones() {
         return cuponRepo.findAll();
     }
