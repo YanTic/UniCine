@@ -73,13 +73,14 @@ insert into genero values (5, "ANIMACION");
 insert into genero values (6, "DRAMA");
 
 /*insert into pelicula values (id,estado,imagen,nombre,reparto,sinopsis,trailerurl);*/
-insert into pelicula values (1,'PRESTRENO', "SpiderMan-NoWayHome","Tom, Andrew, Tobey", "Spiderman pelea con ayuda de los otros spidermans", "url");
-insert into pelicula values (2,'PRESTRENO', "StarWars: Rogue One","Andor, Darth Vader", "Pelean por los planos de destruccion de la death star", "url");
-insert into pelicula values (3,'ESTRENO',   "Klaus", "Klaus, Repartidor", "El repartidor salva la navidad de una aldea", "url");
-insert into pelicula values (4,'ESTRENO',   "The Father", "Abuelito, Doctora", "El abuelito vive con alzheimer", "url");
-insert into pelicula values (5,'PROXIMO',   "Free Guy", "NPC, Policia", "El npc se da cuenta que vive en un mundo virtual", "url");
-insert into pelicula values (6,'PROXIMO',   "Tenet", "Negrito, Blanquito", "Salvan el mundo con viajes al futuro y pasado", "url");
-insert into pelicula values (7,'ESTRENO',   "The Amazing SpiderMan", "Peter Parker, Gwen Stacy, May, Electro", "Spidy se enfrenta a electro, increible", "url");
+insert into pelicula values (1,'PRESTRENO', "SpiderMan-NoWayHome","Tom, Andrew, Tobey", "Spiderman pelea con ayuda de los otros spidermans", "https://www.youtube.com/embed/rt-2cxAiPJk");
+insert into pelicula values (2,'PRESTRENO', "StarWars: Rogue One","Andor, Darth Vader", "Pelean por los planos de destruccion de la death star", "https://www.youtube.com/embed/frdj1zb9sMY");
+insert into pelicula values (3,'ESTRENO',   "Klaus", "Klaus, Repartidor", "El repartidor salva la navidad de una aldea", "https://www.youtube.com/embed/taE3PwurhYM");
+insert into pelicula values (4,'ESTRENO',   "The Father", "Abuelito, Doctora", "El abuelito vive con alzheimer", "https://www.youtube.com/embed/4TZb7YfK-JI");
+insert into pelicula values (5,'PROXIMO',   "Free Guy", "NPC, Policia", "El npc se da cuenta que vive en un mundo virtual", "https://www.youtube.com/embed/X2m-08cOAbc");
+insert into pelicula values (6,'PROXIMO',   "Tenet", "Negrito, Blanquito", "Salvan el mundo con viajes al futuro y pasado", "https://www.youtube.com/embed/LdOM0x0XDMo");
+insert into pelicula values (7,'ESTRENO',   "The Amazing SpiderMan 2", "Peter Parker, Gwen Stacy, May, Electro", "Spidy se enfrenta a electro, increible", "https://www.youtube.com/embed/nbp3Ra3Yp74");
+insert into pelicula values (8,'ESTRENO',   "Black Panther: Wakanda Forever", "churi, namor, tchalla", "Wakanda pierde a su rey y pelean contra namor", "https://www.youtube.com/embed/_Z3QKkl1WyM");
 
 /*insert into pelicula_generos values (peliculaid, generoid);*/
 insert into pelicula_generos values (1, 2);
@@ -101,6 +102,7 @@ insert into pelicula_imagenes values (4, "http://res.cloudinary.com/dkislcnml/im
 insert into pelicula_imagenes values (5, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
 insert into pelicula_imagenes values (6, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
 insert into pelicula_imagenes values (7, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
+insert into pelicula_imagenes values (8, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
 
 /*insert into horario values (id, fechafin, fechainicio, horafin, horainicio);*/
 insert into horario values (1, '2022-08-13', '2022-08-03', '10:30:00', '08:15:00');
