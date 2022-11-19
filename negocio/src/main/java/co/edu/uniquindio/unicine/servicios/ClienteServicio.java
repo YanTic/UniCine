@@ -40,7 +40,7 @@ public interface ClienteServicio {
 
     List<Pelicula> listarPeliculasPorEstadoCiudad(EstadoPelicula estadoPelicula, Integer idCiudad);
 
-    List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula);
+    List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula) throws Exception;
 
     List<PeliculaFuncionDTO> buscarPeliculaFuncion(String nombre);
 

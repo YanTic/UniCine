@@ -165,18 +165,14 @@ public class DetallePeliculaBean implements Serializable {
         return t.getNombre() + " - "+ t.getDireccion();
     }
 
-    public String realizarCompra(Funcion funcion) {
+    public String realizarCompra(Integer idFuncion) {
         //return "/proceso_compra?faces-redirect=true&parametro1=2&parametro2=hola";
-        if(!funcion.equals(null) || funcion != null) {
-            return "/proceso_compra?faces-redirect=true&amp;funcion_id="+funcion.getId();
+        if(!idFuncion.equals(null) || idFuncion != null) {
+            return "/cliente/proceso_compra?faces-redirect=true&amp;funcion_id="+idFuncion;
         }
         else{
             return "";
         }
-    }
-
-    public void testmor() {
-        System.out.println("FUNCIONA EL HIJUEPUTA BOTON");
     }
 
 }

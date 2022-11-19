@@ -17,6 +17,111 @@
 
     <div class="container mt-3 mb-3">
 
+      <!--<p:panel >
+        <h:form id="gestion-sillas">
+
+          <div class="text-center"><h4><strong>SALA</strong></h4></div>
+
+          <p:dataTable id="matriz-sillas" value="#{compraBean.funcion.sala.distribucionSillas.filas}">
+            <p:columns id="columnas" var="col" value="#{compraBean.funcion.sala.distribucionSillas.columnas}">
+              <p:panelGrid id="item-silla">
+
+              </p:panelGrid>
+            </p:columns>
+          </p:dataTable>
+
+        </h:form>
+      </p:panel>-->
+
+      <p:panel header="Confiteria ">
+        <div class="row">
+          <p:repeat value="#{compraBean.confiterias}" var="confiteria">
+            <div class="col-3">
+              <div class="shadow-sm">
+
+                <h:form id="confiterias-form">
+                  <img src="imagen.png" alt="imagen confiteria" />
+                  <p>#{confiteria.producto}</p>
+                  <p>$ #{confiteria.precio}</p>
+
+                  <div class="text-center">
+                    <div class="d-inline-flex">
+                      <p:commandButton icon="pi pi-plus" styleClass="rounded-button ui-button-info" action="#{compraBean.sumarUnidadesConfi(confiteria)}" update="@form"/>
+                      <p jsf:id="cantidad" class="mb-0 me-2 ms-2 mt-1">3</p>
+                      <p:commandButton icon="pi pi-minus" styleClass="rounded-button ui-button-danger" action="#{compraBean.restarUnidadesConfi(confiteria)}" update="@form"/>
+                    </div>
+                  </div>
+                </h:form>
+
+              </div>
+            </div>
+          </p:repeat>
+        </div>
+      </p:panel>
+
+      <p:panel id="detalle-compra" header="Detalles">
+        <div>
+          <div>
+            <strong>Entradas:</strong>
+            <p:repeat value="entrada" var="#{compraBean}">
+              <div>
+                <p:outputLabel styleClass="d-inline-block" value="fila tin - columna tan"/>
+                <p:outputLabel styleClass="d-inline-block" value="precio de esa silla tintin"/>
+              </div>
+            </p:repeat>
+          </div>
+          <hr/>
+
+          <div>
+            <strong>Confiteria:</strong>
+            <p:repeat value="confiteria" var="#{compraBean}">
+              <div>
+                <p:outputLabel styleClass="d-inline-block" value="#{compraBean}"/>
+                <p:outputLabel styleClass="d-inline-block" />
+              </div>
+            </p:repeat>
+          </div>
+          <hr/>
+
+          <h4>Total: </h4>
+        </div>
+      </p:panel>
+
+      <p:panel header="Finalizar la compra">
+        <h:form id="fin-compra">
+          <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="nombre_cli" value="Nombre Completo: "/>
+            <p:inputText id="nombre_cli" value="#{compraBean.cliente.nombre}" disabled="true"/>
+            <p:message for="nombre_cli"/>
+
+            <p:outputLabel for="cedula_cli" value="Cedula: "/>
+            <p:inputText id="cedula_cli" value="#{compraBean.cliente.cedula}" disabled="true"/>
+            <p:message for="cedula_cli"/>
+
+            <p:outputLabel for="email_cli" value="Email: "/>
+            <p:inputText id="email_cli" value="#{compraBean.cliente.email}" disabled="true"/>
+            <p:message for="email_cli"/>
+
+            <p:outputLabel for="metodo_pago_cli" value="Metodo de pago: "/>
+            <p:selectOneMenu id="metodo_pago_cli" value="#{compraBean.metodoPagoSeleccionado}" required="true" requiredMessage="Debe escoger un metodo de pago">
+              <f:selectItem itemLabel="Seleccione el metodo de pago" noSelectionOption="true"/>
+              <f:selectItems value="#{compraBean.metodosPago}"/>
+            </p:selectOneMenu>
+            <p:message for="metodo_pago_cli"/>
+
+            <p:outputLabel for="cupon_cli" value="Redimir cupon: "/>
+            <p:inputText id="cupon_cli" value="#{compraBean.codigoCupon}"/>
+            <p:message for="cupon_cli"/>
+
+          </h:panelGrid>
+
+          <p:commandButton value="Finalizar compra" action="#{compraBean.realizarCompra()}" update="@form"/>
+          <!--<p:messages />  MENSAJE DE ERROR-->
+          <p:growl for="mensaje_bean" showDetail="true"/> <!--ALERTA-->
+        </h:form>
+
+      </p:panel>
+
     </div>
 
   </ui:define>

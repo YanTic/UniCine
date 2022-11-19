@@ -357,8 +357,14 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     @Override
-    public List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula) {
-        return clienteRepo.obtenerPeliculasPorEstado(estadoPelicula);
+    public List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula) throws Exception {
+        List<Pelicula> peliculas = clienteRepo.obtenerPeliculasPorEstado(estadoPelicula);
+
+        if(peliculas.isEmpty()) {
+            throw new Exception("No existen peliculas con el estado ["+estadoPelicula+"]");
+        }
+
+        return peliculas;
     }
 
     @Override

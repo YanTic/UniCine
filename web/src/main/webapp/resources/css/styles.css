@@ -36,7 +36,8 @@
 }
 
 .img-pelicula {
-
+    width: 100%;
+    height: auto;
 }
 
 .img-pelicula img {

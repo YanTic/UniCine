@@ -12,11 +12,79 @@
   <ui:define name="titulo">Resultados de Busqueda</ui:define>
 
   <ui:define name="content">
+
     <div class="container mt-3 mb-3">
+      <h:form>
+        <p:dataView id="lista-peliculas" var="pelicula" value="#{busquedaBean.peliculas}" paginatorPosition="bottom"
+                    paginator="true" rows="12" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+          <p:dataViewGridItem>
+            <div class="card">
+              <img src="#{pelicula.pelicula.imagenPrincipal}" alt="img-pelicula" class="card-img-top"/>
+              <div class="card-body">
+                <h5 class="card-title">#{pelicula.pelicula.nombre}</h5>
+                <div class="d-inline-block mb-2" >
+                  <p:repeat value="#{pelicula.pelicula.generos}" var="genero" ><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+                </div>
+                <p class="card-text">Hora: #{pelicula.funcion.horario.hora_inicio}</p>
+                <p class="card-text">#{pelicula.funcion.sala.teatro.ciudad.nombre} - #{pelicula.funcion.sala.teatro.nombre} - #{pelicula.funcion.sala.teatro.direccion}</p>
+                <hr/>
+                <p:linkButton value="Ver detalles" href="/detalle_pelicula.xhtml?pelicula_id=#{pelicula.pelicula.id}"/> <!-- QUITAR ESE UNDERLINE HORRIBLE-->
+              </div>
+            </div>
+          </p:dataViewGridItem>
+
+          <p:dataViewListItem>
+            <div class="row d-flex mt-3">
+              <div class="col-lg-2 col-md-1 align-self-center">
+                <img src="#{pelicula.pelicula.imagenPrincipal}" alt="img-pelicula" class="img-pelicula"/>
+              </div>
+
+              <div class="col-lg-8 col-md-1 align-self-center">
+                <div style="font-weight: bold">#{pelicula.pelicula.nombre}</div>
+                <div class="d-inline-block mb-2 mt-2">
+                  <p:repeat value="#{pelicula.pelicula.generos}" var="genero" ><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat>
+                </div>
+                <div>Sinopsis: #{pelicula.pelicula.sinopsis}</div>
+                <div>Hora: <strong>#{pelicula.funcion.horario.hora_inicio}</strong></div>
+                <div>Lugar: #{pelicula.funcion.sala.teatro.ciudad.nombre} - #{pelicula.funcion.sala.teatro.nombre} - #{pelicula.funcion.sala.teatro.direccion}</div>
+              </div>
+
+              <div class="col-lg-2 col-md-1 align-self-center">
+                <p:linkButton value="Ver detalles" href="/detalle_pelicula.xhtml?pelicula_id=#{pelicula.pelicula.id}"/>
+              </div>
+            </div>
+          </p:dataViewListItem>
+
+        </p:dataView>
+      </h:form>
 
     </div>
+
   </ui:define>
 
 </ui:composition>
+
+
+<!--<div class="col-lg-8 col-md-1 align-self-center">
+  <p:outputPanel>
+    <h:panelGrid columns="3" cellpadding="5">
+      <h:outputText value="#{pelicula.pelicula.nombre}" style="font-weight: bold"/>
+      <h:outputText value="Generos:"/>
+      <div class="d-inline-block mb-2" > <p:repeat value="#{pelicula.pelicula.generos}" var="genero" ><p:chip label="#{genero.nombre}" styleClass="me-2" style="font-size: 12px;"/></p:repeat> </div>
+      <h:outputText value=""/>
+      <h:outputText value="Hora:"/>
+      <h:outputText value="#{pelicula.funcion.horario.hora_inicio}"/>
+      <h:outputText value="Lugar:"/>
+      <h:outputText value="#{pelicula.funcion.sala.teatro.ciudad.nombre} - #{pelicula.funcion.sala.teatro.nombre} - #{pelicula.funcion.sala.teatro.direccion}"/>
+    </h:panelGrid>
+  </p:outputPanel>
+</div>-->
+
+
+
+
+
+
 
 </html>

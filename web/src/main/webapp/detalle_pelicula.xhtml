@@ -52,7 +52,7 @@
           <div class="shadow">
 
             <div class="trailer-detalle-pelicula">
-              <iframe src="https://www.youtube.com/embed/_Z3QKkl1WyM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+              <iframe src="#{detallePeliculaBean.pelicula.trailerURL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
             </div>
 
             <div class="p-3">
@@ -82,12 +82,14 @@
                     <p:tab title="#{detallePeliculaBean.getMsgTeatro(teatro)}">
                       <p:repeat value="#{teatro.salas}" var="sala" >
                         <div class="mb-4">
-                          <div class="shadow-sm p-3">
-                            <p>#{sala.nombre}:</p>
-                            <p:repeat value="#{sala.funciones}" var="funcion" >
-                              <p:commandButton value="#{funcion.horario.hora_inicio}" action="#{detallePeliculaBean.realizarCompra(funcion)}" />
-                            </p:repeat>
-                          </div>
+                          <h:form>
+                            <div class="shadow-sm p-3">
+                              <p>#{sala.nombre}:</p>
+                              <p:repeat value="#{sala.funciones}" var="funcion" >
+                                <p:commandButton value="#{funcion.horario.hora_inicio}" action="#{detallePeliculaBean.realizarCompra(funcion.id)}"/>
+                              </p:repeat>
+                            </div>
+                          </h:form>
                         </div>
                       </p:repeat>
                     </p:tab>

@@ -43,14 +43,19 @@ public class InicioBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        peliculasEstreno = clienteServicio.listarPeliculasPorEstado(EstadoPelicula.ESTRENO);
-        peliculasProximas = clienteServicio.listarPeliculasPorEstado(EstadoPelicula.PROXIMO);
-        ciudades = adminGeneralServicio.listarCiudades();
+        try {
+            peliculasEstreno = clienteServicio.listarPeliculasPorEstado(EstadoPelicula.ESTRENO);
+            peliculasProximas = clienteServicio.listarPeliculasPorEstado(EstadoPelicula.PROXIMO);
+            ciudades = adminGeneralServicio.listarCiudades();
 
-        imagenes = new ArrayList<>();
-        imagenes.add("");
-        imagenes.add("");
-        imagenes.add("");
+            imagenes = new ArrayList<>();
+            imagenes.add("https://wallpaperaccess.com/full/553391.jpg"); // spidy
+            imagenes.add("https://wallpaperaccess.com/full/2042961.jpg"); // klaus
+            imagenes.add("https://wallpaperaccess.com/full/2776322.jpg"); // tenet
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void elegirCiudad() {
