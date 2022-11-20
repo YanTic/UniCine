@@ -5,15 +5,70 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Detalle Compra</title>
-</h:head>
 
-<h:body>
+<ui:composition template="/WEB-INF/template.xhtml">
 
+  <ui:define name="titulo">Detalle compra</ui:define>
 
-</h:body>
+  <ui:define name="content">
+
+    <div class="container">
+      <p:panel id="detalle-compra" header="Detalles">
+        <div>
+
+          <p:barcode value="#{detalleCompraBean.compra.id.toString()}" type="qr" width="124" height="125"/>
+
+          <div>
+            <strong class="d-inline-block me-2">Pelicula:</strong>
+            <p:outputLabel value="#{detalleCompraBean.compra.funcion.pelicula.nombre}"/>
+          </div>
+
+          <div>
+            <strong class="d-inline-block me-2">Horario:</strong>
+            <p:outputLabel value="#{detalleCompraBean.compra.fechaFuncionCompra} : #{detalleCompraBean.compra.funcion.horario.hora_inicio}"/>
+          </div>
+
+          <div>
+            <strong class="d-inline-block me-2">Ciudad:</strong>
+            <p:outputLabel value="#{detalleCompraBean.compra.funcion.sala.teatro.ciudad.nombre}"/>
+          </div>
+
+          <div>
+            <strong class="d-inline-block me-2">Lugar:</strong>
+            <p:outputLabel value="#{detalleCompraBean.compra.funcion.sala.teatro.nombre} - #{detalleCompraBean.compra.funcion.sala.teatro.direccion}. Sala: #{detalleCompraBean.compra.funcion.sala.nombre}"/>
+          </div>
+
+          <div>
+            <strong>Entradas:</strong>
+            <p:repeat value="#{detalleCompraBean.compra.boletas}" var="bol_compra">
+              <div>
+                <p:outputLabel styleClass="d-inline-block me-3" value="#{bol_compra.fila}-#{bol_compra.columna}"/>
+                <p:outputLabel styleClass="d-inline-block" value="$#{bol_compra.precio}"/>
+              </div>
+            </p:repeat>
+          </div>
+          <hr/>
+
+          <div>
+            <strong>Confiteria:</strong>
+            <p:repeat value="#{detalleCompraBean.compra.confiteriaCompras}" var="confiteria_compra">
+              <div>
+                <p:outputLabel styleClass="d-inline-block me-2" value="#{confiteria_compra.confiteria.producto}"/>
+                <p:outputLabel styleClass="d-inline-block" value="#{confiteria_compra.unidades}  x  $ #{confiteria_compra.confiteria.precio}"/>
+              </div>
+            </p:repeat>
+          </div>
+          <hr/>
+
+          <h4>Total: $#{detalleCompraBean.compra.valorTotal}</h4>
+        </div>
+      </p:panel>
+    </div>
+
+  </ui:define>
+
+</ui:composition>
+
 </html>

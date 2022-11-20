@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 @Component
 @ViewScoped
-public class DetalleCompra implements Serializable {
+public class DetalleCompraBean implements Serializable {
 
     @Autowired
     private ClienteServicio clienteServicio;
@@ -27,7 +27,6 @@ public class DetalleCompra implements Serializable {
 
     @PostConstruct
     public void init() {
-
         if (idCompra != null && !idCompra.isEmpty()) {
             try {
                 compra = clienteServicio.obtenerCompra(Integer.parseInt(idCompra));
@@ -36,4 +35,6 @@ public class DetalleCompra implements Serializable {
             }
         }
     }
+
+
 }

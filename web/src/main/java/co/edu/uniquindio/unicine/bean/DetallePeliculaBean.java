@@ -45,6 +45,9 @@ public class DetallePeliculaBean implements Serializable {
     @Getter @Setter
     private List<LocalDate> fechas;
 
+    @Getter @Setter
+    private LocalDate fechaSeleccionada;
+
     @Autowired
     private AdminGeneralServicio adminGeneralServicio;
 
@@ -81,6 +84,7 @@ public class DetallePeliculaBean implements Serializable {
     public void actualizarTeatroSalasFunciones(LocalDate fecha) {
         try {
             funciones = adminTeatroServicio.listarFuncionesPorPeliculaCiudadFecha(Integer.parseInt(peliculaId), ciudad.getId(), fecha);
+            fechaSeleccionada = fecha;
 
             // Agregamos a una lista los teatros y salas de las funciones, sin repetir teatro o sala
             for(Funcion f : funciones) {
@@ -121,7 +125,7 @@ public class DetallePeliculaBean implements Serializable {
                 }
             }
 
-            // Pruebas para verificar con los datos en la B
+            // Pruebas para verificar con los datos en la BD
          /* funciones.forEach(System.out::println);
             teatros.forEach(System.out::println);
             salas.forEach(System.out::println); */
@@ -168,7 +172,7 @@ public class DetallePeliculaBean implements Serializable {
     public String realizarCompra(Integer idFuncion) {
         //return "/proceso_compra?faces-redirect=true&parametro1=2&parametro2=hola";
         if(!idFuncion.equals(null) || idFuncion != null) {
-            return "/cliente/proceso_compra?faces-redirect=true&amp;funcion_id="+idFuncion;
+            return "/cliente/proceso_compra?faces-redirect=true&amp;funcion_id="+idFuncion+"&amp;fecha_sel="+fechaSeleccionada.toString();
         }
         else{
             return "";

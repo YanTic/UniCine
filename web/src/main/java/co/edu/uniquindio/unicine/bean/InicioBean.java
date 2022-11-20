@@ -60,9 +60,13 @@ public class InicioBean implements Serializable {
 
     public void elegirCiudad() {
         if (ciudad != null) {
-            peliculasEstreno = clienteServicio.listarPeliculasPorEstadoCiudad(EstadoPelicula.ESTRENO, ciudad.getId());
-            peliculasProximas = clienteServicio.listarPeliculasPorEstadoCiudad(EstadoPelicula.PROXIMO, ciudad.getId());
+            try {
+                peliculasEstreno = clienteServicio.listarPeliculasPorEstadoCiudad(EstadoPelicula.ESTRENO, ciudad.getId());
+                peliculasProximas = clienteServicio.listarPeliculasPorEstadoCiudad(EstadoPelicula.PROXIMO, ciudad.getId());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
-
+    
     }
 }

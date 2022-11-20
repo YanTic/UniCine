@@ -147,10 +147,9 @@
       </div>
     </div>
 
-    <p:dialog id="dialogo_ciudad" widgetVar="dialogo_ciudad" modal="true" header="Seleccionar Ciudad" showEffect="fade" visible="true">
+    <p:dialog id="dialogo_ciudad" widgetVar="dialogo_ciudad" modal="true" header="Seleccionar Ciudad" showEffect="fade" visible="#{seguridadBean.ciudadSeleccionada == null ? 'true' : 'false'}">
       <h:form>
         <h:panelGrid columns="3" cellpadding="5">
-
           <div>
             <h:graphicImage library="img" name="icono_black_font.png" styleClass="img-icon-ciudad"/>
           </div>
@@ -159,12 +158,13 @@
           <p:selectOneMenu id="ciudad_inicio" value="#{inicioBean.ciudad}" converter="#{ciudadConverter}" required="true" requiredMessage="La ciudad es obligatoria">
             <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true"/>
             <f:selectItems value="#{inicioBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
+            <p:ajax event="change" listener="#{inicioBean.elegirCiudad()}" update="@form, listas_peliculas"/>
           </p:selectOneMenu>
           <p:message for="ciudad_inicio"/>
 
         </h:panelGrid>
 
-        <p:commandButton value="Seleccionar Ciudad" action="#{inicioBean.elegirCiudad()}" icon="pi pi-check" iconPos="left" update="@form, listas_peliculas" oncomplete="PF('dialogo_ciudad').hide()"/>
+        <p:commandButton value="Seleccionar Ciudad" action="#{seguridadBean.seleccionarCiudad(inicioBean.ciudad)}" icon="pi pi-check" iconPos="left" oncomplete="PF('dialogo_ciudad').hide()"/>
         <!--<p:messages />  MENSAJE DE ERROR-->
         <p:growl for="mensaje_bean" showDetail="true"/> <!--ALERTA-->
       </h:form>
