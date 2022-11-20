@@ -352,8 +352,14 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     @Override
-    public List<Pelicula> listarPeliculasPorEstadoCiudad(EstadoPelicula estadoPelicula, Integer idCiudad) {
-        return clienteRepo.obtenerPeliculasPorEstadoCiudad(estadoPelicula, idCiudad);
+    public List<Pelicula> listarPeliculasPorEstadoCiudad(EstadoPelicula estadoPelicula, Integer idCiudad) throws Exception {
+        List<Pelicula> peliculas = clienteRepo.obtenerPeliculasPorEstadoCiudad(estadoPelicula, idCiudad);
+
+        if (peliculas.isEmpty()) {
+            throw new Exception("No existen peliculas con el estado ["+estadoPelicula+"] y ciudad [id:"+idCiudad+"]");
+        }
+
+        return peliculas;
     }
 
     @Override
@@ -370,6 +376,11 @@ public class ClienteServicioImpl implements ClienteServicio{
     @Override
     public List<PeliculaFuncionDTO> buscarPeliculaFuncion(String nombre) {
         return clienteRepo.obtenerPeliculaFuncion(nombre);
+    }
+
+    @Override
+    public Compra obtenerCompra(Integer idCompra) throws Exception {
+        return compraRepo.findById(idCompra).orElseThrow(()->new Exception("No se encontro la compra"));
     }
 
     @Override

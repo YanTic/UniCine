@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,7 +23,10 @@ public class Compra implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
-    private LocalDateTime fecha;
+    private LocalDateTime fechaCompra;
+
+    @Column(nullable = false)
+    private LocalDate fechaFuncionCompra;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -55,8 +59,9 @@ public class Compra implements Serializable {
     private Funcion funcion;
 
     @Builder
-    public Compra(MetodoPago metodo_pago, CuponCliente cupon, Cliente cliente, Funcion funcion) {
-        this.fecha = LocalDateTime.now();
+    public Compra(LocalDate fechaFuncionCompra, MetodoPago metodo_pago, CuponCliente cupon, Cliente cliente, Funcion funcion) {
+        this.fechaCompra = LocalDateTime.now();
+        this.fechaFuncionCompra = fechaFuncionCompra;
         this.metodo_pago = metodo_pago;
         this.cupon = cupon;
         this.cliente = cliente;

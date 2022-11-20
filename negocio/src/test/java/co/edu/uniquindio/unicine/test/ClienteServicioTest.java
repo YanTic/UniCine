@@ -13,12 +13,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
 @Transactional // No modifica los datos de la bd
 public class ClienteServicioTest {
+
+    // SI SE LLEGA A TENER ERRORES DE ESTE TIPO EN EL TEST: ScriptStatementFailedException
+    // Es porque en hay datos cargados en la base de datos, entonces al cargar @Sql("classpath:dataset.sql")
+    // Utilizaria los mismo datos sobreescritos, diciendo que ya existen, por lo que para usar tests
+    // la base de datos no deberia tener nada (Pero como se debe usar en el modulo web, los tests quedan obsoletos)
 
     @Autowired
     private ClienteServicio clienteServicio;
@@ -146,6 +152,7 @@ public class ClienteServicioTest {
         try {
             Compra compra = Compra.builder()
                     .cliente(clienteServicio.obtenerCliente(5))
+                    .fechaFuncionCompra(LocalDate.now())
                     .funcion(adminTeatroServicio.obtenerFuncion(1))
                     .metodo_pago(MetodoPago.EFECTY)
                     .cupon(clienteServicio.obtenerCuponCliente(5, 4))

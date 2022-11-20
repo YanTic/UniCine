@@ -151,16 +151,16 @@ insert into funcion values (14, 210, 8, 2, 5);
 insert into funcion values (15, 222, 8, 3, 4);
 
 
-/*insert into compra values (id,fecha,metodopago,valortotal,clientecedula,cuponClienteid,funcionid );*/
-insert into compra values (1, '2022-05-03', 'EFECTY',    42200,  1, 1, 2);
-insert into compra values (2, '2022-05-03', 'EFECTY',    30120,  1, 2, 2);
-insert into compra values (3, '2022-05-03', 'VISA',      40200,  3, null, 1);
-insert into compra values (4, '2022-05-03', 'DAVIPLATA', 52462,  4, 5, 4);
-insert into compra values (5, '2022-06-10', 'EFECTY',    6240,  2, 3, 5);
-insert into compra values (6, '2022-06-12', 'EFECTY',    51240,  5, null, 9);
-insert into compra values (7, '2022-06-24', 'VISA',      45400,  3, null, 1);
-insert into compra values (8, '2022-07-13', 'EFECTY',    120240, 2, null, 3);
-insert into compra values (9, '2022-07-17', 'NEQUI',     10264,  4, 6, 8);
+/*insert into compra values (id,fechaCompra, fechaFuncionCompra,metodopago,valortotal,clientecedula,cuponClienteid,funcionid );*/
+insert into compra values (1, '2022-05-03', '2022-05-03', 'EFECTY',    42200,  1, 1, 2);
+insert into compra values (2, '2022-05-03', '2022-05-03', 'EFECTY',    30120,  1, 2, 2);
+insert into compra values (3, '2022-05-03', '2022-05-03', 'VISA',      40200,  3, null, 1);
+insert into compra values (4, '2022-05-03', '2022-05-03', 'DAVIPLATA', 52462,  4, 5, 4);
+insert into compra values (5, '2022-06-10', '2022-05-03', 'EFECTY',    6240,  2, 3, 5);
+insert into compra values (6, '2022-06-12', '2022-05-03', 'EFECTY',    51240,  5, null, 9);
+insert into compra values (7, '2022-06-24', '2022-05-03', 'VISA',      45400,  3, null, 1);
+insert into compra values (8, '2022-07-13', '2022-05-03', 'EFECTY',    120240, 2, null, 3);
+insert into compra values (9, '2022-07-17', '2022-05-03', 'NEQUI',     10264,  4, 6, 8);
 
 /*insert into confiteria_compra values (id,precio,unidades,compraid,confiteria_id);*/
 insert into confiteria_compra values (1, 30000, 2, 1, 1);

@@ -56,7 +56,7 @@ public interface CompraRepo extends JpaRepository<Compra, Integer> {
     // Cree una consulta que devuelva una lista de compras de un cliente, la respuesta debe incluir el valor total, la
     // fecha de la compra, la función, el valor pagado por la confitería y el valor pagado por las entradas, por
     // separado. Use un DTO para una mejor respuesta.
-    @Query("select new co.edu.uniquindio.unicine.dto.InformacionCompraDTO(comp.valorTotal, comp.fecha, comp.funcion, (select sum(conf.precio * conf.unidades) from ConfiteriaCompra conf where conf.compra.id = comp.id), (select sum(bol.precio) from Boleta bol where bol.compra.id = comp.id)) from Compra comp where comp.cliente.cedula = :idCliente")
+    @Query("select new co.edu.uniquindio.unicine.dto.InformacionCompraDTO(comp.valorTotal, comp.fechaCompra, comp.funcion, (select sum(conf.precio * conf.unidades) from ConfiteriaCompra conf where conf.compra.id = comp.id), (select sum(bol.precio) from Boleta bol where bol.compra.id = comp.id)) from Compra comp where comp.cliente.cedula = :idCliente")
     List<InformacionCompraDTO> obtenerInformacionCompra(Integer idCliente);
 
 

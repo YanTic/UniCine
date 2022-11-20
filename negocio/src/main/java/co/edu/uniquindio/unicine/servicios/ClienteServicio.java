@@ -38,11 +38,13 @@ public interface ClienteServicio {
 
     List<Pelicula> buscarPelicula(String nombre);
 
-    List<Pelicula> listarPeliculasPorEstadoCiudad(EstadoPelicula estadoPelicula, Integer idCiudad);
+    List<Pelicula> listarPeliculasPorEstadoCiudad(EstadoPelicula estadoPelicula, Integer idCiudad) throws Exception;
 
     List<Pelicula> listarPeliculasPorEstado(EstadoPelicula estadoPelicula) throws Exception;
 
     List<PeliculaFuncionDTO> buscarPeliculaFuncion(String nombre);
+
+    Compra obtenerCompra(Integer idCompra) throws Exception;
 
     Cliente cambiarContrasenia(Integer idCliente, String contraseniaAnterior, String contraseniaNueva) throws Exception;
 }

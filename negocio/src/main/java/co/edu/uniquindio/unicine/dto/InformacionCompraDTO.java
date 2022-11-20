@@ -16,7 +16,7 @@ public class InformacionCompraDTO {
     // (select sum(bol.precio) from Boleta bol where bol.compra.id = comp.id)
 
     private Float valorTotal;
-    private LocalDateTime fecha;
+    private LocalDateTime fechaCompra;
     private Funcion funcion;
     private double precioConfiterias;
     private double precioBoletas;
