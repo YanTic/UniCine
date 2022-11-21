@@ -31,6 +31,7 @@
                 <!--Este ajax, se puede simplificar y generalizar solo actualizando el formulario completo, pero tambien se
                     puede actualizar un solo item, como datable y columns son propiedades que están usando listas para iterar
                     se puede especificar en que iteracion actualizar y que item va a actualizar de la siguiente manera: -->
+                <!--TODO-->
                 <!--<p:ajax event="click" listener="#{compraBean.selecionarSilla(fila, col)}" update="gestionSillas:matriz-sillas:#{fila}:columnas:#{col}:item-silla"/>-->
               </p:panelGrid>
             </p:columns>
@@ -42,19 +43,19 @@
       <p:panel header="Confiteria ">
         <div class="row">
           <p:repeat value="#{compraBean.confiterias}" var="confiteria">
-            <div class="col-3">
-              <div class="shadow-sm">
+            <div class="col-3 mb-3">
 
+              <div class="shadow-sm item-confiteria p-3">
                 <h:form id="confiterias-form">
-                  <img src="imagen.png" alt="imagen confiteria" />
+                  <img src="/resources/img/spider_confi.jpg" alt="imagen confiteria" />
                   <p>#{confiteria.producto}</p>
                   <p>$ #{confiteria.precio}</p>
 
                   <div class="text-center">
                     <div class="d-inline-flex">
-                      <p:commandButton icon="pi pi-plus" styleClass="rounded-button ui-button-info" action="#{compraBean.sumarUnidadesConfi(confiteria)}" update="@form"/>
+                      <p:commandButton icon="pi pi-plus" styleClass="rounded-button ui-button-info" action="#{compraBean.sumarUnidadesConfi(confiteria)}" update="confiterias-form:cantidad"/>
                       <p jsf:id="cantidad" class="mb-0 me-2 ms-2 mt-1">3</p>
-                      <p:commandButton icon="pi pi-minus" styleClass="rounded-button ui-button-danger" action="#{compraBean.restarUnidadesConfi(confiteria)}" update="@form"/>
+                      <p:commandButton icon="pi pi-minus" styleClass="rounded-button ui-button-danger" action="#{compraBean.restarUnidadesConfi(confiteria)}" update="confiterias-form:cantidad"/>
                     </div>
                   </div>
                 </h:form>
@@ -144,7 +145,7 @@
 
           <p:commandButton value="Finalizar compra" action="#{compraBean.realizarCompra()}" update="@form"/>
           <!--<p:messages />  MENSAJE DE ERROR-->
-          <p:growl for="mensaje_bean" showDetail="true"/> <!--ALERTA-->
+          <p:growl for="msg_bean" showDetail="true"/> <!--ALERTA-->
         </h:form>
 
       </p:panel>

@@ -7,12 +7,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<ui:composition template="/WEB-INF/template.xhtml">
+<ui:composition template="/WEB-INF/template_admin.xhtml">
 
   <ui:define name="titulo">Gestionar Peliculas</ui:define>
 
   <ui:define name="content">
     <div class="container mt-3 mb-3">
+      <!--TODO: Agregar otro panel para gestionar-crud 'GENERO'-->
+
       <p:panel header="Creacion Pelicula">
         <h:form>
           <h:panelGrid columns="3" cellpadding="5">
@@ -62,12 +64,5 @@
 
 
 </ui:composition>
-
-
-<h:body>
-
-
-
-</h:body>
 
 </html>

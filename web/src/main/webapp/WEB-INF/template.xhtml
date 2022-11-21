@@ -21,8 +21,6 @@
 
 
 <h:body onload="#{onLoadJS}">
-  <p>Usuario: #{seguridadBean.cliente.nombre} - Tipo Sesion: #{seguridadBean.tipoSesion}</p>
-
   <ui:param name="onLoadJS" value=".." />
 
   <div id="pre-header">
@@ -48,25 +46,13 @@
                       Inicio
                     </a>
                   </li>
-                  <li>
-                    <a href="/admin/crudPelicula.xhtml" class="nav-link text-white text-center">
-                      <i class="pi pi-cog"/> <br/>
-                      CRUD Peliculas
+                  <li jsf:rendered="#{seguridadBean.autenticado}">
+                    <a href="#" class="nav-link text-white text-center">
+                      <i class="pi pi-wallet" /> <br/>
+                      Historial Compras
                     </a>
                   </li>
-                  <li>
-                    <a href="/admin/crudTeatro.xhtml" class="nav-link text-white text-center">
-                      <i class="pi pi-cog" /> <br/>
-                      CRUD Teatros
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/admin_teatro/crudSala.xhtml" class="nav-link text-white text-center">
-                      <i class="pi pi-cog" /> <br/>
-                      CRUD Salas
-                    </a>
-                  </li>
-                  <li>
+                  <li jsf:rendered="#{seguridadBean.autenticado}">
                     <a href="#" class="nav-link text-white text-center">
                       <i class="pi pi-user" /> <br/>
                       Perfil
@@ -88,7 +74,7 @@
 
               <div class="text-end">
                 <h:form rendered="#{seguridadBean.autenticado}">
-                  <p:outputLabel value="Hola, #{seguridadBean.cliente.nombre}" styleClass="me-3"/>
+                  <p:outputLabel value="Hola, #{seguridadBean.msgCerrarSesion}" styleClass="me-3"/>
                   <p:commandButton  value="Cerrar Sesion" action="#{seguridadBean.cerrarSesion()}" styleClass="ui-button-outlined ui-button-danger me-3"/>
                 </h:form>
                 <h:form rendered="#{!seguridadBean.autenticado}">

@@ -45,7 +45,11 @@ public class SeguridadBean implements Serializable {
 
     @Getter @Setter
     private Cliente cliente;
+
+    @Getter @Setter
     private AdminGeneral adminGeneral;
+
+    @Getter @Setter
     private AdminTeatro adminTeatro;
 
     @Getter @Setter
@@ -62,27 +66,10 @@ public class SeguridadBean implements Serializable {
                 cliente = clienteServicio.login(email, password);
                 tipoSesion = "cliente";
                 autenticado = true;
-                System.out.println("SE HA INICIADO SESION COMO 'CLIENTE'");
                 return "/index?faces-redirect=true";
             } catch (Exception e) {
-                try {
-                    adminGeneral = adminGeneralServicio.login(email, password);
-                    tipoSesion = "admin_general";
-                    autenticado = true;
-                    System.out.println("SE HA INICIADO SESION COMO 'ADMIN GENERAL'");
-                    return "/index?faces-redirect=true";
-                } catch (Exception b) {
-                    try {
-                        adminTeatro = adminTeatroServicio.login(email, password);
-                        tipoSesion = "admin_teatro";
-                        autenticado = true;
-                        System.out.println("SE HA INICIADO SESION COMO 'ADMIN TEATRO'");
-                        return "/index?faces-redirect=true";
-                    }catch (Exception c) {
-                        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
-                        FacesContext.getCurrentInstance().addMessage("login-bean", fm);
-                    }
-                }
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
+                FacesContext.getCurrentInstance().addMessage("login-bean", fm);
             }
         }
         else{
@@ -93,13 +80,61 @@ public class SeguridadBean implements Serializable {
         return "";
     }
 
+    public String iniciarSesionAdmins() {
+        if (!email.isEmpty() && !password.isEmpty()) {
+            try{
+                adminGeneral = adminGeneralServicio.login(email, password);
+                tipoSesion = "admin_general";
+                autenticado = true;
+                return "/index_admin?faces-redirect=true";
+
+            } catch (Exception e) {
+                try {
+                    adminTeatro = adminTeatroServicio.login(email, password);
+                    tipoSesion = "admin_teatro";
+                    autenticado = true;
+                    return "/index_admin?faces-redirect=true";
+
+                } catch (Exception c) {
+                    FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", c.getMessage());
+                    FacesContext.getCurrentInstance().addMessage("login-bean", fm);
+                }
+            }
+        }
+        else {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "El correo y la contraseña son necesarios");
+            FacesContext.getCurrentInstance().addMessage("login-bean", fm);
+        }
+
+        return "";
+    }
+
+
     public void seleccionarCiudad(Ciudad ciudad) {
          this.ciudadSeleccionada = ciudad;
     }
 
     public String cerrarSesion() {
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); // Este objeto se seguridadBean se saca de la memoria
-        return "/index?faces-redirect=true";
+        if (tipoSesion == "cliente") {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); // Este objeto saca a seguridadBean de la memoria
+            return "/index?faces-redirect=true";
+        }
+        else{
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); // Este objeto saca a seguridadBean de la memoria
+            return "/index_admin?faces-redirect=true";
+        }
     }
 
+
+    public String getMsgCerrarSesion() {
+        if (tipoSesion == "cliente") {
+            return cliente.getNombre();
+        }
+        else if (tipoSesion == "admin_general") {
+            return adminGeneral.getNombre();
+        }
+        else {
+            return adminTeatro.getNombre();
+        }
+    }
 }

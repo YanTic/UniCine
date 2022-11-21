@@ -22,10 +22,11 @@ public class SeguridadFiltro implements Filter {
             // Entonces ahora cualquier peticion que quiera acceder a un archivo de la carpeta 'cliente' deberá
             // tener autenticado = true, es decir debe está logeado
 
+            //Obtenemos el objeto seguridadBean de la sesión actual
+            SeguridadBean userManager = (SeguridadBean) request.getSession().getAttribute("seguridadBean");
+
             //Aplicar el filtro a esta carpeta
             if (requestURI.startsWith("/cliente/") ) {
-                //Obtenemos el objeto seguridadBean de la sesión actual
-                SeguridadBean userManager = (SeguridadBean) request.getSession().getAttribute("seguridadBean");
 
                 if (userManager != null) {
                     if (userManager.isAutenticado() && userManager.getTipoSesion().equals("cliente")) {
@@ -39,7 +40,38 @@ public class SeguridadFiltro implements Filter {
                     //El usuario no está logueado, entonces se redirecciona al inicio
                     response.sendRedirect(request.getContextPath() + PAGINA_INICIO);
                 }
-            }else{
+            }
+            else if (requestURI.startsWith("/admin/") ) {
+
+                if (userManager != null) {
+                    if (userManager.isAutenticado() && userManager.getTipoSesion().equals("admin_general")) {
+                        //El usuario está logueado entonces si puede ver la página solicitada
+                        filterChain.doFilter(servletRequest, servletResponse);
+                    } else {
+                        //El usuario no está logueado, entonces se redirecciona al inicio
+                        response.sendRedirect(request.getContextPath() + PAGINA_INICIO);
+                    }
+                } else {
+                    //El usuario no está logueado, entonces se redirecciona al inicio
+                    response.sendRedirect(request.getContextPath() + PAGINA_INICIO);
+                }
+            }
+            else if (requestURI.startsWith("/admin_teatro/") ) {
+
+                if (userManager != null) {
+                    if (userManager.isAutenticado() && userManager.getTipoSesion().equals("admin_teatro")) {
+                        //El usuario está logueado entonces si puede ver la página solicitada
+                        filterChain.doFilter(servletRequest, servletResponse);
+                    } else {
+                        //El usuario no está logueado, entonces se redirecciona al inicio
+                        response.sendRedirect(request.getContextPath() + PAGINA_INICIO);
+                    }
+                } else {
+                    //El usuario no está logueado, entonces se redirecciona al inicio
+                    response.sendRedirect(request.getContextPath() + PAGINA_INICIO);
+                }
+            }
+            else{
                 //La página solicitada no está en la carpeta /usuario entonces el filtro no aplica
                 filterChain.doFilter(servletRequest, servletResponse);
             }

@@ -38,14 +38,11 @@ public class CompraBean implements Serializable {
     @Getter @Setter
     private Funcion funcion;
 
-    //@Value("#{param['cliente_id']}")
-    private Integer clienteId;
-
     @Getter @Setter
     private Cliente cliente;
 
     @Getter @Setter
-    private String codigoCupon;
+    private Integer codigoCupon;
 
     @Getter @Setter
     private DistribucionSillas distribucion;
@@ -74,7 +71,6 @@ public class CompraBean implements Serializable {
     @Getter @Setter
     private double precioTotalCompra;
 
-
     @Autowired
     private ClienteServicio clienteServicio;
 
@@ -96,9 +92,9 @@ public class CompraBean implements Serializable {
             columnas = new ArrayList<>();
             precioTotalCompra = 0f;
 
-          /*  confiterias.forEach(c -> {
+            confiterias.forEach(c -> {
                 confiteriaCliente.add( ConfiteriaCompra.builder().confiteria(c).unidades(0).build() );
-            });*/
+            });
 
             try {
                 if (clienteSesion != null)  {
@@ -119,23 +115,33 @@ public class CompraBean implements Serializable {
             throw new RuntimeException(e);
         }
     }
-    
-    public void selecionarSilla(Integer fila, Integer col) {
 
+    // TODO: Reorganizar el metodo para que se añada una boleta (o silla) si no hay otra con la misma fila y col,
+    //       si la hay entonces elimenela
+    public void selecionarSilla(Integer fila, Integer col) {
+        for(Boleta b : boletasCliente) {
+            if (!b.getFila().equals(fila.toString()) && !b.getColumna().equals(col.toString()) ) {
+                boletasCliente.add(Boleta.builder().tipo(TipoSilla.ESTANDAR).fila(""+fila).columna(""+col).build());
+                break;
+            }
+        }
+        boletasCliente.add(Boleta.builder().tipo(TipoSilla.ESTANDAR).fila(""+fila).columna(""+col).build());
     }
 
     public boolean buscarSilla(Integer fila, Integer col) {
         return filas.contains(fila) && columnas.contains(col) ? true : false;
     }
 
+    // TODO: Hacer el metodo para que se le sume a la confiteria las unidades
     public void restarUnidadesConfi(Confiteria confiteria) {
         /*if(!totalConfiteriaComprada.contains(confiteria)) {
             totalConfiteriaComprada.remove(confiteria);
         }*/
     }
 
+    // TODO: Hacer el metodo para que se le reste a la confiteria las unidades
     public void sumarUnidadesConfi(Confiteria confiteria) {
-        /*totalConfiteriaComprada.add(confiteria);*/
+
     }
 
     public void crearDistribucionSala() {
@@ -151,27 +157,38 @@ public class CompraBean implements Serializable {
         }
     }
 
-    /*public String realizarCompra() {
+    public String realizarCompra() {
         if (clienteSesion != null) {
-            if (!boletos.isEmpty && fechaSeleccionada != null) {
+            if (!boletasCliente.isEmpty() && fechaSeleccionada != null) {
                 try {
-                    List<ConfiteriaCompra> listaConfi = confiteriasFormulario.stream().filter(c -> c.getUnidades > 0).collect(Collectors.toList());
+                    // Como la lista confiteriaCliente se inicializa con todas las confiterias que existen, se deben
+                    // obtener solo las confiterias que a las que se halla asignado una cantidad de unidades (el usuario
+                    // suma y resta la cantidad que quiere de algo en 'proceso_compra.xhtml'), por lo que en la compra
+                    // solo se va a almacenar la lista de las confiterias que tengan unidades mayores a cero, con ayuda de .filter()
+                    List<ConfiteriaCompra> listaConfi = confiteriaCliente.stream().filter(c -> c.getUnidades() > 0).collect(Collectors.toList());
 
-                    //Compra compra = clienteServicio.realizarCompra();
+                    Compra datosCompra = Compra.builder()
+                            .cliente(cliente)
+                            .fechaFuncionCompra(fechaSeleccionada)
+                            .funcion(funcion)
+                            .metodo_pago(metodoPagoSeleccionado)
+                            .cupon(clienteServicio.obtenerCuponCliente(cliente.getCedula(), codigoCupon))
+                            .build();
+                    Compra compra = clienteServicio.realizarCompra(datosCompra, boletasCliente, listaConfi);
 
                     if (compra != null) {
                         FacesMessage fm;
 
                         if (compra.getCupon() != null) {
-                            //TODO Cambiar los mensajes para que diga lo del cupon redimido o no
-                            fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Se ha realizado la compra exitosamente, se le ha enviado un correo con los detalles de la compra");
+                            fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Se ha realizado la compra exitosamente!! Se le ha enviado un correo con los detalles de la compra y se ha redimido el cupon!");
                         }
                         else{
-                            fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Se ha realizado la compra exitosamente, se le ha enviado un correo con los detalles de la compra");
+                            fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Se ha realizado la compra exitosamente!!.Se le ha enviado un correo con los detalles de la compra");
                         }
 
                         FacesContext.getCurrentInstance().addMessage("msg_bean", fm);
                         Thread.sleep(2000);
+                        return "/cliente/detalle_compra.xhtml?faces-redirect=true&amp;compra_id="+compra.getId();
                     }
                 }catch (Exception e) {
                     FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
@@ -179,7 +196,14 @@ public class CompraBean implements Serializable {
                 }
 
             }
+            else {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe escoger al menos una silla");
+                FacesContext.getCurrentInstance().addMessage("msg_bean", fm);
+            }
         }
 
-    }*/
+        return "";
+    }
+
+
 }

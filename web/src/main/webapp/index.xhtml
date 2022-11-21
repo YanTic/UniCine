@@ -26,8 +26,8 @@
       <nav class="py-0 bg-light border-bottom ">
         <div class="container d-flex flex-wrap barra-principal">
           <ul class="nav me-auto">
-            <li class="nav-item">
-              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="blank" class="nav-link link-dark px-2"> <span class="pi pi-youtube"/> </a>
+            <li class="nav-item ">
+              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="blank" class="nav-link link-dark px-2 center"> <span class="pi pi-youtube"/> </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link link-dark px-2"> <span class="pi pi-twitter" /> </a>
@@ -36,9 +36,20 @@
               <a href="https://github.com/YanTic" target="blank" class="nav-link link-dark px-2"> <span class="pi pi-github" /> </a>
             </li>
           </ul>
-          <ul class="nav">
-            <li class="nav-item "><a href="#" class="nav-link link-dark px-2">ELIJA EL CIUDAD TEATRO</a></li>
-          </ul>
+          <!--<ul class="nav">
+            <li class="nav-item ">
+              <h:form>
+                <p:outputLabel for="ciudad_ini" value="Ciudad: "/>
+                <p:selectOneMenu id="ciudad_ini" value="#{inicioBean.ciudad}" onchange="#{inicioBean.elegirCiudad()}" converter="#{ciudadConverter}" required="false">
+                  <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true"/>
+                  <f:selectItems value="#{inicioBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
+                  <p:ajax event="change" listener="#{inicioBean.elegirCiudad()}" update="@form, listas_peliculas"/>
+                  <p:ajax event="change" listener="#{seguridadBean.seleccionarCiudad(inicioBean.ciudad)}" update="@form, listas_peliculas"/>
+                </p:selectOneMenu>
+                <p:message for="ciudad_ini"/>
+              </h:form>
+            </li>
+          </ul>-->
         </div>
       </nav>
     </div>
@@ -61,13 +72,13 @@
             <div class="carousel-item #{i.index == 0 ? 'active' : ''}">
               <img class="bd-placeholder-img img-carrusel" src="#{imagen}" alt="img"/>
 
-              <div class="container">
+              <!--<div class="container">
                 <div class="carousel-caption text-end">
                   <h1>Example headline.</h1>
                   <p>Some representative placeholder content for the first slide of the carousel.</p>
                   <p><a class="btn btn-lg btn-primary" href="#">Ver funciones</a></p>
                 </div>
-              </div>
+              </div>-->
             </div>
           </p:repeat>
         </div>
@@ -175,36 +186,5 @@
   <!--<ui:define name="footer"></ui:define> Si no quiero cambiar el footer no uso el define-->
 
 </ui:composition>
-
-<!--
-
-<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-
-
-<div class="carousel-item">
-  <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
-  <div class="container">
-    <div class="carousel-caption">
-      <h1>Another example headline.</h1>
-      <p>Some representative placeholder content for the second slide of the carousel.</p>
-      <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-    </div>
-  </div>
-</div>
-<div class="carousel-item">
-  <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
-  <div class="container">
-    <div class="carousel-caption text-end">
-      <h1>One more for good measure.</h1>
-      <p>Some representative placeholder content for the third slide of this carousel.</p>
-      <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
-    </div>
-  </div>
-</div>
-</div>-->
 
 </html>
