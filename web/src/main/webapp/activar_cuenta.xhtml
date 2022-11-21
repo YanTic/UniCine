@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<ui:composition template="/WEB-INF/template.xhtml" >
+
+  <ui:define name="titulo">Activar Cuenta</ui:define>
+
+  <ui:define name="content">
+    <div class="container">
+
+      <p:panel header="Activacion de la cuenta" styleClass="mt-3 mb-3">
+        <h:form rendered="#{gestionCuentaBean.verificado}">
+          <p:outputLabel value="#{gestionCuentaBean.mensaje}" styleClass="me-3"/>
+          <p:commandButton  value="Ir a Inicio" action="#{gestionCuentaBean.volverAInicio()}" styleClass="ui-button-outlined ui-button-success me-3"/>
+        </h:form>
+      </p:panel>
+
+    </div>
+  </ui:define>
+
+  <!--<ui:define name="footer"></ui:define> Si no quiero cambiar el footer no uso el define-->
+
+</ui:composition>
+
+</html>

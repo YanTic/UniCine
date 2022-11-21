@@ -4,8 +4,13 @@ import co.edu.uniquindio.unicine.dto.PeliculaFuncionDTO;
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
 import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,36 +80,60 @@ public class ClienteServicioImpl implements ClienteServicio{
         cliente.setImagen_perfil("");
 
         Cliente registro = clienteRepo.save(cliente);
-        /*emailServicio.enviarEmail("Bienvenido a Unicine | Registro Exitoso!"
+
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("raton");
+
+        LocalDateTime ldt = LocalDateTime.now();
+        ZonedDateTime zdt = ldt.atZone(ZoneId.of("America/Bogota"));
+
+        String param1 = textEncryptor.encrypt(registro.getEmail());
+        String param2 = textEncryptor.encrypt(""+zdt.toInstant().toEpochMilli());
+        String link = "http://localhost:8085/activar_cuenta.xhtml?p1="+param1+"&amp;p2="+param2;
+
+        emailServicio.enviarEmail("Bienvenido a Unicine | Registro Exitoso!"
                 ,"<!DOCTYPE html>\n" +
                         "<html>\n" +
                         "    <head>\n" +
                         "        <title>Registro</title>\n" +
                         "    </head>\n" +
                         "    <body>\n" +
-                        "        <p><strong>Hola, "+ cliente.getNombre()+ "Bienvenido a Unicine!</strong></p>\n" +
+                        "        <p><strong>Hola, "+ cliente.getNombre()+ " Bienvenido a Unicine!</strong></p>\n" +
                         "        <p>Solo falta un paso más, ahora debes activar tu cuenta para verificar tu identidad. Haz click en la imagen: </p>\n" +
-                        "        <a href=#><img src=\"\" alt=\"Activar Cuenta\"></a>\n" +
-                        "        <p>Si no puedes ingresar usa este link: <a href=#>link</a> </p>\n" +
+                        "        <a href=\""+link+"\" ><img src=\"\" alt=\"Activar Cuenta\"></a>\n" +
+                        "        <p>Si no puedes ingresar usa este link: <a href=\""+link+"\">link</a> </p>\n" +
                         "    </body>\n" +
                         "</html>"
-                ,"julian.acostat@uqvirtual.edu.co");*/
+                ,registro.getEmail());
         System.out.println("Se ha enviado el correo");
         return registro;
     }
 
     @Override
-    public Cliente activarCuenta(Cliente cliente) throws Exception {
-        Optional<Cliente> guardado = clienteRepo.findById(cliente.getCedula());
+    public void activarCuenta(String correo, String fecha) throws Exception {
 
-        if (guardado.isEmpty()) {
+        correo = correo.replaceAll(" ", "+");
+        fecha = fecha.replaceAll(" ", "+");
+
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("raton");
+
+        LocalDateTime ldt = LocalDateTime.now();
+        ZonedDateTime zdt = ldt.atZone(ZoneId.of("America/Bogota"));
+
+        String correoDes = textEncryptor.decrypt(correo);
+        String fechaDes = textEncryptor.decrypt(fecha);
+
+        Cliente guardado = clienteRepo.findByEmail(correoDes).orElse(null);
+
+        if (guardado == null) {
             throw new Exception("El cliente no existe, no se ha registrado");
         }
 
         // Ahora se le asigna el un cupon por registro al cliente
-        CuponCliente cuponRegistro = asignarCuponACliente(cliente.getCedula(), 1);
-        guardado.get().setEstado(true);
-        guardado.get().getCupones().add(cuponRegistro);
+        CuponCliente cuponRegistro = asignarCuponACliente(guardado.getCedula(), 1);
+        guardado.setEstado(true);
+        guardado.getCupones().add(cuponRegistro);
 
         emailServicio.enviarEmail("Cuenta activada!"
                 , "<!DOCTYPE html>\n" +
@@ -119,9 +148,9 @@ public class ClienteServicioImpl implements ClienteServicio{
                         "        <a href=#><img src=\"\" alt=\"Cupon Registro\"></a>\n" +
                         "    </body>\n" +
                         "</html>"
-                ,"julian.acostat@uqvirtual.edu.co");
+                ,guardado.getEmail());
 
-        return clienteRepo.save(guardado.get());
+        clienteRepo.save(guardado);
     }
 
     private boolean esEmailRepetido(String email) {
@@ -394,6 +423,8 @@ public class ClienteServicioImpl implements ClienteServicio{
         return compraRepo.findById(idCompra).orElseThrow(()->new Exception("No se encontro la compra"));
     }
 
+
+    // TODO: Hacer la encriptacion al igual que activar cuenta, crear un .xhtml y se puede usar el bien de gestionCuenta o crear otro tambien
     @Override
     public Cliente cambiarContrasenia(Integer idCliente, String contraseniaAnterior, String contraseniaNueva) throws Exception {
         boolean clienteExiste = esClienteExistente(idCliente);

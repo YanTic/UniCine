@@ -66,7 +66,7 @@ public class ClienteServicioTest {
         }
     }
 
-    @Test
+    /*@Test
     @Sql("classpath:dataset.sql")
     public void activarCuentaTest() {
         try {
@@ -81,7 +81,7 @@ public class ClienteServicioTest {
             throw new RuntimeException(e);
             //Assertions.assertTrue(false);
         }
-    }
+    }*/
 
     @Test
     @Sql("classpath:dataset.sql")

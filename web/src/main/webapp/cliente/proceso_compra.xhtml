@@ -31,8 +31,8 @@
                 <!--Este ajax, se puede simplificar y generalizar solo actualizando el formulario completo, pero tambien se
                     puede actualizar un solo item, como datable y columns son propiedades que están usando listas para iterar
                     se puede especificar en que iteracion actualizar y que item va a actualizar de la siguiente manera: -->
-                <!--TODO-->
-                <!--<p:ajax event="click" listener="#{compraBean.selecionarSilla(fila, col)}" update="gestionSillas:matriz-sillas:#{fila}:columnas:#{col}:item-silla"/>-->
+                <!--TODO:  JSF TIENE PROBLEMAS CON LOS COMENTARIOS COMO QUE EJECUTA FUNCIONES ASI ESTEN COMENTADAS, como odio esto -->
+                <!--TODO <p:a/jax even/t="c/li/ck" li/stene/r="#/{/compraBean.selecionar/Silla(fila,/ col)}" upda/te="gestionSi/llas:matri/z-sillas:#/{fila}:columnas:#/{co/l}:item-s/illa"/>-->
               </p:panelGrid>
             </p:columns>
           </p:dataTable>
@@ -93,7 +93,7 @@
             <strong>Entradas:</strong>
             <p:repeat value="#{compraBean.boletasCliente}" var="bol_cli">
               <div>
-                <p:outputLabel styleClass="d-inline-block" value="#{bol_cli.fila} - #{bol_cli.columna}"/>
+                <p:outputLabel styleClass="d-inline-block me-3" value="#{bol_cli.fila} - #{bol_cli.columna}"/>
                 <p:outputLabel styleClass="d-inline-block" value="#{compraBean.funcion.precio}"/> <!--bol_cli.precio tambien se puede pero acomodemos otras cosas primero-->
               </div>
             </p:repeat>
@@ -103,7 +103,7 @@
           <div>
             <strong>Confiteria: </strong>
             <p:repeat value="#{compraBean.confiteriaCliente}" var="confiteria_cli">
-              <div jsf:rendered="#{confiteria_cli > 0}">
+              <div> <!--TODO: Agregar el jsf rendered-->
                 <p:outputLabel styleClass="d-inline-block" value="#{confiteria_cli.confiteria.producto}"/>
                 <p:outputLabel styleClass="d-inline-block" value="#{confiteria_cli.unidades}  x  $ #{confiteria_cli.confiteria.precio}"/>
               </div>
