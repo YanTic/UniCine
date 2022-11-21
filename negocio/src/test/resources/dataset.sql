@@ -10,17 +10,17 @@ insert into teatro values (3, "Carrera 14", "Unicine Cali", 3);
 insert into teatro values (4, "Carrera 12", "Unicine Pereira", 2);
 insert into teatro values (5, "Carrera 13", "Unicine Bogotá", 5);
 
-insert into admin_general values (1,"35ad", "harry@email.com", "Harry Styles", 1);
-insert into admin_general values (2,"4add", "frank@email.com", "Frank Ocean", 3);
-insert into admin_general values (3,"3jka", "rex@email.com", "Rex Orange", 5);
-insert into admin_general values (4,"35ba", "pualo@email.com", "Paulo Snezze", 5);
-insert into admin_general values (5,"l5yk", "drake@email.com", "Drake yeye", 5);
+insert into admin_general values (1,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "harry@email.com", "Harry Styles", 1);
+insert into admin_general values (2,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "frank@email.com", "Frank Ocean", 3);
+insert into admin_general values (3,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "rex@email.com", "Rex Orange", 5);
+insert into admin_general values (4,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "pualo@email.com", "Paulo Snezze", 5);
+insert into admin_general values (5,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "drake@email.com", "Drake yeye", 5);
 
-insert into admin_teatro values (1,"33ks", "bruno@email.com", "Bruno Mars", 1);
-insert into admin_teatro values (2,"35wa", "ferxxo@email.com", "Feid Mor", 3);
-insert into admin_teatro values (3,"o705", "steve@email.com", "Steve Wonder", 5);
-insert into admin_teatro values (4,"046j", "miles@email.com", "Miles Morales", 4);
-insert into admin_teatro values (5,"3ow9", "fredy@email.com", "Fredy Mercury", 2);
+insert into admin_teatro values (1,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "bruno@email.com", "Bruno Mars", 1);
+insert into admin_teatro values (2,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "ferxxo@email.com", "Feid Mor", 3);
+insert into admin_teatro values (3,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "steve@email.com", "Steve Wonder", 5);
+insert into admin_teatro values (4,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "miles@email.com", "Miles Morales", 4);
+insert into admin_teatro values (5,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "fredy@email.com", "Fredy Mercury", 2);
 
 insert into evento values (1, '2022-08-17', '10:30:00', '09:30:00', "url", "Evento Fin de Anio", 1);
 insert into evento values (2, '2022-06-10', '04:00:00', '02:15:00', "url", "Evento Familia", 1);
@@ -34,12 +34,12 @@ insert into confiteria values (3, "url", 10000, "Gaseosa Mediana");
 insert into confiteria values (4, "url", 40000, "Combo parejita");
 insert into confiteria values (5, "url", 13000, "Nachos");
 
-insert into cliente values (1,"1234","julian@email.com", 1, "url","Julian Acosta");
-insert into cliente values (2,"3jn1","juan@email.com", 1, "url","Juan Bunny");
-insert into cliente values (3,"34a4","pepe@email.com", 0, "url","Pepe Lipa");
-insert into cliente values (4,"a378","mailo@email.com", 0, "url","Mailo Styles");
-insert into cliente values (5,"b35a","diego@email.com", 1, "url","Diego Cloud");
-insert into cliente values (6,"97Tg","peter@email.com", 1, "url","Peter Parker");
+insert into cliente values (1,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","julian@email.com", 1, "url","Julian Acosta");
+insert into cliente values (2,"EogmqE89QufrAw7CaY6JqqDh+ID2rVkswnmIj2LQIzwcGXAm8dOjVigXeol1HXC/","juan@email.com", 1, "url","Juan Bunny");
+insert into cliente values (3,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","pepe@email.com", 0, "url","Pepe Lipa");
+insert into cliente values (4,"EogmqE89QufrAw7CaY6JqqDh+ID2rVkswnmIj2LQIzwcGXAm8dOjVigXeol1HXC/","mailo@email.com", 0, "url","Mailo Styles");
+insert into cliente values (5,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","diego@email.com", 1, "url","Diego Cloud");
+insert into cliente values (6,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","peter@email.com", 1, "url","Peter Parker");
 
 insert into cliente_telefonos values (1,"3353");
 insert into cliente_telefonos values (1,"2441");

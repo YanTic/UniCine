@@ -12,4 +12,6 @@ public interface AdminGeneralRepo extends JpaRepository<AdminGeneral, String> {
 
     @Query("select adm from AdminGeneral adm where adm.email = :email and adm.contrasenia = :contrasenia")
     AdminGeneral comprobarAutenticacion(String email, String contrasenia);
+
+    Optional<AdminGeneral> findByEmail(String email);
 }

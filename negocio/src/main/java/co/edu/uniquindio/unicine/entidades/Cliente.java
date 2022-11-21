@@ -34,9 +34,9 @@ public class Cliente implements Serializable {
 
     private String imagen_perfil;
 
+    @Lob // Porque cuando la contraseña se encripta guarda una cadena muy grande
     @ToString.Exclude // Porque es inseguro
-    @Length(max = 40)
-    @Column(nullable = false, length = 40)
+    @Column(nullable = false)
     private String contrasenia;
 
     @Column(nullable = false)

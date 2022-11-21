@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.servicios;
 import co.edu.uniquindio.unicine.dto.PeliculaFuncionDTO;
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,13 +44,18 @@ public class ClienteServicioImpl implements ClienteServicio{
 
     @Override
     public Cliente login(String email, String contrasenia) throws Exception {
-        Cliente cliente = clienteRepo.comprobarAutenticacion(email, contrasenia);
+        Cliente cliente = clienteRepo.findByEmail(email).orElse(null);
 
         if(cliente == null) {
-            throw new Exception("Los datos son incorrectos");
+            throw new Exception("El correo no existe");
         }
         if(cliente.getEstado() == false) {
             throw new Exception("La cuenta del clientes está desactivada [Debe activarla]");
+        }
+
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+        if (!spe.checkPassword(contrasenia, cliente.getContrasenia())) {
+            throw new Exception("La contraseña es incorrecta");
         }
 
         return cliente;
@@ -62,6 +68,11 @@ public class ClienteServicioImpl implements ClienteServicio{
         if(correoExiste){
             throw new Exception("El correo ya está en uso");
         }
+
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+        cliente.setContrasenia(spe.encryptPassword(cliente.getContrasenia()));
+        cliente.setEstado(false);
+        cliente.setImagen_perfil("");
 
         Cliente registro = clienteRepo.save(cliente);
         /*emailServicio.enviarEmail("Bienvenido a Unicine | Registro Exitoso!"

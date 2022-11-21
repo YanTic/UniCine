@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -33,10 +34,15 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
 
     @Override
     public AdminGeneral login(String email, String contrasenia) throws Exception {
-        AdminGeneral adminGeneral = adminGeneralRepo.comprobarAutenticacion(email, contrasenia);
+        AdminGeneral adminGeneral = adminGeneralRepo.findByEmail(email).orElse(null);
 
         if(adminGeneral == null) {
-            throw new Exception("Los datos son incorrectos");
+            throw new Exception("El correo no existe");
+        }
+
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+        if (!spe.checkPassword(contrasenia, adminGeneral.getContrasenia())) {
+            throw new Exception("La contraseña es incorrecta");
         }
 
         return adminGeneral;
