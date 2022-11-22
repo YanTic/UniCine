@@ -13,7 +13,7 @@
 
   <ui:define name="content">
     <div class="container mt-3 mb-3">
-      <!--TODO: Agregar otro panel para gestionar-crud 'CIUDAD'-->
+
       <h:form id="crud_teatro">
         <p:growl id="mensajes" showDetail="true"/>
 
@@ -88,6 +88,66 @@
           <p:commandButton value="#{teatroBean.msgDialogoTeatro}" action="#{teatroBean.crearTeatro()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_teatro:tabla_teatros"/>
           <!--<p/:/messages />  MENSAJE DE ERROR-->
           <p:growl for="mensaje_bean" showDetail="true"/> <!--ALERTA-->
+        </h:form>
+      </p:dialog>
+
+    </div>
+
+    <!--Panel para gestionar-crud 'CIUDAD'-->
+    <div class="container mt-3 mb-3">
+
+      <h:form id="crud_ciudad">
+        <p:growl id="mensajes_ciudad" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_ciudad"
+                             oncomplete="PF('crear_ciudad').show()" action="#{ciudadBean.crearCiudadDialogo()}"/>
+            <p:commandButton id="btn_eliminar_ciudad" value="#{ciudadBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{ciudadBean.eliminarCiudades()}" disabled="#{ciudadBean.ciudadesSeleccionadas.size()==0}"
+                             update="crud_ciudad:tabla_ciudades, @this"/>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_ciudades" value="#{ciudadBean.ciudades}" var="ciudad" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{ciudad.id}" rowSelectMode="add" selection="#{ciudadBean.ciudadesSeleccionadas}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_ciudad:btn_eliminar_ciudad"/>
+          <p:ajax event="rowUnselect" update="crud_ciudad:btn_eliminar_ciudad"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_ciudad:btn_eliminar_ciudad"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_ciudad:btn_eliminar_ciudad"/>
+          <p:ajax event="toggleSelect" update="crud_ciudad:btn_eliminar_ciudad"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{ciudad.id}"/>
+          </p:column>
+
+          <p:column headerText="Nombre" >
+            <h:outputText value="#{ciudad.nombre}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{ciudadBean.editarCiudadDialogo(ciudad)}" update="dialogo_ciudad" oncomplete="PF('crear_ciudad').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+      <p:dialog id="dialogo_ciudad" widgetVar="crear_ciudad" modal="true" header="#{ciudadBean.msgDialogoCiudad}" showEffect="fade">
+        <h:form>
+          <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="nombre_ciudad" value="Nombre: "/>
+            <p:inputText id="nombre_ciudad" value="#{ciudadBean.ciudad.nombre}" required="true"/>
+            <p:message for="nombre_ciudad"/>
+          </h:panelGrid>
+
+          <p:commandButton value="#{ciudadBean.msgDialogoCiudad}" action="#{ciudadBean.crearCiudad()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_ciudad:tabla_ciudades"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
         </h:form>
       </p:dialog>
 

@@ -20,9 +20,184 @@
   <ui:define name="titulo">Gestionar Funciones</ui:define>
 
   <ui:define name="content">
+    <!--Panel para gestionar-crud 'FUNCION'-->
     <div class="container mt-3 mb-3">
-      <!--TODO: Agregar otro panel para gestionar-crud 'HORARIO'-->
-      <!--TODO: Agregar otro panel para gestionar-crud 'FUNCION'-->
+      <h:form id="crud_funcion">
+        <p:growl id="mensajes" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_funcion"
+                             oncomplete="PF('crear_funcion').show()" action="#{funcionBean.crearFuncionDialogo()}"/>
+            <p:commandButton id="btn_eliminar" value="#{funcionBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{funcionBean.eliminarFunciones()}" disabled="#{funcionBean.funcionesSeleccionadas.size()==0}"
+                             update="crud_funcion:tabla_funciones, @this"/>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_funciones" value="#{funcionBean.funciones}" var="funcion" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{funcion.id}" rowSelectMode="add" selection="#{funcionBean.funcionesSeleccionadas}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_funcion:btn_eliminar"/>
+          <p:ajax event="rowUnselect" update="crud_funcion:btn_eliminar"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_funcion:btn_eliminar"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_funcion:btn_eliminar"/>
+          <p:ajax event="toggleSelect" update="crud_funcion:btn_eliminar"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{funcion.id}"/>
+          </p:column>
+
+          <p:column headerText="Precio" >
+            <h:outputText value="$ #{funcion.precio}"/>
+          </p:column>
+
+          <p:column headerText="Pelicula" >
+            <h:outputText value="#{funcion.pelicula.nombre}"/>
+          </p:column>
+
+          <p:column headerText="Sala" >
+            <h:outputText value="#{funcion.sala.nombre}"/>
+          </p:column>
+
+          <p:column headerText="Horario" >
+            <h:outputText value="#{funcion.horario.fecha_inicio} - #{funcion.horario.hora_inicio}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{funcionBean.editarFuncionDialogo(funcion)}" update="dialogo_funcion" oncomplete="PF('crear_funcion').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+
+      <p:dialog id="dialogo_funcion" widgetVar="crear_funcion" modal="true" header="#{funcionBean.msgDialogoFuncion}" showEffect="fade">
+        <h:form>
+          <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="precio_funcion" value="Precio: "/>
+            <p:inputText id="precio_funcion" value="#{funcionBean.funcion.precio}" required="true"/>
+            <p:message for="precio_funcion"/>
+
+            <p:outputLabel for="pelicula_funcion" value="Pelicula: "/>
+            <p:selectOneMenu id="pelicula_funcion" value="#{funcionBean.funcion.pelicula}" converter="#{peliculaConverter}" required="true" requiredMessage="La pelicula es obligatoria">
+              <f:selectItem itemLabel="Seleccione la pelicula" noSelectionOption="true"/>
+              <f:selectItems value="#{funcionBean.peliculas}" var="pelicula" itemLabel="#{pelicula.nombre}" itemValue="#{pelicula}"/>
+            </p:selectOneMenu>
+            <p:message for="pelicula_funcion"/>
+
+            <p:outputLabel for="sala_funcion" value="Sala: "/>
+            <p:selectOneMenu id="sala_funcion" value="#{funcionBean.funcion.sala}" converter="#{salaConverter}" required="true" requiredMessage="La sala es obligatoria">
+              <f:selectItem itemLabel="Seleccione la sala" noSelectionOption="true"/>
+              <f:selectItems value="#{funcionBean.salas}" var="sala" itemLabel="#{sala.nombre}" itemValue="#{sala}"/>
+            </p:selectOneMenu>
+            <p:message for="sala_funcion"/>
+
+            <p:outputLabel for="horario_funcion" value="Pelicula: "/>
+            <p:selectOneMenu id="horario_funcion" value="#{funcionBean.funcion.horario}" converter="#{horarioConverter}" required="true" requiredMessage="El horario es obligatorio">
+              <f:selectItem itemLabel="Seleccione el horario" noSelectionOption="true"/>
+              <f:selectItems value="#{funcionBean.horarios}" var="horario" itemLabel="#{horario.fecha_inicio} - #{horario.hora_inicio}" itemValue="#{horario}"/>
+            </p:selectOneMenu>
+            <p:message for="horario_funcion"/>
+
+          </h:panelGrid>
+
+          <p:commandButton value="#{funcionBean.msgDialogoFuncion}" action="#{funcionBean.crearFuncion()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_funcion:tabla_funciones"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
+        </h:form>
+      </p:dialog>
+
+    </div>
+
+    <!--Panel para gestionar-crud 'HORARIO'-->
+    <div class="container mt-3 mb-3">
+
+      <h:form id="crud_horario">
+        <p:growl id="mensajes_horario" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_horario"
+                             oncomplete="PF('crear_horario').show()" action="#{horarioBean.crearHorarioDialogo()}"/>
+            <p:commandButton id="btn_eliminar_horario" value="#{horarioBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{horarioBean.eliminarHorarios()}" disabled="#{horarioBean.horariosSeleccionados.size()==0}"
+                             update="crud_horario:tabla_horarios, @this"/>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_horarios" value="#{horarioBean.horarios}" var="horario" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{horario.id}" rowSelectMode="add" selection="#{horarioBean.horariosSeleccionados}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_horario:btn_eliminar_horario"/>
+          <p:ajax event="rowUnselect" update="crud_horario:btn_eliminar_horario"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_horario:btn_eliminar_horario"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_horario:btn_eliminar_horario"/>
+          <p:ajax event="toggleSelect" update="crud_horario:btn_eliminar_horario"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{horario.id}"/>
+          </p:column>
+
+          <p:column headerText="Fecha de inicio" >
+            <h:outputText value="#{horario.fecha_inicio.toString()}"/>
+          </p:column>
+
+          <p:column headerText="Fecha de fin" >
+            <h:outputText value="#{horario.fecha_fin.toString()}"/>
+          </p:column>
+
+          <p:column headerText="Hora de inicio" >
+            <h:outputText value="#{horario.hora_inicio.toString()}"/>
+          </p:column>
+
+          <p:column headerText="Hora de fin" >
+            <h:outputText value="#{horario.hora_fin.toString()}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{horarioBean.editarHorarioDialogo(horario)}" update="dialogo_horario" oncomplete="PF('crear_horario').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+      <p:dialog id="dialogo_horario" widgetVar="crear_horario" modal="true" header="#{horarioBean.msgDialogoTeatro}" showEffect="fade">
+        <h:form>
+          <h:panelGrid columns="3" cellpadding="5">
+
+            <p:outputLabel for="fechaIni_horario" value="Fecha de inicio: "/>
+            <p:datePicker id="fechaIni_horario" value="#{horarioBean.horario.fecha_inicio}" required="true"/>
+            <p:message for="fechaIni_horario"/>
+
+            <p:outputLabel for="fechaFin_horario" value="Fecha de fin: "/>
+            <p:datePicker id="fechaFin_horario" value="#{horarioBean.horario.fecha_fin}" required="true"/>
+            <p:message for="fechaFin_horario"/>
+
+            <!--TODO: TIMEPICKER: buscar algo para seleccionar hora-->
+            <!--<p:outputLabel for="horaIni_horario" value="Hora de inicio: "/>
+            <p:datePicker id="horaIni_horario" value="#{horarioBean.horario.hora_inicio}" required="true"/>
+            <p:message for="horaIni_horario"/>
+
+            <p:outputLabel for="horaFin_horario" value="Hora de fin: "/>
+            <p:datePicker id="horaFin_horario" value="#{horarioBean.horario.hora_fin}" required="true"/>
+            <p:message for="horaFin_horario"/>-->
+          </h:panelGrid>
+
+          <p:commandButton value="#{horarioBean.msgDialogoTeatro}" action="#{horarioBean.crearHorario()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_horario:tabla_horarios"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
+        </h:form>
+      </p:dialog>
+
     </div>
   </ui:define>
 

@@ -14,28 +14,79 @@
   <ui:define name="content">
     <div class="container mt-3 mb-3">
 
-      <p:dialog id="dialogo_teatro" widgetVar="crear_teatro" modal="true" header="#{teatroBean.msgDialogoTeatro}" showEffect="fade">
+      <h:form id="crud_confiteria">
+        <p:growl id="mensajes" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_confiteria"
+                             oncomplete="PF('crear_confiteria').show()" action="#{confiteriaBean.crearConfiteriaDialogo()}"/>
+            <p:commandButton id="btn_eliminar" value="#{confiteriaBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{confiteriaBean.eliminarConfiterias()}" disabled="#{confiteriaBean.confiteriasSeleccionadas.size()==0}"
+                             update="crud_confiteria:tabla_confiterias, @this"/>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_confiterias" value="#{confiteriaBean.confiterias}" var="confiteria" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{confiteria.id}" rowSelectMode="add" selection="#{confiteriaBean.confiteriasSeleccionadas}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_confiteria:btn_eliminar"/>
+          <p:ajax event="rowUnselect" update="crud_confiteria:btn_eliminar"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_confiteria:btn_eliminar"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_confiteria:btn_eliminar"/>
+          <p:ajax event="toggleSelect" update="crud_confiteria:btn_eliminar"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{confiteria.id}"/>
+          </p:column>
+
+          <p:column headerText="Nombre Producto" >
+            <h:outputText value="#{confiteria.producto}"/>
+          </p:column>
+
+          <p:column headerText="Precio" >
+            <h:outputText value="$ #{confiteria.precio}"/>
+          </p:column>
+
+          <p:column headerText="Imagen" exportable="false" styleClass="img-tabla-pelicula">
+            <img src="#{confiteria.imagenPrincipal}" alt="#{confiteria.producto}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{confiteriaBean.editarConfiteriaDialogo(confiteria)}" update="dialogo_confiteria" oncomplete="PF('crear_confiteria').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+      <p:dialog id="dialogo_confiteria" widgetVar="crear_confiteria" modal="true" header="#{confiteriaBean.msgDialogoConfiteria}" showEffect="fade">
         <h:form>
           <h:panelGrid columns="3" cellpadding="5">
-            <p:outputLabel for="nombre_confi" value="Nombre: "/>
-            <p:inputText id="nombre_confi" value="#{peliculaBean.pelicula.nombre}" required="true"/>
-            <p:message for="nombre_confi"/>
+            <p:outputLabel for="producto_confiteria" value="Nombre producto: "/>
+            <p:inputText id="producto_confiteria" value="#{confiteriaBean.confiteria.producto}" required="true"/>
+            <p:message for="producto_confiteria"/>
 
-            <p:outputLabel for="precio_confi" value="Sinopsis: "/>
-            <p:inputTextarea id="precio_confi" value="#{peliculaBean.pelicula.sinopsis}" required="true"/>
-            <p:message for="precio_confi"/>
+            <p:outputLabel for="precio_confiteria" value="Precio: "/>
+            <p:inputTextarea id="precio_confiteria" value="#{confiteriaBean.confiteria.precio}" required="true"/>
+            <p:message for="precio_confiteria"/>
 
-            <p:outputLabel for="img_confi" value="Imagenes: "/>
-            <p:fileUpload id="img_confi" listener="#{peliculaBean.subirImg}" mode="advanced" multiple="true" fileLimit="2"
+            <p:outputLabel for="img_confiteria" value="Imagenes: "/>
+            <p:fileUpload id="img_confiteria" listener="#{confiteriaBean.subirImg}" mode="advanced" multiple="true" fileLimit="2"
                           sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
-            <p:message for="img_pelicula"/>
+            <p:message for="img_confiteria"/>
 
           </h:panelGrid>
 
-          <p:commandButton value="#{teatroBean.msgDialogoTeatro}" action="#{teatroBean.crearTeatro()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_teatro:tabla_teatros"/>
+          <p:commandButton value="#{confiteriaBean.msgDialogoConfiteria}" action="#{confiteriaBean.crearConfiteria()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_confiteria:tabla_confiterias"/>
           <p:growl for="mensaje_bean" showDetail="true"/>
         </h:form>
       </p:dialog>
+
     </div>
   </ui:define>
 
