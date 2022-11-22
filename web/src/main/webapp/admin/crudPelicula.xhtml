@@ -15,7 +15,57 @@
     <div class="container mt-3 mb-3">
       <!--TODO: Agregar otro panel para gestionar-crud 'GENERO'-->
 
-      <p:panel header="Creacion Pelicula">
+      <h:form id="crud_pelicula">
+        <p:growl id="mensajes" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_pelicula"
+                             oncomplete="PF('crear_pelicula').show()" action="#{peliculaBean.crearPeliculaDialogo()}"/>
+            <p:commandButton id="btn_eliminar" value="#{peliculaBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{peliculaBean.eliminarPeliculas()}" disabled="#{peliculaBean.peliculasSeleccionadas.size()==0}"
+                             update="crud_pelicula:tabla_peliculas, @this"/>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_peliculas" value="#{peliculaBean.peliculas}" var="pelicula" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{pelicula.id}" rowSelectMode="add" selection="#{peliculaBean.peliculasSeleccionadas}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_pelicula:btn_eliminar"/>
+          <p:ajax event="rowUnselect" update="crud_pelicula:btn_eliminar"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_pelicula:btn_eliminar"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_pelicula:btn_eliminar"/>
+          <p:ajax event="toggleSelect" update="crud_pelicula:btn_eliminar"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{pelicula.id}"/>
+          </p:column>
+
+          <p:column headerText="Nombre" >
+            <h:outputText value="#{pelicula.nombre}"/>
+          </p:column>
+
+          <p:column headerText="Imagen" exportable="false" styleClass="img-tabla-pelicula">
+            <img src="#{pelicula.imagenPrincipal}" alt="#{pelicula.nombre}"/>
+          </p:column>
+
+          <p:column headerText="Estado" >
+            <h:outputText value="#{pelicula.estado.toString()}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{peliculaBean.editarPeliculaDialogo(pelicula)}" update="dialogo_pelicula" oncomplete="PF('crear_pelicula').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+      <p:dialog id="dialogo_pelicula" widgetVar="crear_pelicula" modal="true" header="#{peliculaBean.msgDialogoPelicula}" showEffect="fade">
         <h:form>
           <h:panelGrid columns="3" cellpadding="5">
             <p:outputLabel for="nombre_pelicula" value="Nombre: "/>
@@ -46,20 +96,84 @@
             </p:selectOneMenu>
             <p:message for="estado_pelicula"/>
 
+            <!--// TODO: Por culpa de este checkbox no se agregan los datos a editar, debe haber algun modo de establecer los checkbox checked
+                     segun los generos que tenga la pelicula-->
             <p:outputLabel for="generos_pelicula" value="Generos: "/>
             <p:selectManyCheckbox id="generos_pelicula" value="#{peliculaBean.pelicula.generos}" converter="#{generoConverter}" layout="grid" columns="3">
-              <f:selectItems value="#{peliculaBean.generos}" var="genero" itemLabel="#{genero.nombre}" itemValue="#{genero}"/>
+              <f:selectItems value="#{peliculaBean.generos}" var="genero" itemLabel="#{genero.nombre}" itemValue="#{genero}" />
             </p:selectManyCheckbox>
             <p:message for="generos_pelicula"/>
 
           </h:panelGrid>
 
-          <p:commandButton value="Crear nueva pelicula" action="#{peliculaBean.crearPelicula()}" icon="pi pi-plus-circle" iconPos="left" update="@form"/>
-          <!--<p:messages />  MENSAJE DE ERROR-->
-          <p:growl for="mensaje_bean" showDetail="true"/> <!--ALERTA-->
+          <p:commandButton value="#{peliculaBean.msgDialogoPelicula}" action="#{peliculaBean.crearPelicula()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_pelicula:tabla_peliculas"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
         </h:form>
-      </p:panel>
+      </p:dialog>
+
     </div>
+
+
+    <!--Panel para gestionar-crud 'GENERO'-->
+    <div class="container mt-3 mb-3">
+
+      <h:form id="crud_genero">
+        <p:growl id="mensajes_g" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_genero"
+                             oncomplete="PF('crear_genero').show()" action="#{generoBean.crearGeneroDialogo()}"/>
+            <p:commandButton id="btn_eliminar_g" value="#{generoBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{generoBean.eliminarGeneros()}" disabled="#{generoBean.generosSeleccionados.size()==0}"
+                             update="crud_genero:tabla_generos, @this"/>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_generos" value="#{generoBean.generos}" var="genero" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{genero.id}" rowSelectMode="add" selection="#{generoBean.generosSeleccionados}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_genero:btn_eliminar_g"/>
+          <p:ajax event="rowUnselect" update="crud_genero:btn_eliminar_g"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_genero:btn_eliminar_g"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_genero:btn_eliminar_g"/>
+          <p:ajax event="toggleSelect" update="crud_genero:btn_eliminar_g"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{genero.id}"/>
+          </p:column>
+
+          <p:column headerText="Nombre" >
+            <h:outputText value="#{genero.nombre}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{generoBean.editarGeneroDialogo(genero)}" update="dialogo_genero" oncomplete="PF('crear_genero').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+      <p:dialog id="dialogo_genero" widgetVar="crear_genero" modal="true" header="#{generoBean.msgDialogoGenero}" showEffect="fade">
+        <h:form>
+          <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="nombre_genero" value="Nombre: "/>
+            <p:inputText id="nombre_genero" value="#{generoBean.genero.nombre}" required="true"/>
+            <p:message for="nombre_genero"/>
+          </h:panelGrid>
+
+          <p:commandButton value="#{generoBean.msgDialogoGenero}" action="#{generoBean.crearGenero()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_genero:tabla_generos"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
+        </h:form>
+      </p:dialog>
+
+    </div>
+
   </ui:define>
 
 

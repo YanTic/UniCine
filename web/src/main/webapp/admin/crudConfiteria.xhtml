@@ -9,11 +9,33 @@
 
 <ui:composition template="/WEB-INF/template_admin.xhtml">
 
-  <ui:define name="titulo">Gestionar Eventos</ui:define>
+  <ui:define name="titulo">Gestionar Confiteria</ui:define>
 
   <ui:define name="content">
     <div class="container mt-3 mb-3">
 
+      <p:dialog id="dialogo_teatro" widgetVar="crear_teatro" modal="true" header="#{teatroBean.msgDialogoTeatro}" showEffect="fade">
+        <h:form>
+          <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="nombre_confi" value="Nombre: "/>
+            <p:inputText id="nombre_confi" value="#{peliculaBean.pelicula.nombre}" required="true"/>
+            <p:message for="nombre_confi"/>
+
+            <p:outputLabel for="precio_confi" value="Sinopsis: "/>
+            <p:inputTextarea id="precio_confi" value="#{peliculaBean.pelicula.sinopsis}" required="true"/>
+            <p:message for="precio_confi"/>
+
+            <p:outputLabel for="img_confi" value="Imagenes: "/>
+            <p:fileUpload id="img_confi" listener="#{peliculaBean.subirImg}" mode="advanced" multiple="true" fileLimit="2"
+                          sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+            <p:message for="img_pelicula"/>
+
+          </h:panelGrid>
+
+          <p:commandButton value="#{teatroBean.msgDialogoTeatro}" action="#{teatroBean.crearTeatro()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_teatro:tabla_teatros"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
+        </h:form>
+      </p:dialog>
     </div>
   </ui:define>
 
