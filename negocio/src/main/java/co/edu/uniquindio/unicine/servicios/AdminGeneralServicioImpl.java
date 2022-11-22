@@ -338,16 +338,12 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
 
         guardada.get().setProducto(confiteriaActualizada.getProducto());
         guardada.get().setPrecio(confiteriaActualizada.getPrecio());
-        guardada.get().setImagenURL(confiteriaActualizada.getImagenURL());
 
         return confiteriaRepo.save(guardada.get());
     }
 
     private boolean esConfiteriaExistente(Confiteria confiteria) {
-        return confiteriaRepo.verificarExistencia(confiteria.getProducto(),
-                        confiteria.getPrecio(),
-                        confiteria.getImagenURL())
-                .orElse(null) != null;
+        return confiteriaRepo.verificarExistencia(confiteria.getProducto(),confiteria.getPrecio()).orElse(null) != null;
     }
 
     private boolean esConfiteriaActualizadaDisponible(Integer idConfiteria, Confiteria confiteria) {

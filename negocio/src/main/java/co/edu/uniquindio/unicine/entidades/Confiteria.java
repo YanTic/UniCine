@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -27,8 +28,9 @@ public class Confiteria implements Serializable {
     @Positive
     private Float precio;
 
+    @ElementCollection
     @Column(nullable = false)
-    private String imagenURL;
+    private Map<String, String> imagenes;
 
 
     // --- Relaciones ---
@@ -38,9 +40,16 @@ public class Confiteria implements Serializable {
     private List<ConfiteriaCompra> confiteriaCompras;
 
     @Builder
-    public Confiteria(String producto, Float precio, String imagenURL) {
+    public Confiteria(String producto, Float precio) {
         this.producto = producto;
         this.precio = precio;
-        this.imagenURL = imagenURL;
+    }
+
+    public String getImagenPrincipal() {
+        if (!imagenes.isEmpty()) {
+            String primeraImg = imagenes.keySet().toArray()[0].toString();
+            return imagenes.get(primeraImg);
+        }
+        return "";
     }
 }

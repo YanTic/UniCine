@@ -91,6 +91,7 @@ public class EventoBean implements Serializable {
     }
 
     // TODO: Agregar img a cloudinnary, cambiar el dataset agregando en la tabla evento_imagenes la key y url de la imagen
+    // TODO: ACTUALIZAR DATASET
     public void subirImg(FileUploadEvent event) {
         try {
             UploadedFile img = event.getFile();

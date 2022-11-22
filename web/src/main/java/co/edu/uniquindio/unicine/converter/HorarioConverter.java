@@ -1,8 +1,6 @@
 package co.edu.uniquindio.unicine.converter;
 
-import co.edu.uniquindio.unicine.entidades.Pelicula;
-import co.edu.uniquindio.unicine.entidades.Sala;
-import co.edu.uniquindio.unicine.servicios.AdminGeneralServicio;
+import co.edu.uniquindio.unicine.entidades.Horario;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,28 +13,28 @@ import javax.faces.convert.ConverterException;
 import java.io.Serializable;
 
 @Component
-public class SalaConverter implements Converter<Sala>, Serializable {
+public class HorarioConverter implements Converter<Horario>, Serializable {
 
     @Autowired
     private AdminTeatroServicio adminTeatroServicio;
 
     @Override
-    public Sala getAsObject(FacesContext context, UIComponent component, String value) {
-        Sala sala = null;
+    public Horario getAsObject(FacesContext context, UIComponent component, String value) {
+        Horario horario = null;
 
         if (value != null && !"".equals(value)) {
             try {
-                sala =  adminTeatroServicio.obtenerSala(Integer.parseInt(value));
+                horario =  adminTeatroServicio.obtenerHorario(Integer.parseInt(value));
             } catch (Exception e) {
                 throw new ConverterException(new FacesMessage(component.getId()+ ": id no es valido"));
             }
         }
 
-        return sala;
+        return horario;
     }
 
     @Override
-    public String getAsString(FacesContext context, UIComponent component, Sala value) {
+    public String getAsString(FacesContext context, UIComponent component, Horario value) {
         if (value != null) {
             return ""+value.getId();
         }

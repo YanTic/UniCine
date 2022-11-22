@@ -172,7 +172,6 @@ public class AdminGeneralServicioTest {
         // insert into confiteria values (2, "url", 6000, "Agua");
         Confiteria confiteria = Confiteria.builder()
                 .producto("Agua")
-                .imagenURL("URL")
                 .precio((float) 6000)
                 .build();
 
@@ -324,7 +323,6 @@ public class AdminGeneralServicioTest {
             Confiteria confiteriaActualizada = Confiteria.builder()
                     .producto(confiteria.getProducto())
                     .precio((float)53530.2)
-                    .imagenURL(confiteria.getImagenURL())
                     .build();
 
             Confiteria nuevaConfiteria = adminGeneralServicio.actualizarConfiteria(confiteria.getId(), confiteriaActualizada);

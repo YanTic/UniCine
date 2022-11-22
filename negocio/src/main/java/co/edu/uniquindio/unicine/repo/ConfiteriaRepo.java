@@ -12,8 +12,8 @@ public interface ConfiteriaRepo extends JpaRepository<Confiteria, Integer> {
 
     Optional<Confiteria> findByProducto(String producto);
 
-    @Query("select c from Confiteria c where c.producto = :producto and c.precio = :precio and c.imagenURL = :imagenURL")
-    Optional<Confiteria> verificarExistencia(String producto, Float precio, String imagenURL);
+    @Query("select c from Confiteria c where c.producto = :producto and c.precio = :precio")
+    Optional<Confiteria> verificarExistencia(String producto, Float precio);
 
     @Query("select c from Confiteria c where c.id <> :idConfiteria and c.producto = :producto")
     Optional<Confiteria> verificarDisponibilidadParaActualizadas(Integer idConfiteria, String producto);
