@@ -221,14 +221,13 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
             throw new Exception("El evento no existe");
         }
         if (eventoExistente) {
-            throw new Exception("Otro evento tiene las mismas caracteristicas [nombre, imagenURL, fecha, hora_inicio, hora_fin, teatro]");
+            throw new Exception("Otro evento tiene las mismas caracteristicas [nombre, fecha, hora_inicio, hora_fin, teatro]");
         }
         if (!eventoDisponible) {
             throw new Exception("El evento no es disponible [Otro evento tiene la misma fecha, hora_inicio]");
         }
 
         guardado.get().setNombre(eventoActualizado.getNombre());
-        guardado.get().setImagenURL(eventoActualizado.getImagenURL());
         guardado.get().setFecha(eventoActualizado.getFecha());
         guardado.get().setHora_inicio(eventoActualizado.getHora_inicio());
         guardado.get().setHora_fin(eventoActualizado.getHora_fin());
@@ -239,7 +238,6 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
 
     private boolean esEventoExistente(Evento evento) {
         return eventoRepo.verificarExistencia(evento.getNombre(),
-                        evento.getImagenURL(),
                         evento.getFecha(),
                         evento.getHora_inicio(),
                         evento.getHora_fin(),

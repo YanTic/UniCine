@@ -103,7 +103,6 @@ public class AdminGeneralServicioTest {
             // insert into evento values (1, '2022-08-17', '10:30:00', '09:30:00', "url", "Evento Fin de Anio", 1);
             evento = Evento.builder()
                     .nombre("Evento Fin de Anio")
-                    .imagenURL("URL")
                     .fecha(LocalDate.parse("2022-08-17"))
                     .hora_fin(LocalTime.of(10, 30, 0))
                     .hora_inicio(LocalTime.of(9, 30, 0))
@@ -257,7 +256,6 @@ public class AdminGeneralServicioTest {
 
             Evento eventoActualizado = Evento.builder()
                     .nombre(evento.getNombre()) // "EVENTO MINECRAFT"
-                    .imagenURL(evento.getImagenURL())
                     .fecha(evento.getFecha())
                     .hora_inicio(evento.getHora_inicio())
                     .hora_fin(evento.getHora_fin())

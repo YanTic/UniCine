@@ -14,7 +14,97 @@
   <ui:define name="content">
     <div class="container mt-3 mb-3">
 
+      <h:form id="crud_evento">
+        <p:growl id="mensajes" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_evento"
+                             oncomplete="PF('crear_evento').show()" action="#{eventoBean.crearEventoDialogo()}"/>
+            <p:commandButton id="btn_eliminar" value="#{eventoBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{eventoBean.eliminarEventos()}" disabled="#{eventoBean.eventosSeleccionados.size()==0}"
+                             update="crud_evento:tabla_eventos, @this"/>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_eventos" value="#{eventoBean.eventos}" var="evento" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{evento.id}" rowSelectMode="add" selection="#{eventoBean.eventosSeleccionados}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_evento:btn_eliminar"/>
+          <p:ajax event="rowUnselect" update="crud_evento:btn_eliminar"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_evento:btn_eliminar"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_evento:btn_eliminar"/>
+          <p:ajax event="toggleSelect" update="crud_evento:btn_eliminar"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{evento.id}"/>
+          </p:column>
+
+          <p:column headerText="Nombre" >
+            <h:outputText value="#{evento.nombre}"/>
+          </p:column>
+
+          <p:column headerText="Imagen" exportable="false" styleClass="img-tabla-pelicula">
+            <img src="#{evento.imagenPrincipal}" alt="#{evento.nombre}"/>
+          </p:column>
+
+          <p:column headerText="Fecha" >
+            <h:outputText value="#{evento.fecha.toString()}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{eventoBean.editarEventoDialogo(evento)}" update="dialogo_evento" oncomplete="PF('crear_evento').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+      <p:dialog id="dialogo_evento" widgetVar="crear_evento" modal="true" header="#{eventoBean.msgDialogoEvento}" showEffect="fade">
+        <h:form>
+          <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="nombre_evento" value="Nombre: "/>
+            <p:inputText id="nombre_evento" value="#{eventoBean.evento.nombre}" required="true"/>
+            <p:message for="nombre_evento"/>
+
+            <p:outputLabel for="fecha_evento" value="Fecha: "/>
+            <p:datePicker id="fecha_evento" value="#{eventoBean.evento.fecha}" required="true"/>
+            <p:message for="fecha_evento"/>
+
+            <p:outputLabel for="img_pelicula" value="Imagenes: "/>
+            <p:fileUpload id="img_pelicula" listener="#{eventoBean.subirImg}" mode="advanced" multiple="true" fileLimit="2"
+                          sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+            <p:message for="img_pelicula"/>
+
+            <p:outputLabel for="teatro_evento" value="Teatro: "/>
+            <p:selectOneMenu id="teatro_evento" value="#{eventoBean.evento.teatro}" converter="#{teatroConverter}" required="true" requiredMessage="El teatro es obligatorio">
+              <f:selectItem itemLabel="Seleccione el teatro" noSelectionOption="true"/>
+              <f:selectItems value="#{eventoBean.teatros}" var="teatro" itemLabel="#{teatro.nombre}" itemValue="#{teatro}"/>
+            </p:selectOneMenu>
+            <p:message for="teatro_evento"/>
+
+            <!--TODO: TIME-PICKER para horas -->
+            <!--<p/:outputLabel for="hora_inicio_evento" value="Hora Inicio: "/>
+            <p/:inputTextarea id="hora_inicio_evento" value="#/{eventoBean.evento.hora_inicio.toString()}" required="true"/>
+            <p/:message for="hora_inicio_evento"/>
+
+            <p/:outputLabel for="hora_fin_evento" value="Hora Inicio: "/>
+            <p/:inputTextarea id="hora_fin_evento" value="#/{eventoBean.evento.hora_fin.toString()}" required="true"/>
+            <p/:message for="hora_fin_evento"/>-->
+
+          </h:panelGrid>
+
+          <p:commandButton value="#{eventoBean.msgDialogoEvento}" action="#{eventoBean.crearEvento()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_evento:tabla_eventos"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
+        </h:form>
+      </p:dialog>
+
     </div>
+
   </ui:define>
 
 

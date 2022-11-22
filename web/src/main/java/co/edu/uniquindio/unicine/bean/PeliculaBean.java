@@ -69,9 +69,9 @@ public class PeliculaBean implements Serializable {
             if(!editar) {
                 if(!imagenes.isEmpty()) {
                     pelicula.setImagenes(imagenes);
-                    adminGeneralServicio.crearPelicula(pelicula);
+                    Pelicula registro = adminGeneralServicio.crearPelicula(pelicula);
 
-                    peliculas.add(pelicula);
+                    peliculas.add(registro);
                     pelicula = new Pelicula(); // Resetea los campos en el fronted (con ayuda del update="@form")
                     imagenes = new HashMap<>();
 

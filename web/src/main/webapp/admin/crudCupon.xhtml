@@ -14,6 +14,87 @@
   <ui:define name="content">
     <div class="container mt-3 mb-3">
 
+      <h:form id="crud_cupon">
+        <p:growl id="mensajes" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_cupon"
+                             oncomplete="PF('crear_cupon').show()" action="#{cuponBean.crearCuponDialogo()}"/>
+            <p:commandButton id="btn_eliminar" value="#{cuponBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{cuponBean.eliminarCupones()}" disabled="#{cuponBean.cuponesSeleccionados.size()==0}"
+                             update="crud_cupon:tabla_cupones, @this"/>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_cupones" value="#{cuponBean.cupones}" var="cupon" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{cupon.id}" rowSelectMode="add" selection="#{cuponBean.cuponesSeleccionados}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_cupon:btn_eliminar"/>
+          <p:ajax event="rowUnselect" update="crud_cupon:btn_eliminar"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_cupon:btn_eliminar"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_cupon:btn_eliminar"/>
+          <p:ajax event="toggleSelect" update="crud_cupon:btn_eliminar"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{cupon.id}"/>
+          </p:column>
+
+          <p:column headerText="Criterio" >
+            <h:outputText value="#{cupon.criterio}"/>
+          </p:column>
+
+          <p:column headerText="Descripcion" >
+            <h:outputText value="#{cupon.descripcion}"/>
+          </p:column>
+
+          <p:column headerText="Valor Descuento" >
+            <h:outputText value="#{cupon.valor_descuento}"/>
+          </p:column>
+
+          <p:column headerText="Fecha vencimiento" >
+            <h:outputText value="#{cupon.fecha_vencimiento.toString()}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{cuponBean.editarCuponDialogo(cupon)}" update="dialogo_cupon" oncomplete="PF('crear_cupon').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+
+      <p:dialog id="dialogo_cupon" widgetVar="crear_cupon" modal="true" header="#{cuponBean.msgDialogoCupon}" showEffect="fade">
+        <h:form>
+          <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="criterio_cupon" value="Criterio: "/>
+            <p:inputText id="criterio_cupon" value="#{cuponBean.cupon.criterio}" required="true"/>
+            <p:message for="criterio_cupon"/>
+
+            <p:outputLabel for="desc_cupon" value="Descripcion: "/>
+            <p:inputTextarea id="desc_cupon" value="#{cuponBean.cupon.descripcion}" required="true"/>
+            <p:message for="desc_cupon"/>
+
+            <p:outputLabel for="valorDesc_cupon" value="Valor de descuento: "/>
+            <p:inputText id="valorDesc_cupon" value="#{cuponBean.cupon.valor_descuento}" required="true"/>
+            <p:message for="valorDesc_cupon"/>
+
+            <p:outputLabel for="fechaVen_cupon" value="Fecha de vencimiento: "/>
+            <p:datePicker id="fechaVen_cupon" value="#{cuponBean.cupon.fecha_vencimiento}" required="true"/>
+            <p:message for="fechaVen_cupon"/>
+
+          </h:panelGrid>
+
+          <p:commandButton value="#{cuponBean.msgDialogoCupon}" action="#{cuponBean.crearCupon()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_cupon:tabla_cupones"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
+        </h:form>
+      </p:dialog>
+
     </div>
   </ui:define>
 
