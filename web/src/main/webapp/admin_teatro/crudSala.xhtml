@@ -6,23 +6,200 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <h:outputStylesheet name="styles.css" library="css" />
-  <h:outputStylesheet name="bootstrap.min.css" library="css" />
-  <h:outputScript name="bootstrap.bundle.min.js" library="js" />
-  <title>Gestionar Teatro</title>
-</h:head>
 
 <ui:composition template="/WEB-INF/template_admin.xhtml">
 
   <ui:define name="titulo">Gestionar Salas</ui:define>
 
   <ui:define name="content">
+    <!--Panel para gestionar-crud 'SALA'-->
     <div class="container mt-3 mb-3">
-      <!--TODO: Agregar otro panel para gestionar-crud 'DISTRIBUCION SILLAS'-->
-      <!--TODO: Agregar otro panel para gestionar-crud 'SALA'-->
+      <h:form id="crud_sala">
+        <p:growl id="mensajes" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_sala"
+                             oncomplete="PF('crear_sala').show()" action="#{salaBean.crearSalaDialogo()}"/>
+            <p:commandButton id="btn_eliminar" value="#{salaBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{salaBean.eliminarSalas()}" disabled="#{salaBean.salasSeleccionadas.size()==0}"
+                             update="crud_sala:tabla_salas, @this"/>
+          </p:toolbarGroup>
+          <p:toolbarGroup>
+            <h4><STRONG>Salas</STRONG></h4>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_salas" value="#{salaBean.salas}" var="sala" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{sala.id}" rowSelectMode="add" selection="#{salaBean.salasSeleccionadas}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_sala:btn_eliminar"/>
+          <p:ajax event="rowUnselect" update="crud_sala:btn_eliminar"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_sala:btn_eliminar"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_sala:btn_eliminar"/>
+          <p:ajax event="toggleSelect" update="crud_sala:btn_eliminar"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{sala.id}"/>
+          </p:column>
+
+          <p:column headerText="Nombre" >
+            <h:outputText value="#{sala.nombre}"/>
+          </p:column>
+
+          <p:column headerText="Tipo" >
+            <h:outputText value="#{sala.tipo.toString()}"/>
+          </p:column>
+
+          <p:column headerText="Teatro" >
+            <h:outputText value="#{sala.teatro.nombre}"/>
+          </p:column>
+
+          <p:column headerText="Distribucion" >
+            <h:outputText value="#{sala.distribucionSillas.filas} x #{sala.distribucionSillas.columnas}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{salaBean.editarSalaDialogo(sala)}" update="dialogo_sala" oncomplete="PF('crear_sala').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+
+      <p:dialog id="dialogo_sala" widgetVar="crear_sala" modal="true" header="#{salaBean.msgDialogoSala}" showEffect="fade">
+        <h:form>
+          <h:panelGrid columns="3" cellpadding="5">
+            <p:outputLabel for="nombre_sala" value="Nombre: "/>
+            <p:inputText id="nombre_sala" value="#{salaBean.sala.nombre}" required="true"/>
+            <p:message for="nombre_sala"/>
+
+            <p:outputLabel for="tipo_sala" value="Tipo: "/>
+            <p:selectOneMenu id="tipo_sala" value="#{salaBean.sala.tipo}" required="true" requiredMessage="El tipo es obligatorio">
+              <f:selectItem itemLabel="Seleccione el tipo" noSelectionOption="true"/>
+              <f:selectItems value="#{salaBean.tipoSalas}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}"/>
+            </p:selectOneMenu>
+            <p:message for="tipo_sala"/>
+
+            <p:outputLabel for="teatro_sala" value="Teatro: "/>
+            <p:selectOneMenu id="teatro_sala" value="#{salaBean.sala.teatro}" converter="#{teatroConverter}" required="true" requiredMessage="El teatro es obligatorio">
+              <f:selectItem itemLabel="Seleccione el teatro" noSelectionOption="true"/>
+              <f:selectItems value="#{salaBean.teatros}" var="teatro" itemLabel="#{teatro.nombre}" itemValue="#{teatro}"/>
+            </p:selectOneMenu>
+            <p:message for="teatro_sala"/>
+
+            <p:outputLabel for="distribucion_sala" value="Distribucion: "/>
+            <p:selectOneMenu id="distribucion_sala" value="#{salaBean.sala.distribucionSillas}" converter="#{distribucionConverter}" required="true" requiredMessage="La distribucion es obligatoria">
+              <f:selectItem itemLabel="Seleccione la distribucion" noSelectionOption="true"/>
+              <f:selectItems value="#{salaBean.distribucionSillas}" var="distribucion" itemLabel="#{distribucion.filas} x #{distribucion.columnas}" itemValue="#{distribucion}"/>
+            </p:selectOneMenu>
+            <p:message for="distribucion_sala"/>
+
+          </h:panelGrid>
+
+          <p:commandButton value="#{salaBean.msgDialogoSala}" action="#{salaBean.crearSala()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_sala:tabla_salas"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
+        </h:form>
+      </p:dialog>
+
+    </div>
+
+    <!--Panel para gestionar-crud 'DISTRIBUCION_SILLAS'-->
+    <div class="container mt-3 mb-3">
+
+      <h:form id="crud_distribucion">
+        <p:growl id="mensajes_distribucion" showDetail="true"/>
+
+        <p:toolbar>
+          <p:toolbarGroup>
+            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" update="dialogo_distribucion"
+                             oncomplete="PF('crear_distribucion').show()" action="#{distribucionBean.crearDistribucionDialogo()}"/>
+            <p:commandButton id="btn_eliminar_distribucion" value="#{distribucionBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
+                             action="#{distribucionBean.eliminarDistribuciones()}" disabled="#{distribucionBean.distSeleccionadas.size()==0}"
+                             update="crud_distribucion:tabla_distribuciones, @this"/>
+          </p:toolbarGroup>
+          <p:toolbarGroup>
+            <h4><STRONG>Distribuciones</STRONG></h4>
+          </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="tabla_distribuciones" value="#{distribucionBean.dists}" var="distribucion" paginator="true" paginatorPosition="bottom"
+                     rows="10" rowKey="#{distribucion.id}" rowSelectMode="add" selection="#{distribucionBean.distSeleccionadas}"
+                     reflow="true">
+
+          <p:ajax event="rowSelect" update="crud_distribucion:btn_eliminar_distribucion"/>
+          <p:ajax event="rowUnselect" update="crud_distribucion:btn_eliminar_distribucion"/>
+          <p:ajax event="rowSelectCheckbox" update="crud_distribucion:btn_eliminar_distribucion"/>
+          <p:ajax event="rowUnselectCheckbox" update="crud_distribucion:btn_eliminar_distribucion"/>
+          <p:ajax event="toggleSelect" update="crud_distribucion:btn_eliminar_distribucion"/>
+
+
+          <p:column selectionMode="multiple" exportable="false"/>
+
+          <p:column headerText="Codigo" >
+            <h:outputText value="#{distribucion.id}"/>
+          </p:column>
+
+          <p:column headerText="Filas" >
+            <h:outputText value="#{distribucion.filas}"/>
+          </p:column>
+
+          <p:column headerText="Columnas" >
+            <h:outputText value="#{distribucion.columnas}"/>
+          </p:column>
+
+          <p:column headerText="Total Sillas" >
+            <h:outputText value="#{distribucion.totalSillas}"/>
+          </p:column>
+
+          <!--TODO: Hacer un tipo de boton y un dialogo que muestre el esquema de las sillas, no solo mostrar una url de la base de datos-->
+          <p:column headerText="Esquema" >
+            <h:outputText value="#{distribucion.rutaEsquema}"/>
+          </p:column>
+
+          <p:column headerText="" >
+            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-info"
+                             action="#{distribucionBean.editarDistribucionDialogo(distribucion)}" update="dialogo_distribucion" oncomplete="PF('crear_distribucion').show()"/>
+          </p:column>
+
+        </p:dataTable>
+      </h:form>
+
+      <p:dialog id="dialogo_distribucion" widgetVar="crear_distribucion" modal="true" header="#{distribucionBean.msgDialogoDistribucion}" showEffect="fade">
+        <h:form>
+          <h:panelGrid columns="3" cellpadding="5">
+
+            <p:outputLabel for="filas_distribucion" value="Filas: "/>
+            <p:inputText id="filas_distribucion" value="#{distribucionBean.dist.filas}" required="true"/>
+            <p:message for="filas_distribucion"/>
+
+            <p:outputLabel for="columnas_distribucion" value="Columnas: "/>
+            <p:inputText id="columnas_distribucion" value="#{distribucionBean.dist.columnas}" required="true"/>
+            <p:message for="columnas_distribucion"/>
+
+            <p:outputLabel for="totalSillas_distribucion" value="Total Sillas: "/>
+            <p:inputText id="totalSillas_distribucion" value="#{distribucionBean.dist.totalSillas}" required="true"/>
+            <p:message for="totalSillas_distribucion"/>
+
+            <!--TODO: Se necesita un componente input: para que el admin ingrese un txt con el formato que use el servidor
+                      para registrar las sillas-->
+            <!--<p:outputLabel for="esquema_distribucion" value="Imagenes: "/>
+            <p:fileUpload id="esquema_distribucion" listener="#/{peliculaBean.subirImg}" mode="advanced" multiple="true" fileLimit="2"
+                          sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+            <p:message for="esquema_distribucion"/>-->
+
+          </h:panelGrid>
+
+          <p:commandButton value="#{distribucionBean.msgDialogoDistribucion}" action="#{distribucionBean.crearDistribucionSillas()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_distribucion:tabla_distribuciones"/>
+          <p:growl for="mensaje_bean" showDetail="true"/>
+        </h:form>
+      </p:dialog>
+
     </div>
   </ui:define>
 

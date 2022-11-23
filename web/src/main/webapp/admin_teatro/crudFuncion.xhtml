@@ -6,14 +6,6 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <h:outputStylesheet name="styles.css" library="css" />
-  <h:outputStylesheet name="bootstrap.min.css" library="css" />
-  <h:outputScript name="bootstrap.bundle.min.js" library="js" />
-  <title>Gestionar Teatro</title>
-</h:head>
 
 <ui:composition template="/WEB-INF/template_admin.xhtml">
 
@@ -32,6 +24,9 @@
             <p:commandButton id="btn_eliminar" value="#{funcionBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
                              action="#{funcionBean.eliminarFunciones()}" disabled="#{funcionBean.funcionesSeleccionadas.size()==0}"
                              update="crud_funcion:tabla_funciones, @this"/>
+          </p:toolbarGroup>
+          <p:toolbarGroup>
+            <h4><STRONG>Funciones</STRONG></h4>
           </p:toolbarGroup>
         </p:toolbar>
 
@@ -98,7 +93,7 @@
             </p:selectOneMenu>
             <p:message for="sala_funcion"/>
 
-            <p:outputLabel for="horario_funcion" value="Pelicula: "/>
+            <p:outputLabel for="horario_funcion" value="Horario: "/>
             <p:selectOneMenu id="horario_funcion" value="#{funcionBean.funcion.horario}" converter="#{horarioConverter}" required="true" requiredMessage="El horario es obligatorio">
               <f:selectItem itemLabel="Seleccione el horario" noSelectionOption="true"/>
               <f:selectItems value="#{funcionBean.horarios}" var="horario" itemLabel="#{horario.fecha_inicio} - #{horario.hora_inicio}" itemValue="#{horario}"/>
@@ -127,6 +122,9 @@
             <p:commandButton id="btn_eliminar_horario" value="#{horarioBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
                              action="#{horarioBean.eliminarHorarios()}" disabled="#{horarioBean.horariosSeleccionados.size()==0}"
                              update="crud_horario:tabla_horarios, @this"/>
+          </p:toolbarGroup>
+          <p:toolbarGroup>
+            <h4><STRONG>Horarios</STRONG></h4>
           </p:toolbarGroup>
         </p:toolbar>
 
@@ -171,7 +169,7 @@
         </p:dataTable>
       </h:form>
 
-      <p:dialog id="dialogo_horario" widgetVar="crear_horario" modal="true" header="#{horarioBean.msgDialogoTeatro}" showEffect="fade">
+      <p:dialog id="dialogo_horario" widgetVar="crear_horario" modal="true" header="#{horarioBean.msgDialogoHorario}" showEffect="fade">
         <h:form>
           <h:panelGrid columns="3" cellpadding="5">
 
@@ -193,7 +191,7 @@
             <p:message for="horaFin_horario"/>-->
           </h:panelGrid>
 
-          <p:commandButton value="#{horarioBean.msgDialogoTeatro}" action="#{horarioBean.crearHorario()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_horario:tabla_horarios"/>
+          <p:commandButton value="#{horarioBean.msgDialogoHorario}" action="#{horarioBean.crearHorario()}" icon="pi pi-plus-circle" iconPos="left" update="@form, crud_horario:tabla_horarios"/>
           <p:growl for="mensaje_bean" showDetail="true"/>
         </h:form>
       </p:dialog>

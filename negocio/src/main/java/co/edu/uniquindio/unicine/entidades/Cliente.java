@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -32,7 +33,9 @@ public class Cliente implements Serializable {
     @Column(nullable = false, unique = true) // Restrinccion a nivel de sql
     private String email;
 
-    private String imagen_perfil;
+    @ElementCollection
+    @Column(nullable = false)
+    private Map<String, String> imagenes;
 
     @Lob // Porque cuando la contraseña se encripta guarda una cadena muy grande
     @ToString.Exclude // Porque es inseguro
@@ -55,12 +58,11 @@ public class Cliente implements Serializable {
     private List<Compra> compras;
 
     @Builder
-    public Cliente(Integer cedula, String nombre_completo, List<String> telefonos, String email, String imagen_perfil, String contrasenia) {
+    public Cliente(Integer cedula, String nombre_completo, List<String> telefonos, String email, String contrasenia) {
         this.cedula = cedula;
         this.nombre = nombre_completo;
         this.telefonos = telefonos;
         this.email = email;
-        this.imagen_perfil = imagen_perfil;
         this.contrasenia = contrasenia;
         this.estado = false;
     }

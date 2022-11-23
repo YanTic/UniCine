@@ -77,7 +77,6 @@ public class ClienteServicioImpl implements ClienteServicio{
         StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
         cliente.setContrasenia(spe.encryptPassword(cliente.getContrasenia()));
         cliente.setEstado(false);
-        cliente.setImagen_perfil("");
 
         Cliente registro = clienteRepo.save(cliente);
 
@@ -196,7 +195,6 @@ public class ClienteServicioImpl implements ClienteServicio{
         guardado.get().setCedula(clienteActualizado.getCedula());
         guardado.get().setNombre(clienteActualizado.getNombre());
         guardado.get().setTelefonos(clienteActualizado.getTelefonos());
-        guardado.get().setImagen_perfil(clienteActualizado.getImagen_perfil());
         guardado.get().setContrasenia(clienteActualizado.getContrasenia());
 
         return clienteRepo.save(guardado.get());

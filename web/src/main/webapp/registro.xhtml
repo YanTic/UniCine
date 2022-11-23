@@ -40,6 +40,11 @@
             <p:password id="confirmarContrasenia_cli" value="#{registroBean.confirmacionContrasenia}" required="true" toggleMask="true"/>
             <p:message for="confirmarContrasenia_cli"/>
 
+            <p:outputLabel for="img_cli" value="Imagenes: "/>
+            <p:fileUpload id="img_cli" listener="#{registroBean.subirImg}" mode="advanced" multiple="true" fileLimit="2"
+                          sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+            <p:message for="img_cli"/>
+
           </h:panelGrid>
 
           <p:commandButton value="Crear nueva cuenta" action="#{registroBean.registrarCliente()}" update="@form"/>

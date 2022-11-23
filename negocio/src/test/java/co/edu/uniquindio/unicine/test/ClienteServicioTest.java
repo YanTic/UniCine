@@ -55,7 +55,7 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void registarClienteTest() {
-        Cliente cliente = Cliente.builder().cedula(224).nombre_completo("The Rock").email("rock@email.com").contrasenia("23Ao2").imagen_perfil("url").build();
+        Cliente cliente = Cliente.builder().cedula(224).nombre_completo("The Rock").email("rock@email.com").contrasenia("23Ao2").build();
 
         try {
             Cliente nuevo = clienteServicio.registrarCliente(cliente);
@@ -94,7 +94,6 @@ public class ClienteServicioTest {
                     .nombre_completo("NUEVO NOMBRE")
                     .telefonos(cliente.getTelefonos())
                     .email(cliente.getEmail())
-                    .imagen_perfil(cliente.getImagen_perfil())
                     .contrasenia(cliente.getContrasenia())
                     .build();
 

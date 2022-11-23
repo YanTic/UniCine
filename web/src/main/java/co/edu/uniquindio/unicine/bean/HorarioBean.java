@@ -101,7 +101,7 @@ public class HorarioBean implements Serializable {
         }
     }
 
-    public String getMsgDialogoTeatro() {
+    public String getMsgDialogoHorario() {
         return editar ? "Editar Horario" : "Crear Horario";
     }
 

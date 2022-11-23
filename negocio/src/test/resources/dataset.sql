@@ -22,24 +22,38 @@ insert into admin_teatro values (3,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2
 insert into admin_teatro values (4,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "miles@email.com", "Miles Morales", 4);
 insert into admin_teatro values (5,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq", "fredy@email.com", "Fredy Mercury", 2);
 
-insert into evento values (1, '2022-08-17', '10:30:00', '09:30:00', "url", "Evento Fin de Anio", 1);
-insert into evento values (2, '2022-06-10', '04:00:00', '02:15:00', "url", "Evento Familia", 1);
-insert into evento values (3, '2022-11-26', '05:30:00', '01:20:00', "url", "Evento Spider-Man", 2);
-insert into evento values (4, '2022-12-01', '07:30:00', '04:30:00', "url", "Evento Arroz y pollo", 3);
-insert into evento values (5, '2022-10-04', '11:15:00', '01:00:00', "url", "Evento Arroz y pollo", 5);
+insert into evento values (1, '2022-08-17', '10:30:00', '09:30:00', "Evento Fin de Anio", 1);
+insert into evento values (2, '2022-06-10', '04:00:00', '02:15:00', "Evento Familia", 1);
+insert into evento values (3, '2022-11-26', '05:30:00', '01:20:00', "Evento Spider-Man", 2);
+insert into evento values (4, '2022-12-01', '07:30:00', '04:30:00', "Evento Arroz y pollo", 3);
+insert into evento values (5, '2022-10-04', '11:15:00', '01:00:00', "Evento Arroz y pollo", 5);
 
-insert into confiteria values (1, "url", 15000, "Crispetas Mediana");
-insert into confiteria values (2, "url", 6000, "Agua");
-insert into confiteria values (3, "url", 10000, "Gaseosa Mediana");
-insert into confiteria values (4, "url", 40000, "Combo parejita");
-insert into confiteria values (5, "url", 13000, "Nachos");
+insert into evento_imagenes values (1, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187938/unicine/eventos/jh5ykjp1mjpmppexevcn.jpg", "unicine/eventos/jh5ykjp1mjpmppexevcn");
+insert into evento_imagenes values (2, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187938/unicine/eventos/jh5ykjp1mjpmppexevcn.jpg", "unicine/eventos/jh5ykjp1mjpmppexevcn");
+insert into evento_imagenes values (3, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187938/unicine/eventos/jh5ykjp1mjpmppexevcn.jpg", "unicine/eventos/jh5ykjp1mjpmppexevcn");
+insert into evento_imagenes values (4, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187938/unicine/eventos/jh5ykjp1mjpmppexevcn.jpg", "unicine/eventos/jh5ykjp1mjpmppexevcn");
+insert into evento_imagenes values (5, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187938/unicine/eventos/jh5ykjp1mjpmppexevcn.jpg", "unicine/eventos/jh5ykjp1mjpmppexevcn");
 
-insert into cliente values (1,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","julian@email.com", 1, "url","Julian Acosta");
-insert into cliente values (2,"EogmqE89QufrAw7CaY6JqqDh+ID2rVkswnmIj2LQIzwcGXAm8dOjVigXeol1HXC/","juan@email.com", 1, "url","Juan Bunny");
-insert into cliente values (3,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","pepe@email.com", 0, "url","Pepe Lipa");
-insert into cliente values (4,"EogmqE89QufrAw7CaY6JqqDh+ID2rVkswnmIj2LQIzwcGXAm8dOjVigXeol1HXC/","mailo@email.com", 0, "url","Mailo Styles");
-insert into cliente values (5,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","diego@email.com", 1, "url","Diego Cloud");
-insert into cliente values (6,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","peter@email.com", 1, "url","Peter Parker");
+
+insert into confiteria values (1, 15000, "Crispetas Mediana");
+insert into confiteria values (2, 6000, "Agua");
+insert into confiteria values (3, 10000, "Gaseosa Mediana");
+insert into confiteria values (4, 40000, "Combo parejita");
+insert into confiteria values (5, 13000, "Nachos");
+
+insert into confiteria_imagenes values (1, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187784/unicine/confiterias/ilw6txnyzvygkntgscij.jpg", "unicine/confiterias/ilw6txnyzvygkntgscij");
+insert into confiteria_imagenes values (2, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187784/unicine/confiterias/ilw6txnyzvygkntgscij.jpg", "unicine/confiterias/ilw6txnyzvygkntgscij");
+insert into confiteria_imagenes values (3, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187784/unicine/confiterias/ilw6txnyzvygkntgscij.jpg", "unicine/confiterias/ilw6txnyzvygkntgscij");
+insert into confiteria_imagenes values (4, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187784/unicine/confiterias/ilw6txnyzvygkntgscij.jpg", "unicine/confiterias/ilw6txnyzvygkntgscij");
+insert into confiteria_imagenes values (5, "http://res.cloudinary.com/dkislcnml/image/upload/v1669187784/unicine/confiterias/ilw6txnyzvygkntgscij.jpg", "unicine/confiterias/ilw6txnyzvygkntgscij");
+
+
+insert into cliente values (1,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","julian@email.com", 1, "Julian Acosta");
+insert into cliente values (2,"EogmqE89QufrAw7CaY6JqqDh+ID2rVkswnmIj2LQIzwcGXAm8dOjVigXeol1HXC/","juan@email.com", 1, "Juan Bunny");
+insert into cliente values (3,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","pepe@email.com", 0, "Pepe Lipa");
+insert into cliente values (4,"EogmqE89QufrAw7CaY6JqqDh+ID2rVkswnmIj2LQIzwcGXAm8dOjVigXeol1HXC/","mailo@email.com", 0, "Mailo Styles");
+insert into cliente values (5,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","diego@email.com", 1, "Diego Cloud");
+insert into cliente values (6,"pTebp8M+bBiajhaDWFuWo6sktgLAcIypL8uB+jJ7dgk2ynYm7/w6nxd63UkD/UJq","peter@email.com", 1, "Peter Parker");
 
 insert into cliente_telefonos values (1,"3353");
 insert into cliente_telefonos values (1,"2441");
@@ -47,6 +61,13 @@ insert into cliente_telefonos values (2,"2451");
 insert into cliente_telefonos values (5,"1111");
 insert into cliente_telefonos values (3,"0282");
 insert into cliente_telefonos values (2,"0282");
+
+insert into cliente_imagenes values (1, "http://res.cloudinary.com/dkislcnml/image/upload/v1669188083/unicine/clientes/yvmp3wdpehkdebh2ssus.jpg", "unicine/clientes/yvmp3wdpehkdebh2ssus");
+insert into cliente_imagenes values (2, "http://res.cloudinary.com/dkislcnml/image/upload/v1669188083/unicine/clientes/yvmp3wdpehkdebh2ssus.jpg", "unicine/clientes/yvmp3wdpehkdebh2ssus");
+insert into cliente_imagenes values (3, "http://res.cloudinary.com/dkislcnml/image/upload/v1669188083/unicine/clientes/yvmp3wdpehkdebh2ssus.jpg", "unicine/clientes/yvmp3wdpehkdebh2ssus");
+insert into cliente_imagenes values (4, "http://res.cloudinary.com/dkislcnml/image/upload/v1669188083/unicine/clientes/yvmp3wdpehkdebh2ssus.jpg", "unicine/clientes/yvmp3wdpehkdebh2ssus");
+insert into cliente_imagenes values (5, "http://res.cloudinary.com/dkislcnml/image/upload/v1669188083/unicine/clientes/yvmp3wdpehkdebh2ssus.jpg", "unicine/clientes/yvmp3wdpehkdebh2ssus");
+insert into cliente_imagenes values (6, "http://res.cloudinary.com/dkislcnml/image/upload/v1669188083/unicine/clientes/yvmp3wdpehkdebh2ssus.jpg", "unicine/clientes/yvmp3wdpehkdebh2ssus");
 
 /*insert into cupon values (id,criterio,desc,fechavencimiento,valordescuento)*/
 insert into cupon values (1, "Registro", "Cupon por registrarse", '2022-12-12', 0.10);
@@ -96,12 +117,12 @@ insert into pelicula_generos values (7, 2);
 insert into pelicula_generos values (7, 4);
 
 insert into pelicula_imagenes values (1, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
-insert into pelicula_imagenes values (2, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
-insert into pelicula_imagenes values (3, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
+insert into pelicula_imagenes values (2, "http://res.cloudinary.com/dkislcnml/image/upload/v1669188572/unicine/peliculas/ugiygn98wf75iug8cjlq.jpg", "unicine/peliculas/ugiygn98wf75iug8cjlq");
+insert into pelicula_imagenes values (3, "http://res.cloudinary.com/dkislcnml/image/upload/v1669188520/unicine/peliculas/pjadxegexklmkefow5hj.jpg", "unicine/peliculas/pjadxegexklmkefow5hj");
 insert into pelicula_imagenes values (4, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
 insert into pelicula_imagenes values (5, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
 insert into pelicula_imagenes values (6, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
-insert into pelicula_imagenes values (7, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
+insert into pelicula_imagenes values (7, "http://res.cloudinary.com/dkislcnml/image/upload/v1669188677/unicine/peliculas/t1mebayoad6mzj1avpza.jpg", "unicine/peliculas/t1mebayoad6mzj1avpza");
 insert into pelicula_imagenes values (8, "http://res.cloudinary.com/dkislcnml/image/upload/v1668454700/unicine/peliculas/sphn20jtayvbxyshzmsa.jpg", "unicine/peliculas/sphn20jtayvbxyshzmsa");
 
 /*insert into horario values (id, fechafin, fechainicio, horafin, horainicio);*/

@@ -25,6 +25,9 @@
                              action="#{peliculaBean.eliminarPeliculas()}" disabled="#{peliculaBean.peliculasSeleccionadas.size()==0}"
                              update="crud_pelicula:tabla_peliculas, @this"/>
           </p:toolbarGroup>
+          <p:toolbarGroup>
+            <h4><STRONG>Peliculas</STRONG></h4>
+          </p:toolbarGroup>
         </p:toolbar>
 
         <p:dataTable id="tabla_peliculas" value="#{peliculaBean.peliculas}" var="pelicula" paginator="true" paginatorPosition="bottom"
@@ -126,6 +129,9 @@
             <p:commandButton id="btn_eliminar_g" value="#{generoBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
                              action="#{generoBean.eliminarGeneros()}" disabled="#{generoBean.generosSeleccionados.size()==0}"
                              update="crud_genero:tabla_generos, @this"/>
+          </p:toolbarGroup>
+          <p:toolbarGroup>
+            <h4><STRONG>Generos</STRONG></h4>
           </p:toolbarGroup>
         </p:toolbar>
 

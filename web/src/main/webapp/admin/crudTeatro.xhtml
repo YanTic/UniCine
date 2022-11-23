@@ -25,6 +25,9 @@
                              action="#{teatroBean.eliminarTeatros()}" disabled="#{teatroBean.teatrosSeleccionados.size()==0}"
                              update="crud_teatro:tabla_teatros, @this"/>
           </p:toolbarGroup>
+          <p:toolbarGroup>
+            <h4><STRONG>Teatros</STRONG></h4>
+          </p:toolbarGroup>
         </p:toolbar>
 
         <p:dataTable id="tabla_teatros" value="#{teatroBean.teatros}" var="teatro" paginator="true" paginatorPosition="bottom"
@@ -106,6 +109,9 @@
             <p:commandButton id="btn_eliminar_ciudad" value="#{ciudadBean.msgBtnEliminar}" icon="pi pi-trash" styleClass="ui-button-danger"
                              action="#{ciudadBean.eliminarCiudades()}" disabled="#{ciudadBean.ciudadesSeleccionadas.size()==0}"
                              update="crud_ciudad:tabla_ciudades, @this"/>
+          </p:toolbarGroup>
+          <p:toolbarGroup>
+            <h4><STRONG>Ciudades</STRONG></h4>
           </p:toolbarGroup>
         </p:toolbar>
 
