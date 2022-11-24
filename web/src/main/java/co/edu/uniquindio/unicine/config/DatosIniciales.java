@@ -40,8 +40,10 @@ public class DatosIniciales implements CommandLineRunner {
             adminGeneralServicio.crearAdminGeneral(AdminGeneral.builder().cedula("312").nombre("ADMIN General").email("adminGeneral@email.com").contrasenia("1234").ciudad(adminGeneralServicio.obtenerCiudad(1)).build());
 
             String[] tel = new String[] {"214124", "343242"};
-            clienteServicio.registrarCliente(Cliente.builder().cedula(222).nombre_completo("Cliente").telefonos(Arrays.asList(tel)).email("cliente@email.com").imagen_perfil("url").contrasenia("1234").build());
-            
+            Cliente cliente = Cliente.builder().cedula(222).nombre_completo("Cliente").telefonos(Arrays.asList(tel)).email("cliente@email.com").imagen_perfil("url").contrasenia("1234").build();
+            cliente.setEstado(true);
+            clienteServicio.registrarCliente(cliente);
+
         }
 
     }
