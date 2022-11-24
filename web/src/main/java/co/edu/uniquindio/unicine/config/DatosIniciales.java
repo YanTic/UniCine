@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.config;
 
-import co.edu.uniquindio.unicine.entidades.AdminGeneral;
-import co.edu.uniquindio.unicine.entidades.AdminTeatro;
-import co.edu.uniquindio.unicine.entidades.Ciudad;
-import co.edu.uniquindio.unicine.entidades.Teatro;
+import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.servicios.AdminGeneralServicio;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
@@ -11,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -40,6 +38,10 @@ public class DatosIniciales implements CommandLineRunner {
 
             adminGeneralServicio.crearAdminTeatro(AdminTeatro.builder().cedula("122").nombre("ADMIN Teatro").email("adminTeatro@email.com").contrasenia("1234").teatro(adminGeneralServicio.obtenerTeatro(1)).build());
             adminGeneralServicio.crearAdminGeneral(AdminGeneral.builder().cedula("312").nombre("ADMIN General").email("adminGeneral@email.com").contrasenia("1234").ciudad(adminGeneralServicio.obtenerCiudad(1)).build());
+
+            String[] tel = new String[] {"214124", "343242"};
+            clienteServicio.registrarCliente(Cliente.builder().cedula(222).nombre_completo("Cliente").telefonos(Arrays.asList(tel)).email("cliente@email.com").imagen_perfil("url").contrasenia("1234").build());
+            
         }
 
     }
