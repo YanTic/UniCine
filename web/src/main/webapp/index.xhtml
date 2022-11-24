@@ -36,20 +36,6 @@
               <a href="https://github.com/YanTic" target="blank" class="nav-link link-dark px-2"> <span class="pi pi-github" /> </a>
             </li>
           </ul>
-          <!--<ul class="nav">
-            <li class="nav-item ">
-              <h:form>
-                <p:outputLabel for="ciudad_ini" value="Ciudad: "/>
-                <p:selectOneMenu id="ciudad_ini" value="#{inicioBean.ciudad}" onchange="#{inicioBean.elegirCiudad()}" converter="#{ciudadConverter}" required="false">
-                  <f:selectItem itemLabel="Seleccione la ciudad" noSelectionOption="true"/>
-                  <f:selectItems value="#{inicioBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
-                  <p:ajax event="change" listener="#{inicioBean.elegirCiudad()}" update="@form, listas_peliculas"/>
-                  <p:ajax event="change" listener="#{seguridadBean.seleccionarCiudad(inicioBean.ciudad)}" update="@form, listas_peliculas"/>
-                </p:selectOneMenu>
-                <p:message for="ciudad_ini"/>
-              </h:form>
-            </li>
-          </ul>-->
         </div>
       </nav>
     </div>
