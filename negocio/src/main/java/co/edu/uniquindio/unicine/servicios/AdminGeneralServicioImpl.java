@@ -13,6 +13,7 @@ import java.util.Optional;
 public class AdminGeneralServicioImpl implements AdminGeneralServicio {
 
     private final AdminGeneralRepo adminGeneralRepo;
+    private final AdminTeatroRepo adminTeatroRepo;
     private final CiudadRepo ciudadRepo;
     private final TeatroRepo teatroRepo;
     private final CuponRepo cuponRepo;
@@ -21,8 +22,9 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
     private final GeneroRepo generoRepo;
     private final ConfiteriaRepo confiteriaRepo;
 
-    public AdminGeneralServicioImpl(AdminGeneralRepo adminGeneralRepo, CiudadRepo ciudadRepo, TeatroRepo teatroRepo, CuponRepo cuponRepo, EventoRepo eventoRepo, PeliculaRepo peliculaRepo, GeneroRepo generoRepo, ConfiteriaRepo confiteriaRepo) {
+    public AdminGeneralServicioImpl(AdminGeneralRepo adminGeneralRepo, AdminTeatroRepo adminTeatroRepo, CiudadRepo ciudadRepo, TeatroRepo teatroRepo, CuponRepo cuponRepo, EventoRepo eventoRepo, PeliculaRepo peliculaRepo, GeneroRepo generoRepo, ConfiteriaRepo confiteriaRepo) {
         this.adminGeneralRepo = adminGeneralRepo;
+        this.adminTeatroRepo = adminTeatroRepo;
         this.ciudadRepo = ciudadRepo;
         this.teatroRepo = teatroRepo;
         this.cuponRepo = cuponRepo;
@@ -155,6 +157,24 @@ public class AdminGeneralServicioImpl implements AdminGeneralServicio {
 
     private boolean esConfiteriaDisponible(String producto) {
         return confiteriaRepo.findByProducto(producto).orElse(null) == null;
+    }
+
+
+    // Este servicio ayuda a crear adminTeatros en el despliegue de heroku, pero segun yo: un admin no se debe registrar
+    // porque es un rol interno el cual debe ser asignado por alguien en la BD -> no por el fronted
+    // Igualmente deberia agregar una validacion, pero pues son datos que yo mismo creo y se que no van a fallar
+    @Override
+    public AdminTeatro crearAdminTeatro(AdminTeatro adminTeatro) throws Exception {
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+        adminTeatro.setContrasenia(spe.encryptPassword(adminTeatro.getContrasenia()));
+        return adminTeatroRepo.save(adminTeatro);
+    }
+
+    @Override
+    public AdminGeneral crearAdminGeneral(AdminGeneral adminGeneral) throws Exception {
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+        adminGeneral.setContrasenia(spe.encryptPassword(adminGeneral.getContrasenia()));
+        return adminGeneralRepo.save(adminGeneral);
     }
 
 

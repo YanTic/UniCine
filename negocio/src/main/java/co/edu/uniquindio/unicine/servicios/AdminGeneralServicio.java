@@ -24,6 +24,10 @@ public interface AdminGeneralServicio {
 
     Confiteria crearConfiteria(Confiteria confiteria) throws Exception;
 
+    AdminTeatro crearAdminTeatro(AdminTeatro adminTeatro) throws Exception;
+
+    AdminGeneral crearAdminGeneral(AdminGeneral adminGeneral) throws Exception;
+
 
     // Actualizar
     Ciudad actualizarCiudad(Ciudad ciudad) throws Exception;

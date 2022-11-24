@@ -53,7 +53,7 @@ public class InicioBean implements Serializable {
             imagenes.add("https://wallpaperaccess.com/full/2042961.jpg"); // klaus
             imagenes.add("https://wallpaperaccess.com/full/2776322.jpg"); // tenet
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
@@ -64,7 +64,7 @@ public class InicioBean implements Serializable {
                 peliculasEstreno = clienteServicio.listarPeliculasPorEstadoCiudad(EstadoPelicula.ESTRENO, ciudad.getId());
                 peliculasProximas = clienteServicio.listarPeliculasPorEstadoCiudad(EstadoPelicula.PROXIMO, ciudad.getId());
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     
